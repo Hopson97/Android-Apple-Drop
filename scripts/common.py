@@ -14,8 +14,8 @@ def getKeyPress(window):
         return ""
     return window.checkKey()
 
-def undrawAll(window):
-    for item in window.items:
+def undrawAll(wind):
+    for item in wind.items:
         item.undraw()
 
 def switchState(window, control, newState):
@@ -27,8 +27,7 @@ def getFileName(path, name):
     return    os.path.abspath(os.path.realpath(newName))
 
 def loadSpriteVerticies(fileName):
-    fileName = getFileName("res/", fileName + ".txt")
-    with open(fileName) as inFile:
+    with open("res/" + fileName + ".txt") as inFile:
         data = inFile.read()
     data = data.split()
     data = list(map(int, data))

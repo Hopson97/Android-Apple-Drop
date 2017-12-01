@@ -22,7 +22,7 @@ def runGame(window, control):
         
         if window.closed or currentState == states.EXIT:
             control["running"] = False 
-        gfx.update(UPDATE_SPEED)
+        gfx.update(common.UPDATE_SPEED)
 
 if __name__ == "__main__":
     window = gfx.GraphWin("Android Apple Drop - By Matthew Hopson", 
