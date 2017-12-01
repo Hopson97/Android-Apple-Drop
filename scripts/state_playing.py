@@ -5,18 +5,27 @@ import player
 import common
 import aabb
 
-def shouldChangeState(key):
+def shouldExit(control, window, key):
     if key == "p":
-        switchState(window, control, states.EXIT)
+        common.switchState(window, control, states.EXIT)
         return True 
     return False
+
+def createTiles(window):
+    path = common.getFileName("res/", "tile.png")
+    tile = gfx.Image(gfx.Point(0, 0), path).draw(window)
+
+    y     = common.WINDOW_HEIGHT - 100
+    tiles = []
+    for x in range(10):
+        tiles.append(gfx.Image(gfx.Point(x * 100, y), path).draw(window))
 
 def runPlayState(window, control):
 
     playerXVel =   0.0
     playerAABB =   aabb.createAABB(0.0, 500.0, 90.0, 100.0)
     playerSprite = player.createAndroid(window)
-
+    createTiles(window)
     acceleration = 0.5
     while control["running"]:
         key = common.getKeyPress(window)
@@ -35,5 +44,5 @@ def runPlayState(window, control):
         playerXVel *= 0.90
 
         gfx.update(common.UPDATE_SPEED)
-        if shouldChangeState(key): 
+        if shouldExit(window, control, key): 
             return

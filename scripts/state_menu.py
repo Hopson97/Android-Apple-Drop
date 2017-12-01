@@ -1,7 +1,7 @@
 import graphics as gfx 
 import state_enum as states
 
-from common import *
+import common
 
 def runMenuState(window, control):
     while control["running"]:
@@ -10,7 +10,7 @@ def runMenuState(window, control):
         print("This is the menu")
 
         if key == "n":
-            switchState(window, control, states.STATE_SPLASH)
+            common.switchStateswitchState(window, control, states.STATE_SPLASH)
             return
 
         gfx.update(UPDATE_SPEED)

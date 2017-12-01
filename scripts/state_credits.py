@@ -1,7 +1,7 @@
 import graphics as gfx 
 import state_enum as states
 
-from common import *
+import common
 
 def runCreditsState(window, control):
     while control["running"]:
@@ -10,7 +10,7 @@ def runCreditsState(window, control):
         print("This is the credits")
         
         if key == "n":
-            switchState(window, control, states.STATE_PLAYING)
+            common.switchStateswitchState(window, control, states.STATE_PLAYING)
             return
 
         gfx.update(UPDATE_SPEED)

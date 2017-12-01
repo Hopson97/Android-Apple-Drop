@@ -10,11 +10,13 @@ WINDOW_WIDTH = 1000
 WINDOW_HEIGHT = 700
  
 def getKeyPress(window):
+    if window.closed:
+        return ""
     return window.checkKey()
 
 def undrawAll(window):
     for item in window.items:
-        pass#item.undraw()
+        item.undraw()
 
 def switchState(window, control, newState):
     undrawAll(window)

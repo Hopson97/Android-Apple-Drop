@@ -21,8 +21,7 @@ def runGame(window, control):
             state_splash.runSplashState(window, control)  
         
         if window.closed or currentState == states.EXIT:
-            gameRunning = False 
-            print("exit")
+            control["running"] = False 
         gfx.update(UPDATE_SPEED)
 
 if __name__ == "__main__":
