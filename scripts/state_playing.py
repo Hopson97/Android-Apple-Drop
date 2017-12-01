@@ -21,29 +21,49 @@ def createPlayerSprite(window):
             colour = "green"
         part.setFill(colour)
         part.setOutline(colour)
-        part.move(100, 100)
+        part.move(0, 500)
 
-    return body
+    return droidParts
 
-def movePlayer(x, playerSprite):
-    for part in playerSprite:
-        part.move(x, 0)
+def movePlayer(sprite, velocity):
+    for part in sprite:
+        part.move(velocity, 0)
+
+def clampVelocity(velX):
+    clamp = 10
+    if (velX > clamp):
+       return clamp
+    elif (velX < -clamp):
+        return -clamp
+    else:
+        return velX
 
 
 def runPlayState(window, control):
 
+    playerXVel = 0.0
+    playerXPos = 0.0
     playerSprite = createPlayerSprite(window)
 
+    acceleration = 0.5
     while True:
         key = getKeyPress(window)
 
-
         if key == "a":
-            movePlayer(-1, playerSprite)
+            if (playerXVel > 0):
+                playerXVel = -acceleration
+            playerXVel -= acceleration
         elif key == "d":
-            movePlayer(1, playerSprite)
-        elif key == "e":
+            if (playerXVel < 0):
+                playerXVel = acceleration
+            playerXVel += acceleration
+        elif key == "p":
             switchState(window, control, states.EXIT)
             return
+
+        playerXVel = clampVelocity(playerXVel)
+        
+        movePlayer(playerSprite, playerXVel)
+        playerXPos += playerXVel
 
         gfx.update(UPDATE_SPEED)
