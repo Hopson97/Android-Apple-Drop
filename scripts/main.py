@@ -6,14 +6,10 @@ import state_menu
 import state_credits
 import state_splash
 
-gameRunning = True
-
-
+import common
 
 def runGame(window, control):
-    global gameRunning
-
-    while gameRunning:
+    while control["running"]:
         currentState = control["state"]
         if currentState == states.STATE_MENU:
             state_menu.runMenuState(window, control) 
@@ -30,10 +26,12 @@ def runGame(window, control):
         gfx.update(UPDATE_SPEED)
 
 if __name__ == "__main__":
-    window = gfx.GraphWin("Android Apple Drop - By Matthew Hopson", 1280, 720, autoflush = False)
-    window.pos
+    window = gfx.GraphWin("Android Apple Drop - By Matthew Hopson", 
+                            common.WINDOW_WIDTH, common.WINDOW_HEIGHT, 
+                            autoflush = False)
 
     control = {
+        "running": True,
         "state": states.STATE_PLAYING
     }
 

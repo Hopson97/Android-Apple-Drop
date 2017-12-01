@@ -4,7 +4,7 @@ import state_enum as states
 from common import *
 
 def runCreditsState(window, control):
-    while True:
+    while control["running"]:
         key = getKeyPress(window)
 
         print("This is the credits")

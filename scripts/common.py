@@ -5,6 +5,9 @@ import os
 FILE_DIR = os.path.dirname('__file__')
 
 UPDATE_SPEED = 30
+
+WINDOW_WIDTH = 1000
+WINDOW_HEIGHT = 700
  
 def getKeyPress(window):
     return window.checkKey()
