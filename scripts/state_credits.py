@@ -13,4 +13,4 @@ def runCreditsState(window, control):
             switchState(window, control, states.STATE_PLAYING)
             return
 
-        gfx.update(30)
+        gfx.update(UPDATE_SPEED)

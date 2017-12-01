@@ -37,7 +37,7 @@ def runPlayState(window, control):
     while True:
         key = getKeyPress(window)
 
-
+        print(len(window.items))
         if key == "a":
             movePlayer(-1, playerSprite)
         elif key == "d":
@@ -46,4 +46,4 @@ def runPlayState(window, control):
             switchState(window, control, states.EXIT)
             return
 
-        gfx.update(30)
+        gfx.update(UPDATE_SPEED)

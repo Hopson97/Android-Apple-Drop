@@ -8,10 +8,8 @@ import state_splash
 
 gameRunning = True
 
-if __name__ == "__main__":
-    window = gfx.GraphWin("Android Apple Drop - By Matthew Hopson", 1280, 720, autoflush = False)
-
-    control = {"state": states.STATE_PLAYING}
+def runGame(window, control):
+    global gameRunning
 
     while gameRunning:
         currentState = control["state"]
@@ -27,6 +25,15 @@ if __name__ == "__main__":
         if window.closed or currentState == states.EXIT:
             gameRunning = False 
             print("exit")
-        gfx.update(30)
-        
+        gfx.update(UPDATE_SPEED30)
+
+if __name__ == "__main__":
+    window = gfx.GraphWin("Android Apple Drop - By Matthew Hopson", 1280, 720, autoflush = False)
+
+    control = {
+        "state": states.STATE_PLAYING
+    }
+
+    runGame(window, control)
+
 

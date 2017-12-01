@@ -13,4 +13,4 @@ def runSplashState(window, control):
             switchState(window, control, states.STATE_CREDITS)
             return
 
-        gfx.update(30)
+        gfx.update(UPDATE_SPEED)

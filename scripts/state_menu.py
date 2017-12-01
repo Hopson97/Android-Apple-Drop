@@ -13,4 +13,4 @@ def runMenuState(window, control):
             switchState(window, control, states.STATE_SPLASH)
             return
 
-        gfx.update(30)
+        gfx.update(UPDATE_SPEED)
