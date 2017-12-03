@@ -6,6 +6,8 @@ import common
 import aabb
 import tiles
 
+import math
+
 def shouldExit(window, control, key):
     if key == "p" or window.closed:
         common.switchState(window, control, states.EXIT)
@@ -14,12 +16,12 @@ def shouldExit(window, control, key):
 
 def runPlayState(window, control):
     playerXVel =   0.0
-    playerAABB =   aabb.createAABB(0.0, 500.0, 60.0, 45.0)
+    playerAABB =   aabb.createAABB(500.0, 500.0, 60.0, 45.0)
     playerSprite = player.createAndroid(window)
 
    # background = createBackground()
-    tileSprites, \
-    tilesXPositions, \
+    tileSprites,        \
+    tilesXPositions,    \
     isTilesActive       = tiles.createTiles(window)
     NUM_TILES           = len(tileSprites)
 
@@ -38,12 +40,16 @@ def runPlayState(window, control):
         elif playerMaxX > common.WINDOW_WIDTH:
             playerXVel = -1
 
-        for i in range(NUM_TILES):
-            if (playerMinX < tilesXPositions[i] + tiles.TILE_SIZE and not isTilesActive[i]):
-                playerXVel = 1
-            elif (playerMaxX > tilesXPositions[i] and not isTilesActive[i]):
-                playerXVel = -1
+        tileIndexMin = math.floor((playerMinX + 15) / tiles.TILE_SIZE)
+        tileIndexMax = math.ceil((playerMaxX - 15) / tiles.TILE_SIZE) - 1
+        print (math.ceil(tileIndexMin), math.floor(tileIndexMax), end = "\n\n")
 
+        if playerXVel < 0: #moving left
+            if not isTilesActive[tileIndexMin]:
+                playerXVel = 1
+        elif playerXVel > 0:
+            if not isTilesActive[tileIndexMax]:
+                playerXVel = -1
         
         player.movePlayer(playerSprite, playerXVel)
         playerAABB["x"] += playerXVel

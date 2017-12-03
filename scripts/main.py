@@ -6,9 +6,6 @@ import state_menu
 import state_credits
 import state_splash
 
-import os
-print(os.getcwd())
-
 import common
 
 def runGame(window, control):
