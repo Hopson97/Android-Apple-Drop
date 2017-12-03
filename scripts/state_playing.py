@@ -42,7 +42,6 @@ def runPlayState(window, control):
 
         tileIndexMin = math.floor((playerMinX + 15) / tiles.TILE_SIZE)
         tileIndexMax = math.ceil((playerMaxX - 15) / tiles.TILE_SIZE) - 1
-        print (math.ceil(tileIndexMin), math.floor(tileIndexMax), end = "\n\n")
 
         if playerXVel < 0: #moving left
             if not isTilesActive[tileIndexMin]:
