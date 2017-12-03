@@ -5,9 +5,9 @@ import common
 def createAndroid(window):
     coords = common.loadSpriteVerticies("android")
     body = gfx.Polygon(coords).draw(window)
-    head = gfx.Circle(gfx.Point(45, 20), 30).draw(window)
-    eye1 = gfx.Circle(gfx.Point(30, 5), 5).draw(window)
-    eye2 = gfx.Circle(gfx.Point(60, 5), 5).draw(window)
+    head = gfx.Circle(gfx.Point(30, 20), 20).draw(window)
+    eye1 = gfx.Circle(gfx.Point(22, 7), 4).draw(window)
+    eye2 = gfx.Circle(gfx.Point(37, 7), 4).draw(window)
 
     droidParts = [body, head, eye1, eye2]
     eyes = [eye1, eye2]

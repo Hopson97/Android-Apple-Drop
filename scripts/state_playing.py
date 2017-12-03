@@ -8,7 +8,7 @@ import aabb
 BASE_HEIGHT = 520
 
 def shouldExit(window, control, key):
-    if key == "p":
+    if key == "p" or window.closed:
         common.switchState(window, control, states.EXIT)
         return True 
     return False
@@ -16,14 +16,14 @@ def shouldExit(window, control, key):
 def createTiles(window):
     y = BASE_HEIGHT + 50
     tiles = []
-    for x in range(10):
-        tiles.append(gfx.Image(gfx.Point(x * 100 + 50, y), "res/tile.png").draw(window))
+    for x in range(20):
+        tiles.append(gfx.Image(gfx.Point(x * 50 + 25, y), "res/tile.png").draw(window))
 
     return tiles
 
 def runPlayState(window, control):
     playerXVel =   0.0
-    playerAABB =   aabb.createAABB(0.0, 500.0, 90.0, 100.0)
+    playerAABB =   aabb.createAABB(0.0, 500.0, 60.0, 45.0)
     playerSprite = player.createAndroid(window)
 
     tiles = createTiles(window)
