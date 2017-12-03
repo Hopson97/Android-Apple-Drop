@@ -18,7 +18,7 @@ def createAndroid(window):
             colour = "green"
         part.setFill(colour)
         part.setOutline(colour)
-        part.move(0, 400)
+        part.move(0, 520 - 45)
     return droidParts
 
 def handleInput(key, velocity):

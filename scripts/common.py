@@ -2,7 +2,7 @@ import graphics as gfx
 
 import os
 
-FILE_DIR = os.path.dirname('__file__')
+__file__ = "../" + __file__
 
 UPDATE_SPEED = 30
 
