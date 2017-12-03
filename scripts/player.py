@@ -1,6 +1,7 @@
 import graphics as gfx
 import common
 import tiles
+import math
 
 #based on the original "android.py" code by Dr. M. Poole
 def createAndroid(window):

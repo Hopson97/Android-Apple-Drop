@@ -7,12 +7,17 @@ import aabb
 import tiles
 
 import math
+import time
 
 def shouldExit(window, control, key):
     if key == "p" or window.closed:
         common.switchState(window, control, states.EXIT)
         return True 
     return False
+
+def calculateTime(start):
+    now = time.time()
+    return now - start
 
 def runPlayState(window, control):
     playerXVel =   0.0
@@ -23,10 +28,16 @@ def runPlayState(window, control):
     tileSprites,        \
     tilesXPositions,    \
     isTilesActive       = tiles.createTiles(window)
-    NUM_TILES           = len(tileSprites)
+    NUM_TILES           = len(tileSprites)#
+
+    startTime = time.time()
+
+
 
     acceleration = 0.5
     while control["running"]:
+        elapsed = calculateTime(startTime)
+
         playerMinX = playerAABB["x"]
         playerMaxX = playerAABB["x"] + playerAABB["w"]
 
