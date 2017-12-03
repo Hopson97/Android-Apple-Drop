@@ -1,7 +1,7 @@
 import graphics as gfx
 import common
 
-#based on the original "android.py" code by Dr. Poole
+#based on the original "android.py" code by Dr. M. Poole
 def createAndroid(window):
     coords = common.loadSpriteVerticies("android")
     body = gfx.Polygon(coords).draw(window)

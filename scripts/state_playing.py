@@ -17,8 +17,7 @@ def createTiles(window):
     y = BASE_HEIGHT + 50
     tiles = []
     for x in range(20):
-        tiles.append(gfx.Image(gfx.Point(x * 50 + 25, y), "res/tile.png").draw(window))
-
+        tiles.append(gfx.Image(gfx.Point(x * 50 + 25, y), "../res/tile.png").draw(window))
     return tiles
 
 def runPlayState(window, control):
@@ -26,6 +25,7 @@ def runPlayState(window, control):
     playerAABB =   aabb.createAABB(0.0, 500.0, 60.0, 45.0)
     playerSprite = player.createAndroid(window)
 
+   # background = createBackground()
     tiles = createTiles(window)
 
     acceleration = 0.5

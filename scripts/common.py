@@ -27,7 +27,7 @@ def getFileName(path, name):
     return    os.path.abspath(os.path.realpath(newName))
 
 def loadSpriteVerticies(fileName):
-    with open("res/" + fileName + ".txt") as inFile:
+    with open("../res/" + fileName + ".txt") as inFile:
         data = inFile.read()
     data = data.split()
     data = list(map(int, data))
