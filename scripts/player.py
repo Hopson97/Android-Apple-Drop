@@ -1,5 +1,6 @@
 import graphics as gfx
 import common
+import tiles
 
 #based on the original "android.py" code by Dr. M. Poole
 def createAndroid(window):
@@ -18,18 +19,18 @@ def createAndroid(window):
             colour = "green"
         part.setFill(colour)
         part.setOutline(colour)
-        part.move(0, 520 - 45)
+        part.move(0, tiles.BASE_HEIGHT - 45)
     return droidParts
 
 def handleInput(key, velocity):
-    acceleration = 0.5
+    acceleration = 0.7
     if key == "a":
         if (velocity > 0):
-            velocit = -acceleration
+            velocity = -velocity / 2
         velocity -= acceleration
     elif key == "d":
         if (velocity < 0):
-            velocity = acceleration
+            velocity = -velocity / 2
         velocity += acceleration
     return velocity
 
