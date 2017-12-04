@@ -12,7 +12,7 @@ _DIAMETER    = _RADIUS * 2
 
 def createAppleSprite(window):
     x = random.randint(_DIAMETER, WINDOW_WIDTH - _DIAMETER)
-    #get X to center of tile
+    #get X position to center of tile
     while (x + 25) % tiles.TILE_SIZE != 0:
         x -= 1
     x -= 5

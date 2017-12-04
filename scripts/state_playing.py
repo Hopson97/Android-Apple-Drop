@@ -32,6 +32,7 @@ def runPlayState(window, control):
     playerAABB =   aabb.createAABB(500.0, 500.0, 60.0, 45.0)
     playerSprite = player.createAndroid(window)
 
+    #Create tiles
     tileSprites,        \
     tilesXPositions,    \
     isTilesActive       = tiles.createTiles(window)
@@ -56,11 +57,9 @@ def runPlayState(window, control):
         #update
         playerXVel = player.tryCollideEdges(playerXVel, playerMinX, 
                                             playerMaxX, isTilesActive)
-        
         player.movePlayer(playerSprite, playerXVel)
         playerAABB["x"] += playerXVel
         playerXVel *= 0.90
-
         
         tryAddMoreApples(apples, elapsed, window)
         for apple in apples[:]:
