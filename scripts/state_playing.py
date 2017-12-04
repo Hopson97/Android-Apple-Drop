@@ -5,10 +5,12 @@ import player
 import common
 import aabb
 import tiles
-import apple
+import apple as appleFuncs
 
 import math
 import time
+
+_DIFFICULTY = 5
 
 def shouldExit(window, control, key):
     if key == "p" or window.closed:
@@ -20,6 +22,11 @@ def calculateTime(start):
     now = time.time()
     return now - start
 
+def tryAddMoreApples(apples, elapsedTime, window):
+    numApples = len(apples)
+    if numApples < elapsedTime // _DIFFICULTY + 2:
+        apples.append(appleFuncs.createAppleSprite(window))
+
 def runPlayState(window, control):
     playerXVel =   0.0
     playerAABB =   aabb.createAABB(500.0, 500.0, 60.0, 45.0)
@@ -28,7 +35,7 @@ def runPlayState(window, control):
     tileSprites,        \
     tilesXPositions,    \
     isTilesActive       = tiles.createTiles(window)
-    NUM_TILES           = len(tileSprites)#
+    NUM_TILES           = len(tileSprites)
 
     startTime = time.time()
 
@@ -38,10 +45,8 @@ def runPlayState(window, control):
     while control["running"]:
         #data
         elapsed = calculateTime(startTime)
-
         playerMinX = playerAABB["x"]
         playerMaxX = playerAABB["x"] + playerAABB["w"]
-
         key = common.getKeyPress(window)
 
         #input
@@ -56,10 +61,15 @@ def runPlayState(window, control):
         playerAABB["x"] += playerXVel
         playerXVel *= 0.90
 
-        if len(apples) < elapsed // 2 + 1:
-            apples.append(apple.createAppleSprite(window))
+        
+        tryAddMoreApples(apples, elapsed, window)
+        for apple in apples[:]:
+            appleFuncs.moveApple(apple)
+            if appleFuncs.isCollidingTile(apple, isTilesActive, tileSprites) or\
+               appleFuncs.isOffScreen(apple):
+                apple.undraw()
+                apples.remove(apple)
  
-        apple.updateApples(apples)
         
         #draw
         gfx.update(common.UPDATE_SPEED)
