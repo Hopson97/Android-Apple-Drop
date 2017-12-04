@@ -1,9 +1,5 @@
 import graphics as gfx
 
-import os
-
-__file__ = "../" + __file__
-
 UPDATE_SPEED = 30
 
 WINDOW_WIDTH = 1000
@@ -34,4 +30,3 @@ def loadSpriteVerticies(fileName):
         y = data[i + 1]
         points.append(gfx.Point(x, y))
     return points
-

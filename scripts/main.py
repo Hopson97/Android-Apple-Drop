@@ -1,10 +1,10 @@
 import graphics as gfx
 import state_enum as states
 
-import state_playing
-import state_menu
-import state_credits
-import state_splash
+from state_playing import runPlayState
+from state_menu    import runMenuState
+from state_credits import runCreditsState
+from state_splash  import runSplashState
 
 import common
 
@@ -12,13 +12,13 @@ def runGame(window, control):
     while control["running"]:
         currentState = control["state"]
         if currentState == states.STATE_MENU:
-            state_menu.runMenuState(window, control) 
+            runMenuState(window, control) 
         elif currentState == states.STATE_PLAYING:
-            state_playing.runPlayState(window, control)
+            runPlayState(window, control)
         elif currentState == states.STATE_CREDITS:
-             state_credits.runCreditsState(window, control)  
+            runCreditsState(window, control)  
         elif currentState == states.STATE_SPLASH:
-            state_splash.runSplashState(window, control)  
+            runSplashState(window, control)  
         
         if window.closed or currentState == states.EXIT:
             control["running"] = False 
