@@ -2,8 +2,8 @@ import graphics as gfx
 
 UPDATE_SPEED = 30
 
-WINDOW_WIDTH = 1000
-WINDOW_HEIGHT = 700
+WINDOW_WIDTH = 1100
+WINDOW_HEIGHT = 720
  
 def getKeyPress(window):
     if window.closed:

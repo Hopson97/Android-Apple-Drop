@@ -5,6 +5,7 @@ import player
 import common
 import aabb
 import tiles
+import apple
 
 import math
 import time
@@ -31,8 +32,11 @@ def runPlayState(window, control):
 
     startTime = time.time()
 
-    acceleration = 0.55
+    apples = []
+
+    #Main loop section for the playing state
     while control["running"]:
+        #data
         elapsed = calculateTime(startTime)
 
         playerMinX = playerAABB["x"]
@@ -40,9 +44,11 @@ def runPlayState(window, control):
 
         key = common.getKeyPress(window)
 
+        #input
         playerXVel = player.handleInput     (key, playerXVel)
         playerXVel = player.clampVelocity   (playerXVel)
 
+        #update
         playerXVel = player.tryCollideEdges(playerXVel, playerMinX, 
                                             playerMaxX, isTilesActive)
         
@@ -50,6 +56,12 @@ def runPlayState(window, control):
         playerAABB["x"] += playerXVel
         playerXVel *= 0.90
 
+        if len(apples) < elapsed // 2 + 1:
+            apples.append(apple.createAppleSprite(window))
+ 
+        apple.updateApples(apples)
+        
+        #draw
         gfx.update(common.UPDATE_SPEED)
         if shouldExit(window, control, key): 
             return
