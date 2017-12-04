@@ -47,3 +47,22 @@ def clampVelocity(velX):
 def movePlayer(sprite, amount):
     for part in sprite:
         part.move(amount, 0)
+
+
+def tryCollideEdges(playerVel, minX, maxX, isTilesActive):
+    tileIndexMin = math.floor((minX + 15) / tiles.TILE_SIZE)
+    tileIndexMax = math.ceil ((maxX - 15) / tiles.TILE_SIZE) - 1
+
+    if playerVel < 0: #moving left
+        if not isTilesActive[tileIndexMin]:
+             playerVel = 1
+    elif playerVel > 0:
+        if not isTilesActive[tileIndexMax]:
+            playerVel = -1
+
+    if minX < 0:
+        playerVel = 1
+    elif maxX > common.WINDOW_WIDTH:
+        playerVel = -1
+            
+    return playerVel

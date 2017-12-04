@@ -24,7 +24,6 @@ def runPlayState(window, control):
     playerAABB =   aabb.createAABB(500.0, 500.0, 60.0, 45.0)
     playerSprite = player.createAndroid(window)
 
-   # background = createBackground()
     tileSprites,        \
     tilesXPositions,    \
     isTilesActive       = tiles.createTiles(window)
@@ -32,9 +31,7 @@ def runPlayState(window, control):
 
     startTime = time.time()
 
-
-
-    acceleration = 0.5
+    acceleration = 0.55
     while control["running"]:
         elapsed = calculateTime(startTime)
 
@@ -46,20 +43,8 @@ def runPlayState(window, control):
         playerXVel = player.handleInput     (key, playerXVel)
         playerXVel = player.clampVelocity   (playerXVel)
 
-        if playerMinX < 0:
-            playerXVel = 1
-        elif playerMaxX > common.WINDOW_WIDTH:
-            playerXVel = -1
-
-        tileIndexMin = math.floor((playerMinX + 15) / tiles.TILE_SIZE)
-        tileIndexMax = math.ceil((playerMaxX - 15) / tiles.TILE_SIZE) - 1
-
-        if playerXVel < 0: #moving left
-            if not isTilesActive[tileIndexMin]:
-                playerXVel = 1
-        elif playerXVel > 0:
-            if not isTilesActive[tileIndexMax]:
-                playerXVel = -1
+        playerXVel = player.tryCollideEdges(playerXVel, playerMinX, 
+                                            playerMaxX, isTilesActive)
         
         player.movePlayer(playerSprite, playerXVel)
         playerAABB["x"] += playerXVel
