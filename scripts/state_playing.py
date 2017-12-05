@@ -24,16 +24,33 @@ def calculateTime(start):
     return now - start
 
 def tryAddMoreApples(apples, elapsedTime, window):
-    notManyApples = len(apples) < (elapsedTime // 7) + 1
+    notManyApples = len(apples) < (elapsedTime // 12) + 1
     if notManyApples:
         apples.append(appleFuncs.createAppleSprite(window))
 
+
+def playerFire(window, playerSprite, projectiles, projDirections, score):
+    fire, point = player.shouldFireProjectile(window)
+    if fire and score > 0:
+        playerPt = playerSprite[1].getCenter()
+        dx = playerPt.x - point.x
+        dy = playerPt.y - point.y
+        projectiles.append(appleFuncs.makeApple(playerPt.x, playerPt.y, window))
+        directionVector = common.normalise(gfx.Point(dx, dy))
+        dx = directionVector.x * 10
+        dy = directionVector.y * 10
+        projDirections.append(gfx.Point(dx, dy))
+        return True 
+    return False
+
 def runPlayState(window, control):
+    #Set up score
     score = 0
     lives = 10
     scoreDisplay = gfx.Text(gfx.Point(common.WINDOW_WIDTH / 2, 50), "Score: 0").draw(window)
     livesDisplay = gfx.Text(gfx.Point(common.WINDOW_WIDTH / 2, 100), "Lives: 10").draw(window)
 
+    #Set up player
     playerXVel =   0.0
     playerAABB =   aabb.createAABB(500.0, 500.0, 60.0, 45.0)
     playerSprite = player.createAndroid(window)
@@ -44,19 +61,25 @@ def runPlayState(window, control):
     isTilesActive       = tiles.createTiles(window)
     NUM_TILES           = len(tileSprites)
 
-    startTime = time.time()
-
+    #Create apples
     x = random.randint(appleFuncs.DIAMETER, WINDOW_WIDTH - appleFuncs.DIAMETER)
     apples = [appleFuncs.makeApple(x, 0, window)]
 
+    projectiles = []
+    projectilesDirections = []
 
+    #Some useful functions
     def removeApple(apple):
         apple.undraw()
         apples.remove(apple)
 
     def updateScore(delta):
+        nonlocal score
         score += delta 
         scoreDisplay.setText("Score: " + str(score))
+
+    #Begin timer
+    startTime = time.time()
 
     #Main loop section for the playing state
     while control["running"]:
@@ -69,6 +92,9 @@ def runPlayState(window, control):
         #input
         playerXVel = player.handleInput     (key, playerXVel)
         playerXVel = player.clampVelocity   (playerXVel)
+
+        if (playerFire(window, playerSprite, projectiles, projectilesDirections, score)):
+            updateScore(-1)
 
         #update
         playerXVel = player.tryCollideEdges(playerXVel, playerMinX, 
@@ -89,8 +115,10 @@ def runPlayState(window, control):
                 removeApple(apple)
                 updateScore(1)
 
-        print(window.checkMouse(), tiles.BASE_HEIGHT)
- 
+        for i in range(len(projectiles)):
+            dx = projectilesDirections[i].x 
+            dy = projectilesDirections[i].y
+            projectiles[i].move(dx, dy)
         
         #draw
         gfx.update(common.UPDATE_SPEED)

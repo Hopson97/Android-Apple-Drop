@@ -9,6 +9,7 @@ from state_splash  import runSplashState
 import common
 
 def runGame(window, control):
+    #Chooses state based on the main control
     while control["running"]:
         currentState = control["state"]
         if currentState == states.STATE_MENU:

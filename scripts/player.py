@@ -72,3 +72,17 @@ def isTochingApple(apple, minX):
     appleY = apple.getCenter().y
     return common.distanceBetweenPoints(minX, tiles.BASE_HEIGHT - 25,
                                         appleX, appleY) < 45
+
+def shouldFireProjectile(window):
+    mousePoint = window.checkMouse()
+    if mousePoint != None:
+        x1 = shouldFireProjectile.oldPos.x
+        x2 = mousePoint.x
+        y1 = shouldFireProjectile.oldPos.y
+        y2 = mousePoint.y
+        if common.distanceBetweenPoints(x1, y1, x2, y2) > 10:
+            shouldFireProjectile.oldPos = mousePoint
+            return True, mousePoint
+    return False, shouldFireProjectile.oldPos
+    
+shouldFireProjectile.oldPos = gfx.Point(-100, -100)

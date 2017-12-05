@@ -38,3 +38,9 @@ def distanceBetweenPoints(x1, y1, x2, y2):
     dy = abs(y1 - y2)
 
     return math.sqrt(dx ** 2 + dy ** 2)
+
+def normalise(vect):
+    x = vect.x
+    y = vect.y
+    length = math.sqrt(x * x + y * y)
+    return gfx.Point(-(x / length), -(y / length))
