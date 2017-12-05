@@ -1,6 +1,7 @@
 import graphics as gfx
 import common
 import tiles
+import apple
 import math
 
 #based on the original "android.py" code by Dr. M. Poole
@@ -48,7 +49,6 @@ def movePlayer(sprite, amount):
     for part in sprite:
         part.move(amount, 0)
 
-
 def tryCollideEdges(playerVel, minX, maxX, isTilesActive):
     tileIndexMin = math.floor((minX + 15) / tiles.TILE_SIZE)
     tileIndexMax = math.ceil ((maxX - 15) / tiles.TILE_SIZE) - 1
@@ -65,4 +65,10 @@ def tryCollideEdges(playerVel, minX, maxX, isTilesActive):
     elif maxX > common.WINDOW_WIDTH:
         playerVel = -1
             
-    return playerVel
+    return playerVel * 0.95 #apply velocity dampening
+
+def isTochingApple(apple, minX):
+    appleX = apple.getCenter().x
+    appleY = apple.getCenter().y
+    return common.distanceBetweenPoints(minX, tiles.BASE_HEIGHT - 25,
+                                        appleX, appleY) < 45

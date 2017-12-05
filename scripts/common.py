@@ -1,5 +1,7 @@
 import graphics as gfx
 
+import math
+
 UPDATE_SPEED = 30
 
 WINDOW_WIDTH = 1100
@@ -30,3 +32,9 @@ def loadSpriteVerticies(fileName):
         y = data[i + 1]
         points.append(gfx.Point(x, y))
     return points
+
+def distanceBetweenPoints(x1, y1, x2, y2):
+    dx = abs(x1 - x2)
+    dy = abs(y1 - y2)
+
+    return math.sqrt(dx ** 2 + dy ** 2)
