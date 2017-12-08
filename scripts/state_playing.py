@@ -33,8 +33,7 @@ def playerFire(window, playerSprite, projectiles, projDirections, score):
     fire, point = player.shouldFireProjectile(window)
     if fire and score > 0:
         playerPt = playerSprite[1].getCenter()
-        dx = playerPt.x - point.x
-        dy = playerPt.y - point.y
+        dx, dy = common.getPointDifference(playerPt, point)
         projectiles.append(appleFuncs.makeApple(playerPt.x, playerPt.y, window))
         directionVector = common.normalise(gfx.Point(dx, dy))
         dx = directionVector.x * 10
@@ -119,6 +118,11 @@ def runPlayState(window, control):
             dx = projectilesDirections[i].x 
             dy = projectilesDirections[i].y
             projectiles[i].move(dx, dy)
+            for apple in apples[:]:
+                appleCenter = apple.getCenter()
+                projCenter  = projectiles[i].getCenter()
+                if common.distanceBetween(appleCenter, projCenter) < apple.radius:
+                    removeApple(apple)
         
         #draw
         gfx.update(common.UPDATE_SPEED)

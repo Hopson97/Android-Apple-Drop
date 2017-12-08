@@ -70,8 +70,8 @@ def tryCollideEdges(playerVel, minX, maxX, isTilesActive):
 def isTochingApple(apple, minX):
     appleX = apple.getCenter().x
     appleY = apple.getCenter().y
-    return common.distanceBetweenPoints(minX, tiles.BASE_HEIGHT - 25,
-                                        appleX, appleY) < 45
+    return common.distance(minX, tiles.BASE_HEIGHT - 25,
+                           appleX, appleY) < 45
 
 def shouldFireProjectile(window):
     mousePoint = window.checkMouse()
@@ -80,7 +80,7 @@ def shouldFireProjectile(window):
         x2 = mousePoint.x
         y1 = shouldFireProjectile.oldPos.y
         y2 = mousePoint.y
-        if common.distanceBetweenPoints(x1, y1, x2, y2) > 10:
+        if common.distance(x1, y1, x2, y2) > 10:
             shouldFireProjectile.oldPos = mousePoint
             return True, mousePoint
     return False, shouldFireProjectile.oldPos
