@@ -34,25 +34,31 @@ def playerFire(window, playerSprite, projectiles, projDirections, score):
     if fire and score > 0:
         playerPt = playerSprite[1].getCenter()
         dx, dy = common.getPointDifference(playerPt, point)
-        newApp = appleFuncs.makeApple(playerPt.x, playerPt.y, "red", appleFuncs.RADIUS, window)
+        newApp = appleFuncs.makeApple(playerPt.getX(), playerPt.getY(), "red", appleFuncs.RADIUS, window)
         projectiles.append(newApp)
         directionVector = common.normalise(gfx.Point(dx, dy))
-        dx = directionVector.x * 10
-        dy = directionVector.y * 10
+        dx = directionVector.getX() * 10
+        dy = directionVector..getY() * 10
         projDirections.append(gfx.Point(dx, dy))
         return True 
     return False
 
+def moveProjectile(direction, projectile):
+    dx = direction.getX()
+    dy = direction.getY()
+    projectile.move(dx, dy)
+
+def testForAppleProjectileCollision(projectile, apples):
+    for apple in apples[:]:
+        appleCenter = apple.getCenter()
+        projCenter  = projectile.getCenter()
+        if common.distanceBetween(appleCenter, projCenter) < appleFuncs.DIAMETER:
+            appleFuncs.removeApple(apples, apple)
+
 def updateProjectiles(projectiles, projectileDirections, apples):
     for i in range(len(projectiles)):
-        dx = projectileDirections[i].x 
-        dy = projectileDirections[i].y
-        projectiles[i].move(dx, dy)
-        for apple in apples[:]:
-            appleCenter = apple.getCenter()
-            projCenter  = projectiles[i].getCenter()
-            if common.distanceBetween(appleCenter, projCenter) < appleFuncs.DIAMETER:
-                appleFuncs.removeApple(apples, apple)
+        moveProjectile(projectileDirections[i], projectiles[i])
+        testForAppleProjectileCollision(projectiles[i], apples)
 
 def runPlayState(window, control):
     #Set up score
@@ -67,10 +73,9 @@ def runPlayState(window, control):
     playerSprite = player.createAndroid(window)
 
     #Create tiles
-    tileSprites,        \
-    isTilesActive       = tiles.createTiles(window)
-
-    NUM_TILES           = len(tileSprites)
+    tileSprites,  \
+    isTilesActive = tiles.createTiles(window)
+    NUM_TILES     = len(tileSprites)
 
     #Create apples
     x = random.randint(appleFuncs.DIAMETER, WINDOW_WIDTH - appleFuncs.DIAMETER)

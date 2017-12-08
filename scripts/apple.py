@@ -19,28 +19,37 @@ RADIUS_BOOST  = 13
 _RADIUS_TYPES  = [RADIUS, RADIUS_REPAIR, RADIUS_BOOST]
 _APPLE_COLOURS = ["red",  "green",       "yellow"]
 
+#Enum for the different apple types
+_DEFAULT = 0
+_REPAIR  = 1
+_BOOST   = 2
+
 def getRandomAppleType():
+    '''Gets a random apple type enum'''
     appleType = random.randint(0, 100)
     if appleType > 30:
-        return 0
+        return _DEFAULT
     elif appleType > 10:
-        return 1
+        return _REPAIR
     else:
-        return 2
+        return _BOOST
 
 def getRandomAppleInfo():
+    '''get random radius and colour for apples'''
     appleType = getRandomAppleType()
     radius    = _RADIUS_TYPES [appleType]
     colour    = _APPLE_COLOURS[appleType]
     return radius, colour
 
 def makeApple(x, y, colour, radius, window):
+    '''Creates a single apple'''
     apple = gfx.Circle(gfx.Point(x, y), radius)
     apple.draw(window)
     apple.setFill(colour)
     return apple
 
 def createAppleSprite(window):
+    '''Creates an apple at top of window'''
     x = random.randint(DIAMETER, WINDOW_WIDTH - DIAMETER)
     y = random.randint(-DIAMETER * 10, 0)
     #get X position to center of tile
@@ -54,8 +63,9 @@ def createAppleSprite(window):
 
 
 def isCollidingTile(apple, isTileActive, tileSprites):
-    y = apple.getCenter().y - RADIUS
-    x = apple.getCenter().x
+    '''Test if apple is colliding with a tile, remove tile if it is'''
+    y = apple.getCenter().getY() - RADIUS
+    x = apple.getCenter().getX()
     tileIndex = round((x) / tiles.TILE_SIZE)
 
     if y >= tiles.BASE_HEIGHT and isTileActive[tileIndex]:
@@ -64,7 +74,7 @@ def isCollidingTile(apple, isTileActive, tileSprites):
         return True
 
 def isOffScreen(apple):
-    return apple.getCenter().y > WINDOW_HEIGHT + RADIUS
+    return apple.getCenter().getY() > WINDOW_HEIGHT + RADIUS
 
 def moveApple(apple):
     apple.move(0, _APPLE_SPEED)
