@@ -52,8 +52,7 @@ def updateProjectiles(projectiles, projectileDirections, apples):
             appleCenter = apple.getCenter()
             projCenter  = projectiles[i].getCenter()
             if common.distanceBetween(appleCenter, projCenter) < appleFuncs.DIAMETER:
-                apple.undraw()
-                apples.remove(apple)
+                appleFuncs.removeApple(apples, apple)
 
 def runPlayState(window, control):
     #Set up score
@@ -79,11 +78,6 @@ def runPlayState(window, control):
 
     projectiles = []
     projectilesDirections = []
-
-    #Some useful functions
-    def removeApple(apple):
-        apple.undraw()
-        apples.remove(apple)
 
     def updateScore(delta):
         nonlocal score
@@ -118,13 +112,13 @@ def runPlayState(window, control):
         for apple in apples[:]:
             appleFuncs.moveApple(apple)
             if appleFuncs.isCollidingTile(apple, isTilesActive, tileSprites):
-                removeApple(apple)
+                appleFuncs.removeApple(apples, apple)
             if appleFuncs.isOffScreen(apple):
-                removeApple(apple)
+                appleFuncs.removeApple(apples, apple)
                 lives -= 1
                 livesDisplay.setText("Lives: " + str(lives))
             if player.isTochingApple(apple, playerMinX):
-                removeApple(apple)
+                appleFuncs.removeApple(apples, apple)
                 updateScore(1)
 
         updateProjectiles(projectiles, projectilesDirections, apples)

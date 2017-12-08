@@ -6,13 +6,16 @@ import math
 import tiles
 from common import WINDOW_WIDTH, WINDOW_HEIGHT
 
+#Default apple attributes
 _APPLE_SPEED = 2
 RADIUS      = 15
 DIAMETER    = RADIUS * 2
 
-RADIUS_REPAIR = 14
+#Attributes for "special" apple types
+RADIUS_REPAIR = 14  
 RADIUS_BOOST  = 13
 
+#List of different apple types
 _RADIUS_TYPES  = [RADIUS, RADIUS_REPAIR, RADIUS_BOOST]
 _APPLE_COLOURS = ["red",  "green",       "yellow"]
 
@@ -29,7 +32,6 @@ def getRandomAppleInfo():
     appleType = getRandomAppleType()
     radius    = _RADIUS_TYPES [appleType]
     colour    = _APPLE_COLOURS[appleType]
-    return 15, "red"
     return radius, colour
 
 def makeApple(x, y, colour, radius, window):
@@ -67,4 +69,6 @@ def isOffScreen(apple):
 def moveApple(apple):
     apple.move(0, _APPLE_SPEED)
 
-        
+def removeApple(apples, apple):
+    apple.undraw()
+    apples.remove(apple)
