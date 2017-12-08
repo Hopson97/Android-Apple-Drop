@@ -10,6 +10,8 @@ _APPLE_SPEED = 2
 RADIUS      = 15
 DIAMETER    = RADIUS * 2
 
+
+
 def makeApple(x, y, window):
     apple = gfx.Circle(gfx.Point(x, y), RADIUS)
     apple.draw(window)

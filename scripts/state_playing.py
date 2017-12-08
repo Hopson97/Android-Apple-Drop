@@ -42,6 +42,17 @@ def playerFire(window, playerSprite, projectiles, projDirections, score):
         return True 
     return False
 
+def updateProjectiles(projectiles, projectileDirections, apples):
+    for i in range(len(projectiles)):
+        dx = projectileDirections[i].x 
+        dy = projectileDirections[i].y
+        projectiles[i].move(dx, dy)
+        for apple in apples[:]:
+            appleCenter = apple.getCenter()
+            projCenter  = projectiles[i].getCenter()
+            if common.distanceBetween(appleCenter, projCenter) < apple.radius:
+                removeApple(apple)
+
 def runPlayState(window, control):
     #Set up score
     score = 0
@@ -56,8 +67,8 @@ def runPlayState(window, control):
 
     #Create tiles
     tileSprites,        \
-    tilesXPositions,    \
     isTilesActive       = tiles.createTiles(window)
+
     NUM_TILES           = len(tileSprites)
 
     #Create apples
@@ -114,17 +125,10 @@ def runPlayState(window, control):
                 removeApple(apple)
                 updateScore(1)
 
-        for i in range(len(projectiles)):
-            dx = projectilesDirections[i].x 
-            dy = projectilesDirections[i].y
-            projectiles[i].move(dx, dy)
-            for apple in apples[:]:
-                appleCenter = apple.getCenter()
-                projCenter  = projectiles[i].getCenter()
-                if common.distanceBetween(appleCenter, projCenter) < apple.radius:
-                    removeApple(apple)
+        updateProjectiles(projectiles, projectileDirections, apples)
         
         #draw
         gfx.update(common.UPDATE_SPEED)
         if shouldExit(window, control, key): 
             return
+    
