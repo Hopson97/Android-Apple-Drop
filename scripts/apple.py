@@ -10,12 +10,32 @@ _APPLE_SPEED = 2
 RADIUS      = 15
 DIAMETER    = RADIUS * 2
 
+RADIUS_REPAIR = 14
+RADIUS_BOOST  = 13
 
+_RADIUS_TYPES  = [RADIUS, RADIUS_REPAIR, RADIUS_BOOST]
+_APPLE_COLOURS = ["red",  "green",       "yellow"]
 
-def makeApple(x, y, window):
-    apple = gfx.Circle(gfx.Point(x, y), RADIUS)
+def getRandomAppleType():
+    appleType = random.randint(0, 100)
+    if appleType > 30:
+        return 0
+    elif appleType > 10:
+        return 1
+    else:
+        return 2
+
+def getRandomAppleInfo():
+    appleType = getRandomAppleType()
+    radius    = _RADIUS_TYPES [appleType]
+    colour    = _APPLE_COLOURS[appleType]
+    return 15, "red"
+    return radius, colour
+
+def makeApple(x, y, colour, radius, window):
+    apple = gfx.Circle(gfx.Point(x, y), radius)
     apple.draw(window)
-    apple.setFill("red")
+    apple.setFill(colour)
     return apple
 
 def createAppleSprite(window):
@@ -25,7 +45,10 @@ def createAppleSprite(window):
     while (x + 25) % tiles.TILE_SIZE != 0:
         x -= 1
     x -= 5
-    return makeApple(x, y, window)
+
+    radius, colour = getRandomAppleInfo()
+
+    return makeApple(x, y, colour, radius, window)
 
 
 def isCollidingTile(apple, isTileActive, tileSprites):
