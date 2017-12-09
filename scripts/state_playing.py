@@ -5,12 +5,13 @@ import player
 import common
 import aabb
 import tiles
+import projectile
 import apple  as appleFuncs
 from   common import WINDOW_HEIGHT, WINDOW_WIDTH
 
+
 import math
 import time
-import random
 import random
 
 from   state_enum import STATE_PLAYING
@@ -35,23 +36,15 @@ def tryAddMoreApples(apples, elapsedTime, window):
 
 def playerFire(window, playerSprite, projectiles, projDirections, score):
     '''Tries to fire a player projectile if they click the mouse on the window'''
-    fire, point = player.shouldFireProjectile(window)
+    fire, target = player.shouldFireProjectile(window)
     if fire and score > 0:
-        playerPt = playerSprite[1].getCenter()
-        dx, dy = common.getPointDifference(playerPt, point)
-        newApp = appleFuncs.makeDefaultApple(playerPt.getX(), playerPt.getY(), window)
-        projectiles.append(newApp)
-        directionVector = common.normalise(gfx.Point(dx, dy))
-        dx = directionVector.getX() * 10
-        dy = directionVector.getY() * 10
-        projDirections.append(gfx.Point(dx, dy))
+        playerPoint = playerSprite[1].getCenter()
+        proj,    \
+        velocity = projectile.create(playerPoint, target, window)
+        projectiles.append(proj)
+        projDirections.append(velocity)
         return True 
     return False
-
-def moveProjectile(direction, projectile):
-    dx = direction.getX()
-    dy = direction.getY()
-    projectile.move(dx, dy)
 
 def testForAppleProjectileCollision(projectile, apples):
     for apple in apples[:]:
@@ -59,12 +52,6 @@ def testForAppleProjectileCollision(projectile, apples):
         projCenter  = projectile.getCenter()
         if common.distanceBetween(appleCenter, projCenter) < appleFuncs.DIAMETER:
             appleFuncs.removeApple(apples, apple)
-
-def updateProjectiles(projectiles, projectileDirections, apples):
-    '''Updates the player's projectiles'''
-    for i in range(len(projectiles)):
-        moveProjectile(projectileDirections[i], projectiles[i])
-        testForAppleProjectileCollision(projectiles[i], apples)
 
 def runPlayState(window, control):
     '''The main function handling the actual gameplay of the game'''
@@ -144,7 +131,7 @@ def runPlayState(window, control):
                 appleFuncs.removeApple(apples, apple)
                 updateScore(1)
 
-        updateProjectiles(projectiles, projectilesDirections, apples)
+        projectile.update(projectiles, projectilesDirections, apples)
         
         #draw/ update window
         gfx.update(common.UPDATE_SPEED * 2)
