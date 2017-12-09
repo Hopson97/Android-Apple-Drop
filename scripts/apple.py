@@ -4,7 +4,7 @@ import random
 import math
 
 import tiles
-from common import WINDOW_WIDTH, WINDOW_HEIGHT
+from   common import WINDOW_WIDTH, WINDOW_HEIGHT
 
 #Default apple attributes
 _APPLE_SPEED = 2

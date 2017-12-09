@@ -1,4 +1,4 @@
-import graphics as gfx
+import graphics   as gfx
 import state_enum as states
 
 from state_playing import runPlayState
@@ -9,6 +9,7 @@ from state_splash  import runSplashState
 import common
 
 def runGame(window, control):
+    '''Main loop of the game'''
     #Chooses state based on the main control
     while control["running"]:
         currentState = control["state"]

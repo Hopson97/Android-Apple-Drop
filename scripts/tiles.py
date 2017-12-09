@@ -1,6 +1,6 @@
 import graphics as gfx
-import random as rng
-from common import WINDOW_HEIGHT, WINDOW_WIDTH
+import random   as rng
+from   common   import WINDOW_HEIGHT, WINDOW_WIDTH
 
 TILE_SIZE   = 50
 BASE_HEIGHT = WINDOW_HEIGHT - TILE_SIZE * 3
