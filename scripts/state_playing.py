@@ -30,11 +30,12 @@ def tryAddMoreApples(apples, elapsedTime, window):
 
 
 def playerFire(window, playerSprite, projectiles, projDirections, score):
+    '''Tries to fire a player projectile if they click the mouse on the window'''
     fire, point = player.shouldFireProjectile(window)
     if fire and score > 0:
         playerPt = playerSprite[1].getCenter()
         dx, dy = common.getPointDifference(playerPt, point)
-        newApp = appleFuncs.makeApple(playerPt.getX(), playerPt.getY(), "red", appleFuncs._RADIUS, window)
+        newApp = appleFuncs.makeDefaultApple(playerPt.getX(), playerPt.getY(), window)
         projectiles.append(newApp)
         directionVector = common.normalise(gfx.Point(dx, dy))
         dx = directionVector.getX() * 10
@@ -79,7 +80,7 @@ def runPlayState(window, control):
 
     #Create apples
     x = random.randint(appleFuncs.DIAMETER, WINDOW_WIDTH - appleFuncs.DIAMETER)
-    apples = [appleFuncs.makeApple(x, 0, "red", appleFuncs.RADIUS, window)]
+    apples = [appleFuncs.makeDefaultApple(x, 0, window)]
 
     projectiles = []
     projectilesDirections = []
@@ -89,11 +90,13 @@ def runPlayState(window, control):
         score += delta 
         scoreDisplay.setText("Score: " + str(score))
 
+    def updateLives(delta):
+        nonlocal lives
+        lives += 1
+        livesDisplay.setText("Lives: " + str(lives))
+
     #Begin timer
     startTime = time.time()
-
-    #Effects/ Power ups
-    isBoostActive = False
 
     #Main loop section for the playing state
     while control["running"]:
@@ -117,25 +120,27 @@ def runPlayState(window, control):
         playerAABB["x"] += playerXVel
         
         tryAddMoreApples(apples, elapsed, window)
+        #Main logic for the apple updates happens here v
         for apple in apples[:]:
             appleFuncs.moveApple(apple)
             if appleFuncs.isCollidingTile(apple, isTilesActive, tileSprites):
                 appleFuncs.removeApple(apples, apple)
             elif appleFuncs.isOffScreen(apple):
                 appleFuncs.removeApple(apples, apple)
-                lives -= 1
-                livesDisplay.setText("Lives: " + str(lives))
+                updateLives(-1)
             elif player.isTochingApple(apple, playerMinX):
                 appleType = appleFuncs.radiusToAppleType(int(apple.getRadius()))
                 if appleType == appleFuncs.REPAIR:
                     tiles.repairTiles(tileSprites, isTilesActive, window)
+                elif appleType == appleFuncs.BOOST:
+                    updateLives(1)
                 appleFuncs.removeApple(apples, apple)
                 updateScore(1)
 
         updateProjectiles(projectiles, projectilesDirections, apples)
         
-        #draw
-        gfx.update(common.UPDATE_SPEED)
+        #draw/ update window
+        gfx.update(common.UPDATE_SPEED * 2)
         if shouldExit(window, control, key): 
             return
     

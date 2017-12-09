@@ -6,14 +6,21 @@ import math
 import tiles
 from   common import WINDOW_WIDTH, WINDOW_HEIGHT
 
+'''
+APPLE TYPES:
+    DEFAULT -> Just a normal apple
+    REPAIR  -> Repairs all the tiles
+    BOOST   -> Increases lifes by 1
+'''
+
 #Default apple attributes
-_APPLE_SPEED = 2
+_APPLE_SPEED = 1.5
 _RADIUS      = 15
-DIAMETER    = RADIUS * 2
+DIAMETER     = _RADIUS * 2
 
 #Attributes for "special" apple types
-__RADIUS_REPAIR = 14  
-RADIUS_BOOST  = 13
+_RADIUS_REPAIR = 14  
+_RADIUS_BOOST   = 13
 
 #List of different apple types
 _RADIUS_TYPES  = [_RADIUS, _RADIUS_REPAIR, _RADIUS_BOOST]
@@ -27,9 +34,9 @@ BOOST   = 2
 def getRandomAppleType():
     '''Gets a random apple type enum'''
     appleType = random.randint(0, 100)
-    if appleType > 50:
+    if appleType > 12:
         return DEFAULT
-    elif appleType > 10:
+    elif appleType > 3:
         return REPAIR
     else:
         return BOOST
@@ -55,6 +62,9 @@ def makeApple(x, y, colour, radius, window):
     apple.draw(window)
     apple.setFill(colour)
     return apple
+
+def makeDefaultApple(x, y, window):
+    return makeApple(x, y, "red", _RADIUS, window)
 
 def createAppleSprite(window):
     '''Creates an apple at top of window'''
