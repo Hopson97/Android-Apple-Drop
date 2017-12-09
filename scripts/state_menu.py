@@ -1,8 +1,6 @@
-import graphics as gfx 
+import graphics   as gfx 
 import state_enum as states
-
 import common
-import state_enum as states 
 
 def runMenuState(window, control):
     while control["states"] == states.STATE_MENU:
