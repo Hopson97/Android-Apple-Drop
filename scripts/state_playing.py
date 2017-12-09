@@ -1,18 +1,18 @@
 import graphics   as gfx 
 import state_enum as states
 
-import player
-import common
-import aabb
-import tiles
 import projectile
-import apple  as appleFuncs
+import common
+import player
+import tiles
+import aabb
+
 from   common import WINDOW_HEIGHT, WINDOW_WIDTH
+import apple  as appleFuncs
 
-
+import random
 import math
 import time
-import random
 
 from   state_enum import STATE_PLAYING
 
@@ -45,13 +45,6 @@ def playerFire(window, playerSprite, projectiles, projDirections, score):
         projDirections.append(velocity)
         return True 
     return False
-
-def testForAppleProjectileCollision(projectile, apples):
-    for apple in apples[:]:
-        appleCenter = apple.getCenter()
-        projCenter  = projectile.getCenter()
-        if common.distanceBetween(appleCenter, projCenter) < appleFuncs.DIAMETER:
-            appleFuncs.removeApple(apples, apple)
 
 def runPlayState(window, control):
     '''The main function handling the actual gameplay of the game'''
