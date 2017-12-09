@@ -33,10 +33,10 @@ BOOST   = 2
 
 def getRandomAppleType():
     '''Gets a random apple type enum'''
-    appleType = random.randint(0, 100)
-    if appleType > 12:
+    appleType = random.randint(0, 150)
+    if appleType > 20:
         return DEFAULT
-    elif appleType > 3:
+    elif appleType > 2:
         return REPAIR
     else:
         return BOOST
@@ -92,6 +92,7 @@ def isCollidingTile(apple, isTileActive, tileSprites):
         return True
 
 def isOffScreen(apple):
+    '''Tests if the apple is out of the window bounds'''
     return apple.getCenter().getY() > WINDOW_HEIGHT + _RADIUS
 
 def moveApple(apple):

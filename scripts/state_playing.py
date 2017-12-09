@@ -92,7 +92,7 @@ def runPlayState(window, control):
 
     def updateLives(delta):
         nonlocal lives
-        lives += 1
+        lives += delta
         livesDisplay.setText("Lives: " + str(lives))
 
     #Begin timer
