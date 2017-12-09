@@ -8,15 +8,15 @@ from common import WINDOW_WIDTH, WINDOW_HEIGHT
 
 #Default apple attributes
 _APPLE_SPEED = 2
-RADIUS      = 15
+_RADIUS      = 15
 DIAMETER    = RADIUS * 2
 
 #Attributes for "special" apple types
-RADIUS_REPAIR = 14  
+__RADIUS_REPAIR = 14  
 RADIUS_BOOST  = 13
 
 #List of different apple types
-_RADIUS_TYPES  = [RADIUS, RADIUS_REPAIR, RADIUS_BOOST]
+_RADIUS_TYPES  = [_RADIUS, _RADIUS_REPAIR, _RADIUS_BOOST]
 _APPLE_COLOURS = ["red",  "green",       "yellow"]
 
 #Enum for the different apple types
@@ -35,11 +35,11 @@ def getRandomAppleType():
         return BOOST
 
 def radiusToAppleType(radius):
-    if radius == RADIUS:
+    if radius == _RADIUS:
         return DEFAULT
-    elif radius == RADIUS_REPAIR:
+    elif radius == _RADIUS_REPAIR:
         return REPAIR
-    elif radius == RADIUS_BOOST:
+    elif radius == _RADIUS_BOOST:
         return BOOST
 
 def getRandomAppleInfo():
@@ -72,7 +72,7 @@ def createAppleSprite(window):
 
 def isCollidingTile(apple, isTileActive, tileSprites):
     '''Test if apple is colliding with a tile, remove tile if it is'''
-    y = apple.getCenter().getY() - RADIUS
+    y = apple.getCenter().getY() - _RADIUS
     x = apple.getCenter().getX()
     tileIndex = round((x) / tiles.TILE_SIZE)
 
@@ -82,7 +82,7 @@ def isCollidingTile(apple, isTileActive, tileSprites):
         return True
 
 def isOffScreen(apple):
-    return apple.getCenter().getY() > WINDOW_HEIGHT + RADIUS
+    return apple.getCenter().getY() > WINDOW_HEIGHT + _RADIUS
 
 def moveApple(apple):
     apple.move(0, _APPLE_SPEED)

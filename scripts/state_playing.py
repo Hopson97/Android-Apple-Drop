@@ -34,7 +34,7 @@ def playerFire(window, playerSprite, projectiles, projDirections, score):
     if fire and score > 0:
         playerPt = playerSprite[1].getCenter()
         dx, dy = common.getPointDifference(playerPt, point)
-        newApp = appleFuncs.makeApple(playerPt.getX(), playerPt.getY(), "red", appleFuncs.RADIUS, window)
+        newApp = appleFuncs.makeApple(playerPt.getX(), playerPt.getY(), "red", appleFuncs._RADIUS, window)
         projectiles.append(newApp)
         directionVector = common.normalise(gfx.Point(dx, dy))
         dx = directionVector.getX() * 10
