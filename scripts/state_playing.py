@@ -46,7 +46,7 @@ def playerFire(window, playerSprite, projectiles, projDirections, score):
         return True 
     return False
 
-def runPlayState(window, control):
+def runMainGame(window, control):
     '''The main function handling the actual gameplay of the game'''
     
     #Set up score
@@ -65,7 +65,7 @@ def runPlayState(window, control):
     isTilesActive = tiles.createTiles(window)
     NUM_TILES     = len(tileSprites)
 
-    #Create apples
+    #Create apple list
     x = random.randint(appleFuncs.DIAMETER, WINDOW_WIDTH - appleFuncs.DIAMETER)
     apples = [appleFuncs.makeDefaultApple(x, 0, window)]
 
@@ -86,7 +86,7 @@ def runPlayState(window, control):
     startTime = time.time()
 
     #Main loop section for the playing state
-    while control["state"] == STATE_PLAYING:
+    while lives > 0:
         #data
         elapsed = calculateTime(startTime)
         playerMinX = playerAABB["x"]
@@ -130,4 +130,14 @@ def runPlayState(window, control):
         gfx.update(common.UPDATE_SPEED * 2)
         if shouldExit(window, control, key): 
             return
+
+def gameOverState(window, control, score):
+
+
+def runPlayState(window, control):
+    while control["state"] == STATE_PLAYING:
+        score = runMainGame(window, control)
+        common.undrawAll(window)
+        gameOverState(window, control, score)
+
     
