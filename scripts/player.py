@@ -1,7 +1,7 @@
 import graphics as gfx
 import common
 import tiles
-import apple
+import apple as appleF
 import math
 
 #based on the original "android.py" code by Dr. M. Poole
@@ -70,8 +70,8 @@ def tryCollideEdges(playerVel, minX, maxX, isTilesActive):
 def isTochingApple(apple, minX):
     appleX = apple.getCenter().x
     appleY = apple.getCenter().y
-    return common.distance(minX, tiles.BASE_HEIGHT - 25,
-                           appleX, appleY) < 45
+    return common.distance(minX + 30, tiles.BASE_HEIGHT - 20,
+                           appleX, appleY) < appleF.DIAMETER
 
 def shouldFireProjectile(window):
     mousePoint = window.checkMouse()

@@ -110,12 +110,7 @@ def runPlayState(window, control):
         #Main logic for the apple updates happens here v
         for apple in apples[:]:
             appleFuncs.moveApple(apple)
-            if appleFuncs.isCollidingTile(apple, isTilesActive, tileSprites):
-                appleFuncs.removeApple(apples, apple)
-            elif appleFuncs.isOffScreen(apple):
-                appleFuncs.removeApple(apples, apple)
-                updateLives(-1)
-            elif player.isTochingApple(apple, playerMinX):
+            if player.isTochingApple(apple, playerMinX):
                 appleType = appleFuncs.radiusToAppleType(int(apple.getRadius()))
                 if appleType == appleFuncs.REPAIR:
                     tiles.repairTiles(tileSprites, isTilesActive, window)
@@ -123,6 +118,11 @@ def runPlayState(window, control):
                     updateLives(1)
                 appleFuncs.removeApple(apples, apple)
                 updateScore(1)
+            elif appleFuncs.isCollidingTile(apple, isTilesActive, tileSprites):
+                appleFuncs.removeApple(apples, apple)
+            elif appleFuncs.isOffScreen(apple):
+                appleFuncs.removeApple(apples, apple)
+                updateLives(-1)
 
         projectile.update(projectiles, projectilesDirections, apples)
         
