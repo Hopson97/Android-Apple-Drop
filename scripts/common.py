@@ -2,6 +2,8 @@ import graphics as gfx
 
 import math
 
+import state_enum as states
+
 UPDATE_SPEED = 30
 
 WINDOW_WIDTH = 1100
@@ -16,9 +18,14 @@ def undrawAll(window):
     for item in window.items:
         item.undraw()
 
+def undrawList(spriteList):
+    for sprite in spriteList:
+        sprite.undraw()
+
 def switchState(window, control, newState):
     '''Changes the current game state'''
-    undrawAll(window)
+    if newState != states.EXIT:
+        undrawAll(window)
     control["state"] = newState
 
 def loadSpriteVerticies(fileName):

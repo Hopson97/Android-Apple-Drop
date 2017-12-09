@@ -16,8 +16,8 @@ import time
 
 from   state_enum import STATE_PLAYING
 
-def shouldExit(window, control, key):
-    if key == "p" or window.closed:
+def shouldExit(window, control):
+    if window.closed:
         common.switchState(window, control, states.EXIT)
         return True 
     return False
@@ -30,6 +30,7 @@ def calculateTime(start):
 def tryAddMoreApples(apples, elapsedTime, window):
     '''Adds apples'''
     notManyApples = len(apples) < (elapsedTime // 12) + 1
+    #notManyApples = len(apples) < (elapsedTime // 1) + 1
     if notManyApples:
         apples.append(appleFuncs.createAppleSprite(window))
 
@@ -51,9 +52,9 @@ def runMainGame(window, control):
     
     #Set up score
     score = 0
-    lives = 10
-    scoreDisplay = gfx.Text(gfx.Point(common.WINDOW_WIDTH / 2, 50), "Score: 0").draw(window)
-    livesDisplay = gfx.Text(gfx.Point(common.WINDOW_WIDTH / 2, 100), "Lives: 10").draw(window)
+    lives = 1
+    scoreDisplay = gfx.Text(gfx.Point(common.WINDOW_WIDTH / 2, 50),  "Score: 0"            ).draw(window)
+    livesDisplay = gfx.Text(gfx.Point(common.WINDOW_WIDTH / 2, 100), "Lives: " + str(lives)).draw(window)
 
     #Set up player
     playerXVel =   0.0
@@ -128,16 +129,45 @@ def runMainGame(window, control):
         
         #draw/ update window
         gfx.update(common.UPDATE_SPEED * 2)
-        if shouldExit(window, control, key): 
-            return
+        if shouldExit(window, control): 
+            break
+    
+    #Undraw everything
+    common.undrawList(apples + projectiles + playerSprite)
+    livesDisplay.undraw()
+    scoreDisplay.undraw()
+    for i in range(len(tileSprites)):
+        if isTilesActive[i]:
+            tileSprites[i].undraw()
 
-def gameOverState(window, control, score):
+    return score, elapsed
 
+def addMessage(window, message):
+    msg = gfx.Text(gfx.Point(common.WINDOW_WIDTH / 2, addMessage.y), message)
+    msg.setSize(30)
+    msg.draw(window)
+    addMessage.y += 50
+    return msg
+
+addMessage.y = common.WINDOW_HEIGHT / 10
+
+def gameOverState(window, control, score, elapsed):
+    messages = [
+        addMessage(window, "GAME OVER"),
+        addMessage(window, "Final score: " + str(score)),
+        addMessage(window, "Final time:  " + str(round(elapsed)) + " seconds")
+    ]
+
+    while True:
+        gfx.update(common.UPDATE_SPEED)
+        if shouldExit(window, control): 
+            break
 
 def runPlayState(window, control):
-    while control["state"] == STATE_PLAYING:
-        score = runMainGame(window, control)
+    while control["state"] == STATE_PLAYING or shouldExit(window, control):
+        score, elapsed = runMainGame(window, control)
+        if shouldExit(window, control):
+            return
         common.undrawAll(window)
-        gameOverState(window, control, score)
-
+        gameOverState(window, control, score, elapsed)
     
