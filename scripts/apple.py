@@ -20,19 +20,27 @@ _RADIUS_TYPES  = [RADIUS, RADIUS_REPAIR, RADIUS_BOOST]
 _APPLE_COLOURS = ["red",  "green",       "yellow"]
 
 #Enum for the different apple types
-_DEFAULT = 0
-_REPAIR  = 1
-_BOOST   = 2
+DEFAULT = 0
+REPAIR  = 1
+BOOST   = 2
 
 def getRandomAppleType():
     '''Gets a random apple type enum'''
     appleType = random.randint(0, 100)
-    if appleType > 30:
-        return _DEFAULT
+    if appleType > 50:
+        return DEFAULT
     elif appleType > 10:
-        return _REPAIR
+        return REPAIR
     else:
-        return _BOOST
+        return BOOST
+
+def radiusToAppleType(radius):
+    if radius == RADIUS:
+        return DEFAULT
+    elif radius == RADIUS_REPAIR:
+        return REPAIR
+    elif radius == RADIUS_BOOST:
+        return BOOST
 
 def getRandomAppleInfo():
     '''get random radius and colour for apples'''

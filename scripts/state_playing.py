@@ -38,7 +38,7 @@ def playerFire(window, playerSprite, projectiles, projDirections, score):
         projectiles.append(newApp)
         directionVector = common.normalise(gfx.Point(dx, dy))
         dx = directionVector.getX() * 10
-        dy = directionVector..getY() * 10
+        dy = directionVector.getY() * 10
         projDirections.append(gfx.Point(dx, dy))
         return True 
     return False
@@ -92,6 +92,9 @@ def runPlayState(window, control):
     #Begin timer
     startTime = time.time()
 
+    #Effects/ Power ups
+    isBoostActive = False
+
     #Main loop section for the playing state
     while control["running"]:
         #data
@@ -118,11 +121,14 @@ def runPlayState(window, control):
             appleFuncs.moveApple(apple)
             if appleFuncs.isCollidingTile(apple, isTilesActive, tileSprites):
                 appleFuncs.removeApple(apples, apple)
-            if appleFuncs.isOffScreen(apple):
+            elif appleFuncs.isOffScreen(apple):
                 appleFuncs.removeApple(apples, apple)
                 lives -= 1
                 livesDisplay.setText("Lives: " + str(lives))
-            if player.isTochingApple(apple, playerMinX):
+            elif player.isTochingApple(apple, playerMinX):
+                appleType = appleFuncs.radiusToAppleType(int(apple.getRadius()))
+                if appleType == appleFuncs.REPAIR:
+                    tiles.repairTiles(tileSprites, isTilesActive, window)
                 appleFuncs.removeApple(apples, apple)
                 updateScore(1)
 

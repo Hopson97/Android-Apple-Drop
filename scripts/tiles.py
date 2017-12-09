@@ -14,3 +14,9 @@ def createTiles(window):
         active.append(True)
         
     return tiles, active
+
+def repairTiles(tileSprites, activeTiles, window):
+    for i in range(len(tileSprites)):
+        if not activeTiles[i]:
+            tileSprites[i].draw(window)
+            activeTiles[i] = True
