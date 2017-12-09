@@ -50,6 +50,7 @@ def movePlayer(sprite, amount):
         part.move(amount, 0)
 
 def tryCollideEdges(playerVel, minX, maxX, isTilesActive):
+    '''Collides player with the X-edges of the window'''
     tileIndexMin = math.floor((minX + 15) / tiles.TILE_SIZE)
     tileIndexMax = math.ceil ((maxX - 15) / tiles.TILE_SIZE) - 1
 
@@ -68,12 +69,14 @@ def tryCollideEdges(playerVel, minX, maxX, isTilesActive):
     return playerVel * 0.95 #apply velocity dampening
 
 def isTochingApple(apple, minX):
+    '''Returns True if the player is touching an apple'''
     appleX = apple.getCenter().x
     appleY = apple.getCenter().y
     return common.distance(minX + 30, tiles.BASE_HEIGHT - 20,
                            appleX, appleY) < appleF.DIAMETER
 
 def shouldFireProjectile(window):
+    '''Returns true on mouse click (which is > 10px away from last click)'''
     mousePoint = window.checkMouse()
     if mousePoint != None:
         x1 = shouldFireProjectile.oldPos.x

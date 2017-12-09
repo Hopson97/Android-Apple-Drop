@@ -52,7 +52,7 @@ def runMainGame(window, control):
     
     #Set up score
     score = 0
-    lives = 1
+    lives = 0 #TODO Change this back to 10
     scoreDisplay = gfx.Text(gfx.Point(common.WINDOW_WIDTH / 2, 50),  "Score: 0"            ).draw(window)
     livesDisplay = gfx.Text(gfx.Point(common.WINDOW_WIDTH / 2, 100), "Lives: " + str(lives)).draw(window)
 
@@ -85,6 +85,7 @@ def runMainGame(window, control):
 
     #Begin timer
     startTime = time.time()
+    elapsed = 0
 
     #Main loop section for the playing state
     while lives > 0:
@@ -131,15 +132,16 @@ def runMainGame(window, control):
         gfx.update(common.UPDATE_SPEED * 2)
         if shouldExit(window, control): 
             break
-    
-    #Undraw everything
+        
+    #end of the game!
+
+    #Undraw everything...
     common.undrawList(apples + projectiles + playerSprite)
+    tiles.undraw(tileSprites, isTilesActive)
     livesDisplay.undraw()
     scoreDisplay.undraw()
-    for i in range(len(tileSprites)):
-        if isTilesActive[i]:
-            tileSprites[i].undraw()
 
+    #...and return the results
     return score, elapsed
 
 def addMessage(window, message):
@@ -162,6 +164,8 @@ def gameOverState(window, control, score, elapsed):
         gfx.update(common.UPDATE_SPEED)
         if shouldExit(window, control): 
             break
+
+    common.undrawList(messages)
 
 def runPlayState(window, control):
     while control["state"] == STATE_PLAYING and not shouldExit(window, control):
