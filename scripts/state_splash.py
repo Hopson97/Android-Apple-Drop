@@ -2,15 +2,15 @@ import graphics as gfx
 import state_enum as states
 
 import common
+import state_enum as states 
 
 def runSplashState(window, control):
-    while control["running"]:
+    while control["state"] == states.STATE_SPLASH:
         key = getKeyPress(window)
 
         print("This is the splash screen")
         
         if key == "n":
             common.switchState(window, control, states.STATE_CREDITS)
-            return
 
         gfx.update(UPDATE_SPEED)

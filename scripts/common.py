@@ -17,14 +17,16 @@ def undrawAll(window):
         item.undraw()
 
 def switchState(window, control, newState):
+    '''Changes the current game state'''
     undrawAll(window)
     control["state"] = newState
 
 def loadSpriteVerticies(fileName):
+    '''Loads up vertex data from a file, and returns it as a list of points'''
     with open("../res/" + fileName + ".txt") as inFile:
         data = inFile.read()
     data = data.split()
-    data = list(map(int, data))
+    data = list(map(int, data)) #convert strig list to list of integers
 
     points = [] 
     for i in range(0, len(data), 2):

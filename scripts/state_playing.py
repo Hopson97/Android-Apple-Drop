@@ -13,6 +13,8 @@ import time
 import random
 import random
 
+from   state_enum import STATE_PLAYING
+
 def shouldExit(window, control, key):
     if key == "p" or window.closed:
         common.switchState(window, control, states.EXIT)
@@ -62,6 +64,8 @@ def updateProjectiles(projectiles, projectileDirections, apples):
         testForAppleProjectileCollision(projectiles[i], apples)
 
 def runPlayState(window, control):
+    '''The main function handling the actual gameplay of the game'''
+    
     #Set up score
     score = 0
     lives = 10
@@ -99,7 +103,7 @@ def runPlayState(window, control):
     startTime = time.time()
 
     #Main loop section for the playing state
-    while control["running"]:
+    while control["state"] == STATE_PLAYING:
         #data
         elapsed = calculateTime(startTime)
         playerMinX = playerAABB["x"]

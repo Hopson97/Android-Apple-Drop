@@ -2,9 +2,10 @@ import graphics as gfx
 import state_enum as states
 
 import common
+import state_enum as states 
 
 def runCreditsState(window, control):
-    while control["running"]:
+    while control["state"] == states.STATE_CREDITS:
         key = getKeyPress(window)
 
         print("This is the credits")
