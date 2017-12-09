@@ -22,6 +22,7 @@ def repairTiles(tileSprites, activeTiles, window):
             activeTiles[i] = True
 
 def undraw(tileSprites, activeTiles):
+    '''undraws all the active tiles'''
     for i in range(len(tileSprites)):
         if activeTiles[i]:
             tileSprites[i].undraw()

@@ -52,7 +52,7 @@ def runMainGame(window, control):
     
     #Set up score
     score = 0
-    lives = 0 #TODO Change this back to 10
+    lives = 10
     scoreDisplay = gfx.Text(gfx.Point(common.WINDOW_WIDTH / 2, 50),  "Score: 0"            ).draw(window)
     livesDisplay = gfx.Text(gfx.Point(common.WINDOW_WIDTH / 2, 100), "Lives: " + str(lives)).draw(window)
 
@@ -132,7 +132,7 @@ def runMainGame(window, control):
         gfx.update(common.UPDATE_SPEED * 2)
         if shouldExit(window, control): 
             break
-        
+
     #end of the game!
 
     #Undraw everything...

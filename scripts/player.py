@@ -4,8 +4,8 @@ import tiles
 import apple as appleF
 import math
 
-#based on the original "android.py" code by Dr. M. Poole
 def createAndroid(window):
+    '''Creates the Android sprite (based on Dr. M. Poole's code)'''
     coords = common.loadSpriteVerticies("android")
     body = gfx.Polygon(coords).draw(window)
     head = gfx.Circle(gfx.Point(30, 20), 20).draw(window)
@@ -25,6 +25,7 @@ def createAndroid(window):
     return droidParts
 
 def handleInput(key, velocity):
+    '''Says it on the tin'''
     acceleration = 0.7
     if key == "a":
         if (velocity > 0):
@@ -50,7 +51,7 @@ def movePlayer(sprite, amount):
         part.move(amount, 0)
 
 def tryCollideEdges(playerVel, minX, maxX, isTilesActive):
-    '''Collides player with the X-edges of the window'''
+    '''Collides player with the X-edges of the window, as well as inactive tiles'''
     tileIndexMin = math.floor((minX + 15) / tiles.TILE_SIZE)
     tileIndexMax = math.ceil ((maxX - 15) / tiles.TILE_SIZE) - 1
 
