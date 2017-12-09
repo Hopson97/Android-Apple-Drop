@@ -28,9 +28,10 @@ def runGame(window, control):
         gfx.update(common.UPDATE_SPEED)
 
 if __name__ == "__main__":
+    '''Entry'''
     window = gfx.GraphWin("Android Apple Drop - By Matthew Hopson", 
                             common.WINDOW_WIDTH, common.WINDOW_HEIGHT, 
-                            autoflush = False)
+                            autoflush = False) #Turning off autoflush allows more control over the framerate
 
     control = {
         "running": True,

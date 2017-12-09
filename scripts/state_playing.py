@@ -22,10 +22,12 @@ def shouldExit(window, control, key):
     return False
 
 def calculateTime(start):
+    '''Calculates the time since program start'''
     now = time.time()
     return now - start
 
 def tryAddMoreApples(apples, elapsedTime, window):
+    '''Adds apples'''
     notManyApples = len(apples) < (elapsedTime // 12) + 1
     if notManyApples:
         apples.append(appleFuncs.createAppleSprite(window))
@@ -59,6 +61,7 @@ def testForAppleProjectileCollision(projectile, apples):
             appleFuncs.removeApple(apples, apple)
 
 def updateProjectiles(projectiles, projectileDirections, apples):
+    '''Updates the player's projectiles'''
     for i in range(len(projectiles)):
         moveProjectile(projectileDirections[i], projectiles[i])
         testForAppleProjectileCollision(projectiles[i], apples)
