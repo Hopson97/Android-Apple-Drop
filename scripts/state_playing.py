@@ -164,7 +164,7 @@ def gameOverState(window, control, score, elapsed):
             break
 
 def runPlayState(window, control):
-    while control["state"] == STATE_PLAYING or shouldExit(window, control):
+    while control["state"] == STATE_PLAYING and not shouldExit(window, control):
         score, elapsed = runMainGame(window, control)
         if shouldExit(window, control):
             return
