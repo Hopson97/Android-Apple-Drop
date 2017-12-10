@@ -68,7 +68,7 @@ def makeDefaultApple(x, y, window):
 
 def createRandomApple(window):
     '''Creates an random apple at top of window'''
-    x = random.randint(DIAMETER, WINDOW_WIDTH - DIAMETER)
+    x = random.randint(DIAMETER, WINDOW_WIDTH - _RADIUS + 1)
     y = random.randint(-DIAMETER * 10, 0)
     #get X position to center of tile
     while (x + 25) % tiles.TILE_SIZE != 0:
