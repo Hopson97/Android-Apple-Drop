@@ -13,13 +13,7 @@ def getRandX():
     else:
         return random.randint(int(button.LEFT + button.WIDTH), common.WINDOW_WIDTH)
 
-def runMenuState(window, control):
-    title = "ANDROID APPLE DROP"
-    titleText = gfx.Text(gfx.Point(common.WINDOW_WIDTH / 2, common.WINDOW_HEIGHT / 10), title)
-    titleText.setSize(30)
-    titleText.setFill("green")
-    titleText.draw(window)
-
+def createFrontMenuButtons(window):
     guiY =  common.WINDOW_HEIGHT / 10 + 50
 
     playBtn,   \
@@ -37,6 +31,20 @@ def runMenuState(window, control):
     exitTxt,   \
     exitBounds = button.create(aabb.create(button.LEFT, guiY, button.WIDTH, button.HEIGHT), 
                                "Exit", window, "gray")
+    sprites = [playBtn, playTxt, howToPlayBtn, howToPlayTxt, exitBtn, exitTxt]
+    return sprites, playBounds, howToPlayBounds, exitBounds
+
+def runMenuState(window, control):
+    title = "ANDROID APPLE DROP"
+    titleText = gfx.Text(gfx.Point(common.WINDOW_WIDTH / 2, common.WINDOW_HEIGHT / 10), title)
+    titleText.setSize(30)
+    titleText.setFill("green")
+    titleText.draw(window)
+
+    sprites,         \
+    playBounds,      \
+    howToPlayBounds, \
+    exitBounds       = createFrontMenuButtons(window)
 
     apples = []
     for i in range(30):
@@ -66,7 +74,4 @@ def runMenuState(window, control):
 
         gfx.update(common.UPDATE_SPEED)
 
-    common.undrawList([
-        titleText, playTxt, playBtn, howToPlayBtn,
-        howToPlayTxt, exitBtn, exitTxt
-    ] + apples)
+    common.undrawList([titleText, sprites] + apples)

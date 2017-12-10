@@ -3,8 +3,6 @@ import state_enum as states
 
 from state_playing import runPlayState
 from state_menu    import runMenuState
-from state_credits import runCreditsState
-from state_splash  import runSplashState
 
 import common
 
@@ -17,10 +15,6 @@ def runGame(window, control):
             runMenuState(window, control) 
         elif currentState == states.STATE_PLAYING:
             runPlayState(window, control)
-        elif currentState == states.STATE_CREDITS:
-            runCreditsState(window, control)  
-        elif currentState == states.STATE_SPLASH:
-            runSplashState(window, control)  
         
         #Exit the game
         if window.closed or currentState == states.EXIT:
