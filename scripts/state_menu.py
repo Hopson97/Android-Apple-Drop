@@ -74,4 +74,4 @@ def runMenuState(window, control):
 
         gfx.update(common.UPDATE_SPEED)
 
-    common.undrawList([titleText, sprites] + apples)
+    common.undrawList([titleText] + sprites + apples)
