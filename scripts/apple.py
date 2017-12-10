@@ -67,13 +67,13 @@ def makeDefaultApple(x, y, window):
     return makeApple(x, y, "red", _RADIUS, window)
 
 def createAppleSprite(window):
-    '''Creates an apple at top of window'''
+    '''Creates an random apple at top of window'''
     x = random.randint(DIAMETER, WINDOW_WIDTH - DIAMETER)
     y = random.randint(-DIAMETER * 10, 0)
     #get X position to center of tile
     while (x + 25) % tiles.TILE_SIZE != 0:
         x -= 1
-    x -= 5
+    x -= 2
 
     radius, colour = getRandomAppleInfo()
 

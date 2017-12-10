@@ -32,7 +32,7 @@ def tryAddMoreApples(apples, elapsedTime, window):
     '''Adds apples'''
     notManyApples = len(apples) < (elapsedTime // 12) + 1
     if notManyApples:
-        apples.append(appleFuncs.createAppleSprite(window))
+        apples.append(appleFuncs.createRandomApple(window))
 
 
 def playerFire(window, playerSprite, projectiles, projDirections, score):
