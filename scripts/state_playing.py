@@ -6,6 +6,7 @@ import common
 import player
 import tiles
 import aabb
+import button
 
 from   common import WINDOW_HEIGHT, WINDOW_WIDTH
 import apple  as appleFuncs
@@ -58,7 +59,7 @@ def runMainGame(window, control):
 
     #Set up player
     playerXVel =   0.0
-    playerAABB =   aabb.createAABB(500.0, 500.0, 60.0, 45.0)
+    playerAABB =   aabb.create(500.0, 500.0, 60.0, 45.0)
     playerSprite = player.createAndroid(window)
 
     #Create tiles
@@ -94,6 +95,9 @@ def runMainGame(window, control):
         playerMinX = playerAABB["x"]
         playerMaxX = playerAABB["x"] + playerAABB["w"]
         key = common.getKeyPress(window)
+
+        if key == "o":
+            break
 
         #input
         playerXVel = player.handleInput     (key, playerXVel)
@@ -144,28 +148,65 @@ def runMainGame(window, control):
     #...and return the results
     return score, elapsed
 
-def addMessage(window, message):
+def addMessage(window, message, reset = False):
+    if reset:
+        addMessage.y = common.WINDOW_HEIGHT / 10
     msg = gfx.Text(gfx.Point(common.WINDOW_WIDTH / 2, addMessage.y), message)
-    msg.setSize(30)
+    msg.setSize(20)
     msg.draw(window)
-    addMessage.y += 50
+    addMessage.y += 40
     return msg
 
 addMessage.y = common.WINDOW_HEIGHT / 10
 
 def gameOverState(window, control, score, elapsed):
+    '''Runs after the player has run out of lives'''
+    overallScore = score * round(elapsed)
     messages = [
-        addMessage(window, "GAME OVER"),
-        addMessage(window, "Final score: " + str(score)),
-        addMessage(window, "Final time:  " + str(round(elapsed)) + " seconds")
+        addMessage(window, "GAME OVER", True),
+        addMessage(window, "Score: "        + str(score)),
+        addMessage(window, "Time:  "        + str(round(elapsed)) + " seconds"),
+        addMessage(window, "Final Score:  " + str(overallScore))
     ]
 
+    btnWidth  =  common.WINDOW_WIDTH  / 4
+    btnHeight =  common.WINDOW_HEIGHT / 10
+    guiX      =  common.WINDOW_WIDTH  / 2  - btnWidth / 2
+    guiY      =  common.WINDOW_HEIGHT / 10 + 50 * len(messages)
+
+    contBtn,   \
+    contTxt,   \
+    contBounds = button.create(aabb.create(guiX, guiY, btnWidth, btnHeight), 
+                               "Play Again", window, "gray")
+    guiY += btnHeight + 10                    
+    submitBtn,   \
+    submitTxt,   \
+    submitBounds = button.create(aabb.create(guiX, guiY, btnWidth, btnHeight), 
+                               "Submit Score", window, "gray")
+
+    guiY += btnHeight + 10
+    exitBtn,   \
+    exitTxt,   \
+    exitBounds = button.create(aabb.create(guiX, guiY, btnWidth, btnHeight), 
+                               "Exit", window, "gray")
+
     while True:
+        mouseClick = window.checkMouse()
+        if button.isButtonPressed(mouseClick, contBounds, window):
+            break
+        elif button.isButtonPressed(mouseClick,submitBounds, window):
+            pass#TODO Add some kind of highscore i/o thing
+        elif button.isButtonPressed(mouseClick,exitBounds, window):
+            common.switchState(window, control, states.EXIT)#TODO Change to main menu
+            break
+
         gfx.update(common.UPDATE_SPEED)
         if shouldExit(window, control): 
             break
 
-    common.undrawList(messages)
+    common.undrawList(messages +  [
+        contBtn, contTxt, submitBtn, submitTxt, exitBtn, exitTxt
+    ])
 
 def runPlayState(window, control):
     while control["state"] == STATE_PLAYING and not shouldExit(window, control):

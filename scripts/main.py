@@ -22,7 +22,7 @@ def runGame(window, control):
         elif currentState == states.STATE_SPLASH:
             runSplashState(window, control)  
         
-        #Exit the gameS
+        #Exit the game
         if window.closed or currentState == states.EXIT:
             control["running"] = False 
         gfx.update(common.UPDATE_SPEED)

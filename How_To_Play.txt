@@ -1,0 +1,28 @@
+To run the game, run from main.py inside of the scripts/ directory.
+
+ANDROID APPLE DROP
+
+This is a game about an Android collecting apples.
+
+A -> Move left
+D -> Move right
+
+The objective of the game is catch the apples as they fall, gaining score.
+
+If you miss an apple, then they will detroy the tile it lands on. If an apple gets below a tile, you lose a life.
+
+It is game over when you run out of lives.
+
+There a different apple types, some have different effects when collected:
+
+RED     -> Red apples are regular apples, they do nothing special.
+GREEN   -> Green apples will repair all broken tiles
+YELLOW  -> Rare, yellow apples will give you an extra life.
+
+You can also "shoot" the apples you collect.
+
+To do this, click the mouse in a place. This will cause you lose a point, but it will fire an apple.
+
+When these apple projectiles hit other apples, they destroy them, but they do not get collected!
+
+Good luck...
