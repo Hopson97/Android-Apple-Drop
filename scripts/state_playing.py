@@ -31,7 +31,6 @@ def calculateTime(start):
 def tryAddMoreApples(apples, elapsedTime, window):
     '''Adds apples'''
     notManyApples = len(apples) < (elapsedTime // 12) + 1
-    #notManyApples = len(apples) < (elapsedTime // 1) + 1
     if notManyApples:
         apples.append(appleFuncs.createAppleSprite(window))
 
@@ -197,7 +196,7 @@ def gameOverState(window, control, score, elapsed):
         elif button.isButtonPressed(mouseClick,submitBounds, window):
             pass#TODO Add some kind of highscore i/o thing
         elif button.isButtonPressed(mouseClick,exitBounds, window):
-            common.switchState(window, control, states.EXIT)#TODO Change to main menu
+            common.switchState(window, control, states.STATE_MENU)
             break
 
         gfx.update(common.UPDATE_SPEED)

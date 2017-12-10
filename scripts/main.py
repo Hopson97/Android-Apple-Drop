@@ -35,7 +35,7 @@ if __name__ == "__main__":
 
     control = {
         "running": True,
-        "state": states.STATE_PLAYING
+        "state": states.STATE_MENU
     }
 
     runGame(window, control)

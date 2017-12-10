@@ -29,7 +29,7 @@ def switchState(window, control, newState):
     '''Changes the current game state'''
     if newState != states.EXIT:
         undrawAll(window)
-        window.items.clear()
+        #window.items.clear()
     control["state"] = newState
 
 def loadSpriteVerticies(fileName):
