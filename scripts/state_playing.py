@@ -168,25 +168,22 @@ def gameOverState(window, control, score, elapsed):
         addMessage(window, "Final Score:  " + str(overallScore))
     ]
 
-    btnWidth  =  common.WINDOW_WIDTH  / 4
-    btnHeight =  common.WINDOW_HEIGHT / 10
-    guiX      =  common.WINDOW_WIDTH  / 2  - btnWidth / 2
-    guiY      =  common.WINDOW_HEIGHT / 10 + 50 * len(messages)
+    guiY =  common.WINDOW_HEIGHT / 10 + 50 * len(messages)
 
     contBtn,   \
     contTxt,   \
-    contBounds = button.create(aabb.create(guiX, guiY, btnWidth, btnHeight), 
+    contBounds = button.create(aabb.create(button.LEFT, guiY, button.WIDTH, button.HEIGHT), 
                                "Play Again", window, "gray")
-    guiY += btnHeight + 10                    
+    guiY += button.HEIGHT + 10                    
     submitBtn,   \
     submitTxt,   \
-    submitBounds = button.create(aabb.create(guiX, guiY, btnWidth, btnHeight), 
+    submitBounds = button.create(aabb.create(button.LEFT, guiY, button.WIDTH, button.HEIGHT), 
                                "Submit Score", window, "gray")
 
-    guiY += btnHeight + 10
+    guiY += button.HEIGHT + 10
     exitBtn,   \
     exitTxt,   \
-    exitBounds = button.create(aabb.create(guiX, guiY, btnWidth, btnHeight), 
+    exitBounds = button.create(aabb.create(button.LEFT, guiY, button.WIDTH, button.HEIGHT), 
                                "Exit", window, "gray")
 
     while True:

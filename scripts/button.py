@@ -1,6 +1,11 @@
 import graphics as gfx
 
 import aabb
+import common
+
+WIDTH  =  common.WINDOW_WIDTH  / 4
+HEIGHT =  common.WINDOW_HEIGHT / 10
+LEFT   =  common.WINDOW_WIDTH  / 2  - WIDTH / 2
 
 def create(aabb, text, window, fill):
     x1 = aabb["x"]

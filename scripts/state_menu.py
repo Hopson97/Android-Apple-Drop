@@ -8,7 +8,10 @@ import apple
 import random
 
 def getRandX():
-    return random.randint(0, common.WINDOW_WIDTH)
+    if random.randint(0, 1) == 1:
+        return random.randint(0, int(button.LEFT))
+    else:
+        return random.randint(int(button.LEFT + button.WIDTH), common.WINDOW_WIDTH)
 
 def runMenuState(window, control):
     title = "ANDROID APPLE DROP"
@@ -17,25 +20,22 @@ def runMenuState(window, control):
     titleText.setFill("green")
     titleText.draw(window)
 
-    btnWidth  =  common.WINDOW_WIDTH  / 4
-    btnHeight =  common.WINDOW_HEIGHT / 10
-    guiX      =  common.WINDOW_WIDTH  / 2  - btnWidth / 2
-    guiY      =  common.WINDOW_HEIGHT / 10 + 50
+    guiY =  common.WINDOW_HEIGHT / 10 + 50
 
     playBtn,   \
     playTxt,   \
-    playBounds = button.create(aabb.create(guiX, guiY, btnWidth, btnHeight), 
+    playBounds = button.create(aabb.create(button.LEFT, guiY, button.WIDTH, button.HEIGHT), 
                                "Play Game", window, "gray")
-    guiY += btnHeight * 2
+    guiY += button.HEIGHT * 2
     howToPlayBtn,   \
     howToPlayTxt,   \
-    howToPlayBounds = button.create(aabb.create(guiX, guiY, btnWidth, btnHeight), 
+    howToPlayBounds = button.create(aabb.create(button.LEFT, guiY, button.WIDTH, button.HEIGHT), 
                                     "How To Play", window, "gray")
 
-    guiY += btnHeight * 2
+    guiY += button.HEIGHT * 2
     exitBtn,   \
     exitTxt,   \
-    exitBounds = button.create(aabb.create(guiX, guiY, btnWidth, btnHeight), 
+    exitBounds = button.create(aabb.create(button.LEFT, guiY, button.WIDTH, button.HEIGHT), 
                                "Exit", window, "gray")
 
     apples = []
