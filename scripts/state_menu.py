@@ -8,12 +8,14 @@ import apple
 import random
 
 def getRandX():
+    '''Gets a random X-Position not above the button bounds'''
     if random.randint(0, 1) == 1:
         return random.randint(0, int(button.LEFT))
     else:
         return random.randint(int(button.LEFT + button.WIDTH), common.WINDOW_WIDTH)
 
 def createFrontMenuButtons(window):
+    '''Creates the main buttons for the main menu'''
     guiY =  common.WINDOW_HEIGHT / 10 + 50
 
     playBtn,   \
@@ -27,11 +29,24 @@ def createFrontMenuButtons(window):
                                     "How To Play", window, "gray")
 
     guiY += button.HEIGHT * 2
+    highBtn,   \
+    highTxt,   \
+    highBounds = button.create(aabb.create(button.LEFT, guiY, button.WIDTH, button.HEIGHT), 
+                               "Highscores", window, "gray")
+
+    guiY += button.HEIGHT * 2
     exitBtn,   \
     exitTxt,   \
     exitBounds = button.create(aabb.create(button.LEFT, guiY, button.WIDTH, button.HEIGHT), 
                                "Exit", window, "gray")
-    sprites = [playBtn, playTxt, howToPlayBtn, howToPlayTxt, exitBtn, exitTxt]
+
+    #This is a list of sprites that have no purpose but to be shown, hence stored in a list
+    #for ease of undrawing.
+    sprites = [ playBtn,        playTxt, 
+                howToPlayBtn,   howToPlayTxt, 
+                highBtn,        highTxt,
+                exitBtn,        exitTxt]
+
     return sprites, playBounds, howToPlayBounds, exitBounds
 
 def runMenuState(window, control):
@@ -44,6 +59,7 @@ def runMenuState(window, control):
     sprites,         \
     playBounds,      \
     howToPlayBounds, \
+    highscoreBounds, \
     exitBounds       = createFrontMenuButtons(window)
 
     apples = []
@@ -59,6 +75,8 @@ def runMenuState(window, control):
         if button.isButtonPressed(point, playBounds, window):
             common.switchState(window, control, states.STATE_PLAYING)
         elif button.isButtonPressed(point, howToPlayBounds, window):
+            pass
+        elif button.isButtonPressed(point, highscoreBounds, window):
             pass
         elif button.isButtonPressed(point, exitBounds, window):
             common.switchState(window, control, states.EXIT)
