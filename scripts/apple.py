@@ -66,7 +66,7 @@ def makeApple(x, y, colour, radius, window):
 def makeDefaultApple(x, y, window):
     return makeApple(x, y, "red", _RADIUS, window)
 
-def createAppleSprite(window):
+def createRandomApple(window):
     '''Creates an random apple at top of window'''
     x = random.randint(DIAMETER, WINDOW_WIDTH - DIAMETER)
     y = random.randint(-DIAMETER * 10, 0)
