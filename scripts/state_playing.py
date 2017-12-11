@@ -162,8 +162,8 @@ def submitScoreState(window, control, score):
 
     y        = int(common.WINDOW_HEIGHT// 6 * 4)
     subBtn,   \
-    subBtn,   \
-    subBtn = button.create(aabb.create(button.LEFT, y, button.WIDTH, button.HEIGHT), 
+    subTxt,   \
+    subBounds = button.create(aabb.create(button.LEFT, y, button.WIDTH, button.HEIGHT), 
                                "Submit", window, "gray")
 
     messText.setFill("red")
@@ -171,8 +171,17 @@ def submitScoreState(window, control, score):
     entry.draw(window)
     nameText.draw(window)
     messText.draw(window)
+    sprites = [messText, entry,subBtn, subTxt, nameText]
     while not window.closed:
+        point = window.checkKey()
+        if button.isButtonPressed(point, subBounds:
+            user = entry.getText()
+            if len(user) == 0 or len(user) > 10:
+                continue
+            else:
+                pass #TODO SUMBIT NAME
         gfx.update(common.UPDATE_SPEED)
+    common.undrawList(sprites)
 
 def gameOverState(window, control, score, elapsed):
     '''Runs after the player has run out of lives'''
