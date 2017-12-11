@@ -88,9 +88,9 @@ def runMenuState(window, control):
         if button.isButtonPressed(point, playBounds, window):
             common.switchState(window, control, states.STATE_PLAYING)
         elif button.isButtonPressed(point, howToPlayBounds, window):
-            pass
+            pass#TODO
         elif button.isButtonPressed(point, highscoreBounds, window):
-            pass
+            pass#TODO
         elif button.isButtonPressed(point, exitBounds, window):
             common.switchState(window, control, states.EXIT)
 

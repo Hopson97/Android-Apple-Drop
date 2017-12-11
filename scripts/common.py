@@ -26,6 +26,11 @@ def undrawList(spriteList):
     for sprite in spriteList:
         sprite.undraw()
 
+def drawList(sprites, window):
+    '''Draws a list of sprites'''
+    for sprite in sprites:
+        sprite.draw(window)
+
 def switchState(window, control, newState):
     '''Changes the current game state'''
     if newState != states.EXIT:

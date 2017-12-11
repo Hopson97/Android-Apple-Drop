@@ -153,6 +153,26 @@ def addMessage(window, message, size = 20, color = "black", reset = False):
     return msg
 
 addMessage.y = common.WINDOW_HEIGHT / 10
+def submitScoreState(window, control, score):
+    message = "Score To Submit: " + str(score) 
+
+    messText = gfx.Text(gfx.Point(common.WINDOW_WIDTH // 2, int(common.WINDOW_HEIGHT // 6 * 2)),message)
+    nameText = gfx.Text(gfx.Point(common.WINDOW_WIDTH // 2, int(common.WINDOW_HEIGHT // 6 * 3 - 50)),"Enter your name:")
+    entry    = gfx.Entry(gfx.Point(common.WINDOW_WIDTH // 2, int(common.WINDOW_HEIGHT// 6 * 3)), 25)
+
+    y        = int(common.WINDOW_HEIGHT// 6 * 4)
+    subBtn,   \
+    subBtn,   \
+    subBtn = button.create(aabb.create(button.LEFT, y, button.WIDTH, button.HEIGHT), 
+                               "Submit", window, "gray")
+
+    messText.setFill("red")
+    messText.setSize(36)
+    entry.draw(window)
+    nameText.draw(window)
+    messText.draw(window)
+    while not window.closed:
+        gfx.update(common.UPDATE_SPEED)
 
 def gameOverState(window, control, score, elapsed):
     '''Runs after the player has run out of lives'''
@@ -181,13 +201,17 @@ def gameOverState(window, control, score, elapsed):
     exitTxt,   \
     exitBounds = button.create(aabb.create(button.LEFT, guiY, button.WIDTH, button.HEIGHT), 
                                "Exit", window, "gray")
-
+    sprites = messages + [contBtn, submitBtn, submitTxt, contTxt, exitBtn, exitTxt]
     while True:
         mouseClick = window.checkMouse()
         if button.isButtonPressed(mouseClick, contBounds, window):
             break
         elif button.isButtonPressed(mouseClick,submitBounds, window):
-            pass#TODO Add some kind of highscore i/o thing
+            common.undrawList(sprites)
+            submitScoreState(window, control, overallScore)
+            if window.closed:
+                break
+            common.drawList(sprites, window)
         elif button.isButtonPressed(mouseClick,exitBounds, window):
             common.switchState(window, control, states.STATE_MENU)
             break
@@ -196,9 +220,7 @@ def gameOverState(window, control, score, elapsed):
         if shouldExit(window, control): 
             break
 
-    common.undrawList(messages +  [
-        contBtn, contTxt, submitBtn, submitTxt, exitBtn, exitTxt
-    ])
+    common.undrawList(sprites)
 
 def runPlayState(window, control):
     while control["state"] == STATE_PLAYING and not shouldExit(window, control):
