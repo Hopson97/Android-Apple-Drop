@@ -171,15 +171,19 @@ def submitScoreState(window, control, score):
     entry.draw(window)
     nameText.draw(window)
     messText.draw(window)
-    sprites = [messText, entry,subBtn, subTxt, nameText]
+    error = "Text must be between 0 and 10 chars"
+    errorMessage = gfx.Text(gfx.Point(common.WINDOW_WIDTH // 2, int(common.WINDOW_HEIGHT // 6 * 3.50)), error)
+    errorMessage.setStyle("bold")
+    errorMessage.setFill("red")
+    sprites = [messText, entry,subBtn, subTxt, nameText, errorMessage]
     while not window.closed:
-        point = window.checkKey()
-        if button.isButtonPressed(point, subBounds:
+        point = window.checkMouse()
+        if button.isButtonPressed(point, subBounds, window):
             user = entry.getText()
             if len(user) == 0 or len(user) > 10:
-                continue
+                errorMessage.draw(window)
             else:
-                pass #TODO SUMBIT NAME
+                break
         gfx.update(common.UPDATE_SPEED)
     common.undrawList(sprites)
 
