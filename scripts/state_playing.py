@@ -23,11 +23,6 @@ def shouldExit(window, control):
         return True 
     return False
 
-def calculateTime(start):
-    '''Calculates the time since program start'''
-    now = time.time()
-    return now - start
-
 def tryAddMoreApples(apples, elapsedTime, window):
     '''Adds apples'''
     notManyApples = len(apples) < (elapsedTime // 12) + 1
@@ -90,7 +85,7 @@ def runMainGame(window, control):
     #Main loop section for the playing state
     while lives > 0:
         #data
-        elapsed = calculateTime(startTime)
+        elapsed = common.calculateTime(startTime)
         playerMinX = playerAABB["x"]
         playerMaxX = playerAABB["x"] + playerAABB["w"]
         key = common.getKeyPress(window)

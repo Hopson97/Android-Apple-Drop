@@ -5,10 +5,13 @@ import button
 import aabb
 import apple
 
+import time
 import random
+import math
 
 def getRandX():
     '''Gets a random X-Position not above the button bounds'''
+    return random.randint(0, common.WINDOW_WIDTH)
     if random.randint(0, 1) == 1:
         return random.randint(0, int(button.LEFT))
     else:
@@ -52,9 +55,10 @@ def createFrontMenuButtons(window):
 def runMenuState(window, control):
     title = "ANDROID APPLE DROP"
     titleText = gfx.Text(gfx.Point(common.WINDOW_WIDTH / 2, common.WINDOW_HEIGHT / 10), title)
-    titleText.setSize(30)
+    titleText.setSize(36)
     titleText.setFill("green")
     titleText.draw(window)
+    titleText.setStyle("bold")
 
     sprites,         \
     playBounds,      \
@@ -71,12 +75,15 @@ def runMenuState(window, control):
         apples.append(apple.makeApple(x, y, "red", r, window))
         apples[-1].setOutline("red")
 
-    for i in range(30):
+    for i in range(100):
         addApple()
 
+    
+    start = time.time()
     while control["state"] == states.STATE_MENU and not window.closed:
         key   = common.getKeyPress(window)
         point = window.checkMouse()
+        elapsed = common.calculateTime(start)
 
         if button.isButtonPressed(point, playBounds, window):
             common.switchState(window, control, states.STATE_PLAYING)
@@ -89,10 +96,18 @@ def runMenuState(window, control):
 
         for app in apples[:]:
             app.move(0, app.getRadius() / 5)
+            #app.move(math.sin(elapsed) * app.getRadius(), app.getRadius() / 5)
             if app.getCenter().getY() > common.WINDOW_HEIGHT:
                 app.undraw()
                 apples.remove(app)
                 addApple()
+        #make it so the title is ALWAYS on front
+        titleText.undraw()
+        titleText.draw(window)
+
+        for s in sprites:
+            s.undraw()
+            s.draw(window)
 
         gfx.update(common.UPDATE_SPEED)
 

@@ -1,6 +1,7 @@
 import graphics as gfx
 
 import math
+import time
 
 import state_enum as states
 
@@ -70,3 +71,8 @@ def normalise(vect):
 def getPointDifference(p1, p2):
     '''Returns dx, dy between two points'''
     return p1.x - p2.x, p1.y - p2.y
+
+def calculateTime(start):
+    '''Calculates the time since program start'''
+    now = time.time()
+    return now - start
