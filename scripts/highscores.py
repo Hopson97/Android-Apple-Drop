@@ -8,13 +8,14 @@ def _loadScores():
     return data
 
 def _writeScores(scores):
+    '''Writes list of tuple(name, score) to the highscore file'''
     outFile = open(_LOCATION, "w") 
     for item in scores:
         outFile.write(" ".join(str(name) for name in item) + "\n")
     outFile.close()
 
 def _extractScores(data):
-    '''Extracts the highscores, and returns a list of them'''
+    '''Extracts the highscores, and returns a list of tuples (name, score)'''
     highscores = []
     data = data.split()
     for i in range(0, len(data) - 1, 2):
