@@ -147,11 +147,12 @@ def runMainGame(window, control):
     #...and return the results
     return score, elapsed
 
-def addMessage(window, message, reset = False):
+def addMessage(window, message, size = 20, color = "black", reset = False):
     if reset:
         addMessage.y = common.WINDOW_HEIGHT / 10
     msg = gfx.Text(gfx.Point(common.WINDOW_WIDTH / 2, addMessage.y), message)
-    msg.setSize(20)
+    msg.setSize(size)
+    msg.setFill(color)
     msg.draw(window)
     addMessage.y += 40
     return msg
@@ -162,7 +163,7 @@ def gameOverState(window, control, score, elapsed):
     '''Runs after the player has run out of lives'''
     overallScore = score * round(elapsed)
     messages = [
-        addMessage(window, "GAME OVER", True),
+        addMessage(window, "GAME OVER", 30, "red", True),
         addMessage(window, "Score: "        + str(score)),
         addMessage(window, "Time:  "        + str(round(elapsed)) + " seconds"),
         addMessage(window, "Final Score:  " + str(overallScore))

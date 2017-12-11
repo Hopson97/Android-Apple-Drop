@@ -47,7 +47,7 @@ def createFrontMenuButtons(window):
                 highBtn,        highTxt,
                 exitBtn,        exitTxt]
 
-    return sprites, playBounds, howToPlayBounds, exitBounds
+    return sprites, playBounds, howToPlayBounds, highBounds, exitBounds
 
 def runMenuState(window, control):
     title = "ANDROID APPLE DROP"
@@ -63,10 +63,16 @@ def runMenuState(window, control):
     exitBounds       = createFrontMenuButtons(window)
 
     apples = []
-    for i in range(30):
+
+    def addApple():
         x = getRandX()
         y = random.randint(-common.WINDOW_HEIGHT, 0)
-        apples.append(apple.makeDefaultApple(x, y, window))
+        r = random.randint(5, 20)
+        apples.append(apple.makeApple(x, y, "red", r, window))
+        apples[-1].setOutline("red")
+
+    for i in range(30):
+        addApple()
 
     while control["state"] == states.STATE_MENU and not window.closed:
         key   = common.getKeyPress(window)
@@ -82,13 +88,11 @@ def runMenuState(window, control):
             common.switchState(window, control, states.EXIT)
 
         for app in apples[:]:
-            apple.moveApple(app)
+            app.move(0, app.getRadius() / 5)
             if app.getCenter().getY() > common.WINDOW_HEIGHT:
                 app.undraw()
                 apples.remove(app)
-                x = getRandX()
-                y = random.randint(-common.WINDOW_HEIGHT, 0)
-                apples.append(apple.makeDefaultApple(x, y, window))
+                addApple()
 
         gfx.update(common.UPDATE_SPEED)
 
