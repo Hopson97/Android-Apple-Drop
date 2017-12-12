@@ -1,21 +1,35 @@
 import operator
+from pathlib import Path
 
-_LOCATION = "../res/highscores.txt"
+_PATH = "../res/highscores.txt"
+
+def _highscoresExist():
+    path = Path(_PATH)
+    return path.is_file()
+
+
+def _createFile():
+    open(_PATH, "w").close()
+
 
 def _loadScores():
-    with open(_LOCATION) as inFile:
+    '''Loads the raw data from the highscore file'''
+    if not _highscoresExist():
+        _createFile()
+
+    with open(_PATH) as inFile:
         data = inFile.read()
     return data
 
 def _writeScores(scores):
     '''Writes list of tuple(name, score) to the highscore file'''
-    outFile = open(_LOCATION, "w") 
-    for item in scores:
-        outFile.write(" ".join(str(name) for name in item) + "\n")
-    outFile.close()
+    with open(_PATH, "w") as outFile:
+        for nameScore in scores:
+            #Writes the tuple to the file, with a space between the elements
+            outFile.write(" ".join(str(x) for x in nameScore) + "\n")
 
 def _extractScores(data):
-    '''Extracts the highscores, and returns a list of tuples (name, score)'''
+    '''Extracts the highscores, and returns a list of tuple(name, score)'''
     highscores = []
     data = data.split()
     for i in range(0, len(data) - 1, 2):
