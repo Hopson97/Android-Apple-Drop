@@ -81,3 +81,9 @@ def calculateTime(start):
     '''Calculates the time since program start'''
     now = time.time()
     return now - start
+
+def shouldExit(window, control):
+    if window.closed:
+        common.switchState(window, control, states.EXIT)
+        return True 
+    return False
