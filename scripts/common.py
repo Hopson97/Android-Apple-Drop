@@ -84,6 +84,6 @@ def calculateTime(start):
 
 def shouldExit(window, control):
     if window.closed:
-        common.switchState(window, control, states.EXIT)
+        switchState(window, control, states.EXIT)
         return True 
     return False
