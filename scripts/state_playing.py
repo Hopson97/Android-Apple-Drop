@@ -136,6 +136,7 @@ def runMainGame(window, control):
 
 
 def runPlayState(window, control):
+    '''Runs the main game'''
     while control["state"] == STATE_PLAYING and not common.shouldExit(window, control):
         score, elapsed = runMainGame(window, control)
         if common.shouldExit(window, control):

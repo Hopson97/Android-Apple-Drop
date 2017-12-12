@@ -1,5 +1,9 @@
+import graphics as gfx
+
 import operator
 from pathlib import Path
+
+import common
 
 _PATH = "../res/highscores.txt"
 
@@ -46,3 +50,22 @@ def submitScore(name, score):
     highscores = highscores[::-1]
     _writeScores(highscores)
 
+def createHighscoresDisplay(window):
+    data = _loadScores()
+    highscores = _extractScores(data)
+    highScoreTexts = []
+
+    gap = common.WINDOW_WIDTH / 5
+    rankXLocation  = gap
+    nameXLocation  = gap * 2
+    scoreXLocation = gap * 3
+
+    for i in range(len(highscores)):
+        rank  = str(i + 1)
+        name  = str(highscores[i][0])
+        score = str(highscores[i][1])
+        highScoreTexts.append(gfx.Text(gfx.Point(rankXLocation,  i * 20 + 100), rank))
+        highScoreTexts.append(gfx.Text(gfx.Point(nameXLocation,  i * 20 + 100), name))
+        highScoreTexts.append(gfx.Text(gfx.Point(scoreXLocation, i * 20 + 100), score))
+
+    common.drawList(highScoreTexts, window)

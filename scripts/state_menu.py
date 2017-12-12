@@ -4,6 +4,7 @@ import common
 import button
 import aabb
 import apple
+import highscores
 
 import time
 import random
@@ -16,6 +17,13 @@ def getRandX():
         return random.randint(0, int(button.LEFT))
     else:
         return random.randint(int(button.LEFT + button.WIDTH), common.WINDOW_WIDTH)
+
+def highScoreDisplayState(window, control):
+    highscores.createHighscoresDisplay(window)
+    while True:
+        gfx.update(common.UPDATE_SPEED)
+
+
 
 def createFrontMenuButtons(window):
     '''Creates the main buttons for the main menu'''
@@ -90,7 +98,9 @@ def runMenuState(window, control):
         elif button.isButtonPressed(point, howToPlayBounds, window):
             pass#TODO
         elif button.isButtonPressed(point, highscoreBounds, window):
-            pass#TODO
+            common.undrawList([titleText] + sprites + apples)
+            highScoreDisplayState(window, control)
+            common.drawList([titleText] + sprites + apples)
         elif button.isButtonPressed(point, exitBounds, window):
             common.switchState(window, control, states.EXIT)
 
