@@ -64,6 +64,7 @@ def makeApple(x, y, colour, radius, window):
     return apple
 
 def makeDefaultApple(x, y, window):
+    '''Creates a basic red apple'''
     return makeApple(x, y, "red", _RADIUS, window)
 
 def createRandomApple(window):
@@ -74,9 +75,7 @@ def createRandomApple(window):
     while (x + 25) % tiles.TILE_SIZE != 0:
         x -= 1
     x -= 2
-
     radius, colour = getRandomAppleInfo()
-
     return makeApple(x, y, colour, radius, window)
 
 

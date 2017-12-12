@@ -83,6 +83,7 @@ def calculateTime(start):
     return now - start
 
 def shouldExit(window, control):
+    '''Checks if the window is shut'''
     if window.closed:
         switchState(window, control, states.EXIT)
         return True 

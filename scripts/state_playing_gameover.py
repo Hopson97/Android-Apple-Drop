@@ -8,8 +8,8 @@ import common
 import button
 import aabb
 
-
 def addMessage(window, message, size = 20, color = "black", reset = False):
+    '''message add'''
     if reset:
         addMessage.y = WINDOW_HEIGHT / 10
     msg = gfx.Text(gfx.Point(WINDOW_WIDTH / 2, addMessage.y), message)
@@ -21,13 +21,13 @@ def addMessage(window, message, size = 20, color = "black", reset = False):
 addMessage.y = common.WINDOW_HEIGHT / 10
 
 def makeSubmitMenuGUI(score, window):
+    '''Creates the GUI for the submission screen'''
     message = "Score To Submit: " + str(score) 
 
     messText = gfx.Text (gfx.Point(WINDOW_WIDTH // 2, WINDOW_HEIGHT // 6 * 2), message)
     nameText = gfx.Text (gfx.Point(WINDOW_WIDTH // 2, WINDOW_HEIGHT // 6 * 3 - 50), "Enter your name:")
     inputBox = gfx.Entry(gfx.Point(WINDOW_WIDTH // 2, WINDOW_HEIGHT // 6 * 3), 25)
     
-
     subBtn,   \
     subTxt,   \
     subBounds = button.create(aabb.create(button.LEFT,  WINDOW_HEIGHT// 6 * 4, 
@@ -65,6 +65,7 @@ def submitScoreState(window, control, score):
     common.undrawList(sprites + [inputBox])
 
 def makeGameOverButtons(messageLength, window):
+    '''Makes buttons for game over screen'''
     guiY =  WINDOW_HEIGHT / 10 + 50 * messageLength
     contBtn,   \
     contTxt,   \
@@ -98,6 +99,7 @@ def gameOverState(window, control, score, elapsed):
 
     sprites,      contBounds, \
     submitBounds, exitBounds  = makeGameOverButtons(len(messages), window)
+    sprites += messages
 
     scoreSubmitted = False
     while not common.shouldExit(window, control):
@@ -105,7 +107,7 @@ def gameOverState(window, control, score, elapsed):
         if button.isButtonPressed(mouseClick, contBounds, window):
             break
         elif button.isButtonPressed(mouseClick,submitBounds, window) and not scoreSubmitted:
-            common.undrawList(sprites + messages)
+            common.undrawList(sprites)
             submitScoreState(window, control, overallScore)
             if window.closed:
                 break
@@ -119,4 +121,4 @@ def gameOverState(window, control, score, elapsed):
 
         gfx.update(common.UPDATE_SPEED)
 
-    common.undrawList(sprites + messages)
+    common.undrawList(sprites)
