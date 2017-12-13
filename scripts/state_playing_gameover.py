@@ -76,7 +76,6 @@ def makeGameOverButtons(messageLength, window):
     submitTxt,   \
     submitBounds = button.create(aabb.create(button.LEFT, guiY, button.WIDTH, button.HEIGHT), 
                                "Submit Score", window, "gray")
-
     guiY += button.HEIGHT + 10
     exitBtn,   \
     exitTxt,   \

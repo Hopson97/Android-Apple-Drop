@@ -15,7 +15,6 @@ def runGame(window, control):
             runMenuState(window, control) 
         elif currentState == states.STATE_PLAYING:
             runPlayState(window, control)
-        
         #Exit the game
         if window.closed or currentState == states.EXIT:
             control["running"] = False 
@@ -26,12 +25,10 @@ if __name__ == "__main__":
     window = gfx.GraphWin("Android Apple Drop - By Matthew Hopson", 
                             common.WINDOW_WIDTH, common.WINDOW_HEIGHT, 
                             autoflush = False) #Turning off autoflush allows more control over the framerate
-
     control = {
         "running": True,
         "state": states.STATE_MENU
     }
-
     runGame(window, control)
 
 
