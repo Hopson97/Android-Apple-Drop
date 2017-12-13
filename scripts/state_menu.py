@@ -19,9 +19,10 @@ def getRandX():
         return random.randint(int(button.LEFT + button.WIDTH), common.WINDOW_WIDTH)
 
 def highScoreDisplayState(window, control):
-    highscores.createHighscoresDisplay(window)
-    while True:
+    sprites = highscores.createHighscoresDisplay(window)
+    while not window.closed:
         gfx.update(common.UPDATE_SPEED)
+    common.undrawList(sprites)
 
 
 

@@ -10,7 +10,7 @@ def createTiles(window):
     tiles  = []
     active = []
     for x in range(WINDOW_WIDTH // TILE_SIZE):
-        tiles.append(gfx.Image(gfx.Point(x * TILE_SIZE + 25, y), "../res/tile.png").draw(window))
+        tiles.append(gfx.Image(gfx.Point(x * TILE_SIZE + 25, y), "../res/tile.gif").draw(window))
         active.append(True)
         
     return tiles, active

@@ -41,18 +41,20 @@ def _extractScores(data):
         highscores.append(pair)
     return highscores
 
+def _getScoresList():
+    return _extractScores(_loadScores())
+
 def submitScore(name, score):
     '''Adds a score to the highscores'''
-    data = _loadScores()
-    highscores = _extractScores(data)
+    highscores = _getScoresList()
     highscores.append((name, score))
     highscores = sorted(highscores, key = lambda x: x[1])
     highscores = highscores[::-1]
     _writeScores(highscores)
 
 def createHighscoresDisplay(window):
-    data = _loadScores()
-    highscores = _extractScores(data)
+    '''Creation of the GUI for the highscores screen'''
+    highscores = _getScoresList()
     highScoreTexts = []
 
     gap = common.WINDOW_WIDTH / 5
