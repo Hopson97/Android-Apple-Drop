@@ -27,7 +27,7 @@ def updateApples(apples, window):
     for app in apples[:]:
         app.move(0, app.getRadius() / 5)
         #app.move(math.sin(elapsed) * app.getRadius(), app.getRadius() / 5)
-        if app.getCenter().getY() > common.WINDOW_HEIGHT:
+        if app.getCenter().getY() > common.WINDOW_HEIGHT + apple.DIAMETER:
             app.undraw()
             apples.remove(app)
             addApple(apples, window)

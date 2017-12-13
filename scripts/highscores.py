@@ -64,7 +64,7 @@ def createHighscoresDisplay(window):
     rankXLocation  = gap
     nameXLocation  = gap * 2
     scoreXLocation = gap * 3
-    colours = ["green", "cyan"] * (len(highscores) // 2 + 1)
+    colours = ["tan1", "chocolate1"] * (len(highscores) // 2 + 1)
     for i in range(len(highscores)):
         rank  = str(i + 1)
         name  = str(highscores[i][0])

@@ -32,8 +32,10 @@ def drawList(sprites, window):
         sprite.draw(window)
 
 def redrawList(sprites, window):
-    undrawList(sprites)
-    drawList(sprites, window)
+    '''Puts a list of sprites on-front'''
+    for sprite in sprites:
+        sprite.undraw()
+        sprite.draw(window)
 
 def switchState(window, control, newState):
     '''Changes the current game state'''
