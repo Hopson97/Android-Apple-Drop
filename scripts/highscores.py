@@ -1,6 +1,6 @@
 import graphics as gfx
 
-import operator
+import math
 from pathlib import Path
 
 import common
@@ -55,20 +55,29 @@ def submitScore(name, score):
 def createHighscoresDisplay(window):
     '''Creation of the GUI for the highscores screen'''
     highscores = _getScoresList()
-    highScoreTexts = []
+    sprites = []
 
-    gap = common.WINDOW_WIDTH / 5
+    #Create title bar
+    sprites.append(common.createTitle("HIGHSCORES"))
+
+    gap = common.WINDOW_WIDTH / 4
     rankXLocation  = gap
     nameXLocation  = gap * 2
     scoreXLocation = gap * 3
-
+    colours = ["green", "cyan"] * (len(highscores) // 2 + 1)
     for i in range(len(highscores)):
         rank  = str(i + 1)
         name  = str(highscores[i][0])
         score = str(highscores[i][1])
-        highScoreTexts.append(gfx.Text(gfx.Point(rankXLocation,  i * 20 + 100), rank))
-        highScoreTexts.append(gfx.Text(gfx.Point(nameXLocation,  i * 20 + 100), name))
-        highScoreTexts.append(gfx.Text(gfx.Point(scoreXLocation, i * 20 + 100), score))
+        y     = i * 20 + 100 + 10
+        rect = gfx.Rectangle(gfx.Point(0, y - 10), gfx.Point(common.WINDOW_WIDTH, y + 10))
+        rect.setFill(colours[i])
+        sprites.append(rect)
+        sprites.append(gfx.Text(gfx.Point(rankXLocation,  y), rank))
+        sprites.append(gfx.Text(gfx.Point(nameXLocation,  y), name))
+        sprites.append(gfx.Text(gfx.Point(scoreXLocation, y), score))
+        if i + 1 == 25:
+            break
 
-    common.drawList(highScoreTexts, window)
-    return highScoreTexts
+    common.drawList(sprites, window)
+    return sprites

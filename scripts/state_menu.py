@@ -10,17 +10,42 @@ import time
 import random
 import math
 
+
+
 def getRandX():
     '''Gets a random X-Position not above the button bounds'''
     return random.randint(0, common.WINDOW_WIDTH)
-    if random.randint(0, 1) == 1:
-        return random.randint(0, int(button.LEFT))
-    else:
-        return random.randint(int(button.LEFT + button.WIDTH), common.WINDOW_WIDTH)
 
-def highScoreDisplayState(window, control):
+def addApple(apples, window):
+    x = getRandX()
+    y = random.randint(-common.WINDOW_HEIGHT, 0)
+    r = random.randint(5, 20)
+    apples.append(apple.makeApple(x, y, "red", r, window))
+    apples[-1].setOutline("red")
+
+def updateApples(apples, window):
+    for app in apples[:]:
+        app.move(0, app.getRadius() / 5)
+        #app.move(math.sin(elapsed) * app.getRadius(), app.getRadius() / 5)
+        if app.getCenter().getY() > common.WINDOW_HEIGHT:
+            app.undraw()
+            apples.remove(app)
+            addApple(apples, window)
+
+def highScoreDisplayState(window, control, apples):
     sprites = highscores.createHighscoresDisplay(window)
+    backButton,      \
+    backButtonText,  \
+    backButtonBounds = button.create(aabb.create(button.LEFT, common.WINDOW_HEIGHT - button.HEIGHT * 1.5, 
+                                     button.WIDTH, button.HEIGHT), 
+                                     "Back", window, "gray")
+    sprites += [backButton, backButtonText]
     while not window.closed:
+        mouseClickPoint = window.checkMouse()
+        updateApples(apples, window)
+        if button.isButtonPressed(mouseClickPoint, backButtonBounds, window):
+            break
+        common.redrawList(sprites, window)
         gfx.update(common.UPDATE_SPEED)
     common.undrawList(sprites)
 
@@ -63,11 +88,7 @@ def createFrontMenuButtons(window):
 
 def runMenuState(window, control):
     title = "ANDROID APPLE DROP"
-    titleText = gfx.Text(gfx.Point(common.WINDOW_WIDTH / 2, common.WINDOW_HEIGHT / 10), title)
-    titleText.setSize(36)
-    titleText.setFill("green")
-    titleText.draw(window)
-    titleText.setStyle("bold")
+    titleText = common.createTitle(title, window)
 
     sprites,         \
     playBounds,      \
@@ -77,16 +98,8 @@ def runMenuState(window, control):
 
     apples = []
 
-    def addApple():
-        x = getRandX()
-        y = random.randint(-common.WINDOW_HEIGHT, 0)
-        r = random.randint(5, 20)
-        apples.append(apple.makeApple(x, y, "red", r, window))
-        apples[-1].setOutline("red")
-
     for i in range(100):
-        addApple()
-
+        addApple(apples, window)
     
     start = time.time()
     while control["state"] == states.STATE_MENU and not window.closed:
@@ -99,21 +112,16 @@ def runMenuState(window, control):
         elif button.isButtonPressed(point, howToPlayBounds, window):
             pass#TODO
         elif button.isButtonPressed(point, highscoreBounds, window):
-            common.undrawList([titleText] + sprites + apples)
-            highScoreDisplayState(window, control)
+            common.undrawList([titleText] + sprites)
+            highScoreDisplayState(window, control, apples)
             if window.closed:
                 break
-            common.drawList([titleText] + sprites + apples, window)
+            common.drawList([titleText] + sprites, window)
         elif button.isButtonPressed(point, exitBounds, window):
             common.switchState(window, control, states.EXIT)
 
-        for app in apples[:]:
-            app.move(0, app.getRadius() / 5)
-            #app.move(math.sin(elapsed) * app.getRadius(), app.getRadius() / 5)
-            if app.getCenter().getY() > common.WINDOW_HEIGHT:
-                app.undraw()
-                apples.remove(app)
-                addApple()
+        updateApples(apples, window)
+
         #make it so the title is ALWAYS on front
         titleText.undraw()
         titleText.draw(window)

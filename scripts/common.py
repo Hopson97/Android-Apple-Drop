@@ -31,6 +31,10 @@ def drawList(sprites, window):
     for sprite in sprites:
         sprite.draw(window)
 
+def redrawList(sprites, window):
+    undrawList(sprites)
+    drawList(sprites, window)
+
 def switchState(window, control, newState):
     '''Changes the current game state'''
     if newState != states.EXIT:
@@ -88,3 +92,12 @@ def shouldExit(window, control):
         switchState(window, control, states.EXIT)
         return True 
     return False
+
+def createTitle(text, window = None):
+    titleText = gfx.Text(gfx.Point(WINDOW_WIDTH / 2, WINDOW_HEIGHT / 10), text)
+    titleText.setSize(36)
+    titleText.setFill("green")
+    titleText.setStyle("bold")
+    if window is not None:
+        titleText.draw(window)
+    return titleText
