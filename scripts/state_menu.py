@@ -101,6 +101,8 @@ def runMenuState(window, control):
         elif button.isButtonPressed(point, highscoreBounds, window):
             common.undrawList([titleText] + sprites + apples)
             highScoreDisplayState(window, control)
+            if window.closed:
+                break
             common.drawList([titleText] + sprites + apples, window)
         elif button.isButtonPressed(point, exitBounds, window):
             common.switchState(window, control, states.EXIT)
