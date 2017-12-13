@@ -1,3 +1,6 @@
+'''
+This is for functions which are generally going to be common amongst multiple files
+'''
 import graphics as gfx
 
 import math
@@ -96,6 +99,7 @@ def shouldExit(window, control):
     return False
 
 def createTitle(text, window = None):
+    '''Creates a big text at the top of the window, pass window in for auto drawing'''
     titleText = gfx.Text(gfx.Point(WINDOW_WIDTH / 2, WINDOW_HEIGHT / 10), text)
     titleText.setSize(36)
     titleText.setFill("green")
