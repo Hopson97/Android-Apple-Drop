@@ -111,7 +111,7 @@ def gameOverState(window, control, score, elapsed):
             submitScoreState(window, control, overallScore)
             if window.closed:
                 break
-            common.drawList(sprites + messages, window)
+            common.drawList(sprites, window)
             scoreSubmitted = True
             sprites[0].setFill("dim gray")
             sprites[1].setFill("gray")

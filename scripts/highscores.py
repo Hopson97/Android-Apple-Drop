@@ -71,3 +71,4 @@ def createHighscoresDisplay(window):
         highScoreTexts.append(gfx.Text(gfx.Point(scoreXLocation, i * 20 + 100), score))
 
     common.drawList(highScoreTexts, window)
+    return highScoreTexts
