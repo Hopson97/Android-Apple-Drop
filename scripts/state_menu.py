@@ -91,10 +91,10 @@ def runMenuState(window, control):
     titleText = common.createTitle(title, window)
 
     sprites,         \
-    playBounds,      \
-    howToPlayBounds, \
-    highscoreBounds, \
-    exitBounds       = createFrontMenuButtons(window)
+    playButton,      \
+    howToPlayButton, \
+    highscoreButton, \
+    exitButton       = createFrontMenuButtons(window)
 
     apples = []
 
@@ -107,17 +107,17 @@ def runMenuState(window, control):
         point = window.checkMouse()
         elapsed = common.calculateTime(start)
 
-        if button.isButtonPressed(point, playBounds, window):
+        if button.isButtonPressed(point, playButton, window):
             common.switchState(window, control, states.STATE_PLAYING)
-        elif button.isButtonPressed(point, howToPlayBounds, window):
+        elif button.isButtonPressed(point, howToPlayButton, window):
             pass#TODO
-        elif button.isButtonPressed(point, highscoreBounds, window):
+        elif button.isButtonPressed(point, highscoreButton, window):
             common.undrawList([titleText] + sprites)
             highScoreDisplayState(window, control, apples)
             if window.closed:
                 break
             common.drawList([titleText] + sprites, window)
-        elif button.isButtonPressed(point, exitBounds, window):
+        elif button.isButtonPressed(point, exitButton, window):
             common.switchState(window, control, states.EXIT)
 
         updateApples(apples, window)

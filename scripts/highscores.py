@@ -72,6 +72,7 @@ def createHighscoresDisplay(window):
         y     = i * 20 + 100 + 10
         rect = gfx.Rectangle(gfx.Point(0, y - 10), gfx.Point(common.WINDOW_WIDTH, y + 10))
         rect.setFill(colours[i])
+        rect.setOutline(colours[i])
         sprites.append(rect)
         sprites.append(gfx.Text(gfx.Point(rankXLocation,  y), rank))
         sprites.append(gfx.Text(gfx.Point(nameXLocation,  y), name))
