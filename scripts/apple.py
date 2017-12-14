@@ -67,14 +67,17 @@ def makeDefaultApple(x, y, window):
     '''Creates a basic red apple'''
     return makeApple(x, y, "red", _RADIUS, window)
 
-def createRandomApple(window):
-    '''Creates an random apple at top of window'''
+def getRandomAppleXPosition():
+    '''Gets an X position that is center to a tile'''
     x = random.randint(DIAMETER, WINDOW_WIDTH - _RADIUS + 1)
-    y = random.randint(-DIAMETER * 10, 0)
-    #get X position to center of tile
     while (x + 25) % tiles.TILE_SIZE != 0:
         x -= 1
-    x -= 2
+    return x - 2
+
+def createRandomApple(window):
+    '''Creates an random apple at top of window'''
+    x = getRandomAppleXPosition()
+    y = random.randint(-DIAMETER * 10, 0)
     radius, colour = getRandomAppleInfo()
     return makeApple(x, y, colour, radius, window)
 

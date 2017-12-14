@@ -1,5 +1,6 @@
 import graphics   as gfx 
 import state_enum as states
+import apple      as appleFuncs
 
 import projectile
 import common
@@ -7,15 +8,13 @@ import player
 import tiles
 import aabb
 
-from   common import WINDOW_HEIGHT, WINDOW_WIDTH
-import apple  as appleFuncs
+from   common                 import WINDOW_HEIGHT, WINDOW_WIDTH
+from   state_enum             import STATE_PLAYING
+from   state_playing_gameover import gameOverState
 
 import random
 import math
 import time
-
-from   state_enum import STATE_PLAYING
-from   state_playing_gameover import gameOverState
 
 def tryAddMoreApples(apples, elapsedTime, window):
     '''Adds apples'''
@@ -79,7 +78,7 @@ def runMainGame(window, control):
     NUM_TILES     = len(tileSprites)
 
     #Create apple list
-    x = random.randint(appleFuncs.DIAMETER, WINDOW_WIDTH - appleFuncs.DIAMETER)
+    x = appleFuncs.getRandomAppleXPosition()
     apples = [appleFuncs.makeDefaultApple(x, 0, window)]
 
     projectiles = []
