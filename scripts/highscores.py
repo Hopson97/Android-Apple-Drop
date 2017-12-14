@@ -5,7 +5,14 @@ from pathlib import Path
 
 import common
 
+#Relative path to the text file containing the highscores listings
 _PATH = "../res/highscores.txt"
+
+#Constants for the creation of the highscore GUI
+_GAP = common.WINDOW_WIDTH / 4
+_RANK_X_LOCATION  = _GAP
+_NAME_X_LOCATION  = _GAP * 2
+_SCORE_X_LOCATION = _GAP * 3
 
 def _highscoresExist():
     path = Path(_PATH)
@@ -52,6 +59,27 @@ def submitScore(name, score):
     highscores = highscores[::-1]
     _writeScores(highscores)
 
+def _addHighscoreTitles(sprites, y):
+    '''Adds the titles to the highscores'''
+    sprites.append(gfx.Text(gfx.Point(_RANK_X_LOCATION,  y), "Rank"))
+    sprites.append(gfx.Text(gfx.Point(_NAME_X_LOCATION,  y), "Name"))
+    sprites.append(gfx.Text(gfx.Point(_SCORE_X_LOCATION, y), "Score"))
+
+    for i in range(1, 4):
+        sprites[-i].setStyle("bold")
+        sprites[-i].setTextColor("gray10")
+
+def _createBackgroundRect(sprites, y, colour):
+    rect = gfx.Rectangle(gfx.Point(0, y - 10), gfx.Point(common.WINDOW_WIDTH, y + 10))
+    rect.setFill(colour)
+    rect.setOutline(colour)
+    sprites.append(rect)
+
+def _addField(sprites, name, rank, score, y):
+    sprites.append(gfx.Text(gfx.Point(_RANK_X_LOCATION,  y), rank))
+    sprites.append(gfx.Text(gfx.Point(_NAME_X_LOCATION,  y), name))
+    sprites.append(gfx.Text(gfx.Point(_SCORE_X_LOCATION, y), score))
+
 def createHighscoresDisplay(window):
     '''Creation of the GUI for the highscores screen'''
     highscores = _getScoresList()
@@ -60,24 +88,18 @@ def createHighscoresDisplay(window):
     #Create title bar
     sprites.append(common.createTitle("HIGHSCORES"))
 
-    gap = common.WINDOW_WIDTH / 4
-    rankXLocation  = gap
-    nameXLocation  = gap * 2
-    scoreXLocation = gap * 3
     colours = ["tan1", "chocolate1"] * (len(highscores) // 2 + 1)
-    for i in range(len(highscores)):
-        rank  = str(i + 1)
-        name  = str(highscores[i][0])
-        score = str(highscores[i][1])
+    for i in range(len(highscores) + 1):
+        rank  = str(i)
+        name  = str(highscores[i - 1][0])
+        score = str(highscores[i - 1][1])
         y     = i * 20 + 100 + 10
-        rect = gfx.Rectangle(gfx.Point(0, y - 10), gfx.Point(common.WINDOW_WIDTH, y + 10))
-        rect.setFill(colours[i])
-        rect.setOutline(colours[i])
-        sprites.append(rect)
-        sprites.append(gfx.Text(gfx.Point(rankXLocation,  y), rank))
-        sprites.append(gfx.Text(gfx.Point(nameXLocation,  y), name))
-        sprites.append(gfx.Text(gfx.Point(scoreXLocation, y), score))
-        if i + 1 == 25:
+        _createBackgroundRect(sprites, y, colours[i])
+        if i == 0:
+            _addHighscoreTitles(sprites, y)
+            continue
+        _addField(sprites, name, rank, score, y)
+        if i + 1 == 26: #Maximum of 25 highscore fields can be displayed
             break
 
     common.drawList(sprites, window)

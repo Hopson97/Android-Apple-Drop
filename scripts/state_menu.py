@@ -36,7 +36,7 @@ def highScoreDisplayState(window, control, apples):
     sprites = highscores.createHighscoresDisplay(window)
     backButton,      \
     backButtonText,  \
-    backButtonBounds = button.create(aabb.create(button.LEFT, common.WINDOW_HEIGHT - button.HEIGHT * 1.5, 
+    backButtonBounds = button.create(aabb.create(button.LEFT, common.WINDOW_HEIGHT - button.HEIGHT - 10, 
                                      button.WIDTH, button.HEIGHT), 
                                      "Back", window, "gray")
     sprites += [backButton, backButtonText]
