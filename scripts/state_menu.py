@@ -109,7 +109,6 @@ def runMenuState(window, control):
     exitButton       = createFrontMenuButtons(window)
 
     apples = []
-
     for i in range(100):
         addApple(apples, window)
 
@@ -139,15 +138,8 @@ def runMenuState(window, control):
             common.switchState(window, control, states.EXIT)
 
         updateApples(apples, window)
-
         #make it so the title is ALWAYS on front
-        titleText.undraw()
-        titleText.draw(window)
-
-        for s in sprites:
-            s.undraw()
-            s.draw(window)
-
+        common.redrawList([titleText] + sprites)
         gfx.update(common.UPDATE_SPEED)
 
     common.undrawList([titleText] + sprites + apples)
