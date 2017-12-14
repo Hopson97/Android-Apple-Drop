@@ -94,13 +94,11 @@ def runMainGame(window, control):
         if (playerFire(window, playerSprite, projectiles, projectilesDirections, score)):
             updateScore(-1)
 
-        #test for detecting a glitch
+        #Fix for a glitch that would happen sometimes
         tileIndex = math.floor(playerSprite[1].getCenter().x / tiles.TILE_SIZE)
         if not isTilesActive[tileIndex]:
             isTilesActive[tileIndex] = True
             tileSprites[tileIndex].draw(window)
-            print("Fix")
-
 
         #update
         playerXVel = player.tryCollideEdges(playerXVel, playerMinX, 

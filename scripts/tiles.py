@@ -15,6 +15,8 @@ def createTiles(window):
         
     return tiles, active
 
+
+
 def repairTiles(tileSprites, activeTiles, window):
     for i in range(len(tileSprites)):
         if not activeTiles[i]:

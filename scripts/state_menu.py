@@ -17,6 +17,7 @@ def getRandX():
     return random.randint(0, common.WINDOW_WIDTH)
 
 def addApple(apples, window):
+    '''Adds an apple to the background of the menus'''
     x = getRandX()
     y = random.randint(-common.WINDOW_HEIGHT, 0)
     r = random.randint(5, 20)
@@ -24,6 +25,7 @@ def addApple(apples, window):
     apples[-1].setOutline("red")
 
 def updateApples(apples, window):
+    '''Updates the apples, such as moves them as removes them when they hit the bottom'''
     for app in apples[:]:
         app.move(0, app.getRadius() / 5)
         #app.move(math.sin(elapsed) * app.getRadius(), app.getRadius() / 5)
@@ -33,6 +35,7 @@ def updateApples(apples, window):
             addApple(apples, window)
 
 def highScoreDisplayState(window, control, apples):
+    '''Displays the highscores'''
     sprites = highscores.createHighscoresDisplay(window)
     backButton,      \
     backButtonText,  \
@@ -87,6 +90,7 @@ def createFrontMenuButtons(window):
     return sprites, playBounds, howToPlayBounds, highBounds, exitBounds
 
 def runMenuState(window, control):
+    '''Says it on the tin'''
     title = "ANDROID APPLE DROP"
     titleText = common.createTitle(title, window)
 
