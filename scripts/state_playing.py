@@ -136,15 +136,10 @@ def runMainGame(window, control):
         projectile.update(projectiles, projectilesDirections, apples)
         
         gfx.update(common.UPDATE_SPEED * 2)
-
-    #end of the game!
-
+    #end of the game (Game over)!
     #Undraw everything...
-    common.undrawList(apples + projectiles + playerSprite)
+    common.undrawList(apples + projectiles + playerSprite + [livesDisplay, scoreDisplay])
     tiles.undraw(tileSprites, isTilesActive)
-    livesDisplay.undraw()
-    scoreDisplay.undraw()
-
     #...and return the results
     return score, elapsed
 
