@@ -36,14 +36,37 @@ def playerFire(window, playerSprite, projectiles, projDirections, score):
         return True 
     return False
 
+def updateApples(apples, playerMinX, isTilesActive, tileSprites, window):
+    '''Update the updates, and test for collisions'''
+    deltaLife = 0
+    deltaScore = 0
+    for apple in apples[:]:
+        appleFuncs.moveApple(apple)
+        if player.isTochingApple(apple, playerMinX):
+            appleType = appleFuncs.radiusToAppleType(int(apple.getRadius()))
+            if appleType == appleFuncs.REPAIR:
+                tiles.repairTiles(tileSprites, isTilesActive, window)
+            elif appleType == appleFuncs.BOOST:
+                deltaLife += random.randint(1, 2)
+            appleFuncs.removeApple(apples, apple)
+            deltaScore += 1
+        elif appleFuncs.isCollidingTile(apple, isTilesActive, tileSprites):
+            appleFuncs.removeApple(apples, apple)
+        elif appleFuncs.isOffScreen(apple):
+            appleFuncs.removeApple(apples, apple)
+            deltaLife -= 1
+    return deltaLife, deltaScore
+
 def runMainGame(window, control):
     '''The main function handling the actual gameplay of the game'''
     
     #Set up score
     score = 0
     lives = 10
-    scoreDisplay = gfx.Text(gfx.Point(common.WINDOW_WIDTH / 2, 50),  "Score: 0"            ).draw(window)
-    livesDisplay = gfx.Text(gfx.Point(common.WINDOW_WIDTH / 2, 100), "Lives: " + str(lives)).draw(window)
+    scoreDisplay = gfx.Text(gfx.Point(common.WINDOW_WIDTH / 2, 50),  "Score: 0")
+    livesDisplay = gfx.Text(gfx.Point(common.WINDOW_WIDTH / 2, 100), "Lives: " + str(lives))
+    scoreDisplay.draw(window)
+    livesDisplay.draw(window)
 
     #Set up player
     playerXVel =   0.0
@@ -78,7 +101,7 @@ def runMainGame(window, control):
 
     #Main loop section for the playing state
     while lives > 0 and not common.shouldExit(window, control):
-        #data
+        #Create data for this frame
         elapsed = common.calculateTime(startTime)
         playerMinX = playerAABB["x"]
         playerMaxX = playerAABB["x"] + playerAABB["w"]
@@ -87,46 +110,30 @@ def runMainGame(window, control):
         if key == "o":
             break
 
-        #input
+        #Player input
         playerXVel = player.handleInput     (key, playerXVel)
         playerXVel = player.clampVelocity   (playerXVel)
 
         if (playerFire(window, playerSprite, projectiles, projectilesDirections, score)):
             updateScore(-1)
 
-        #Fix for a glitch that would happen sometimes
+        #Fix for a glitch causing player to get stuck
         tileIndex = math.floor(playerSprite[1].getCenter().x / tiles.TILE_SIZE)
         if not isTilesActive[tileIndex]:
             isTilesActive[tileIndex] = True
             tileSprites[tileIndex].draw(window)
 
-        #update
-        playerXVel = player.tryCollideEdges(playerXVel, playerMinX, 
-                                            playerMaxX, isTilesActive)
+        #Update players, apples, and then projectiles
+        playerXVel = player.tryCollideEdges(playerXVel, playerMinX, playerMaxX, isTilesActive)
         player.movePlayer(playerSprite, playerXVel)
         playerAABB["x"] += playerXVel
         
         tryAddMoreApples(apples, elapsed, window)
-        #Main logic for the apple updates happens here v
-        for apple in apples[:]:
-            appleFuncs.moveApple(apple)
-            if player.isTochingApple(apple, playerMinX):
-                appleType = appleFuncs.radiusToAppleType(int(apple.getRadius()))
-                if appleType == appleFuncs.REPAIR:
-                    tiles.repairTiles(tileSprites, isTilesActive, window)
-                elif appleType == appleFuncs.BOOST:
-                    updateLives(1)
-                appleFuncs.removeApple(apples, apple)
-                updateScore(1)
-            elif appleFuncs.isCollidingTile(apple, isTilesActive, tileSprites):
-                appleFuncs.removeApple(apples, apple)
-            elif appleFuncs.isOffScreen(apple):
-                appleFuncs.removeApple(apples, apple)
-                updateLives(-1)
+        deltaLives, deltaScore = updateApples(apples, playerMinX, 
+                                              isTilesActive, tileSprites, window)
 
         projectile.update(projectiles, projectilesDirections, apples)
         
-        #draw/ update window
         gfx.update(common.UPDATE_SPEED * 2)
 
     #end of the game!
