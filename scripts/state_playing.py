@@ -131,6 +131,8 @@ def runMainGame(window, control):
         tryAddMoreApples(apples, elapsed, window)
         deltaLives, deltaScore = updateApples(apples, playerMinX, 
                                               isTilesActive, tileSprites, window)
+        updateScore(deltaScore)
+        updateLives(deltaLives)
 
         projectile.update(projectiles, projectilesDirections, apples)
         
