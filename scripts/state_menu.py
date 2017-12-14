@@ -24,6 +24,7 @@ def addApple(apples, window):
     apples.append(apple.makeApple(x, y, "red", r, window))
     apples[-1].setOutline("red")
 
+
 def updateApples(apples, window):
     '''Updates the apples, such as moves them as removes them when they hit the bottom'''
     for app in apples[:]:
@@ -34,9 +35,16 @@ def updateApples(apples, window):
             apples.remove(app)
             addApple(apples, window)
 
-def highScoreDisplayState(window, control, apples):
-    '''Displays the highscores'''
-    sprites = highscores.createHighscoresDisplay(window)
+def createHowToPlayMenu(window):
+    sprites = [
+        common.createTitle("HOW TO PLAY")
+    ]
+    common.drawList(sprites, window)
+    return sprites
+
+
+def showMenu(window, control, apples, guiCreateFunction):
+    sprites = guiCreateFunction(window)
     backButton,      \
     backButtonText,  \
     backButtonBounds = button.create(aabb.create(button.LEFT, common.WINDOW_HEIGHT - button.HEIGHT - 10, 
@@ -51,8 +59,6 @@ def highScoreDisplayState(window, control, apples):
         common.redrawList(sprites, window)
         gfx.update(common.UPDATE_SPEED)
     common.undrawList(sprites)
-
-
 
 def createFrontMenuButtons(window):
     '''Creates the main buttons for the main menu'''
@@ -89,6 +95,8 @@ def createFrontMenuButtons(window):
 
     return sprites, playBounds, howToPlayBounds, highBounds, exitBounds
 
+
+
 def runMenuState(window, control):
     '''Says it on the tin'''
     title = "ANDROID APPLE DROP"
@@ -104,6 +112,14 @@ def runMenuState(window, control):
 
     for i in range(100):
         addApple(apples, window)
+
+    def displayMenu(guiCreateFunction):
+        common.undrawList([titleText] + sprites)
+        showMenu(window, control, apples, guiCreateFunction)
+        if window.closed:
+            return True
+        common.drawList([titleText] + sprites, window)
+        return False
     
     start = time.time()
     while control["state"] == states.STATE_MENU and not window.closed:
@@ -114,13 +130,11 @@ def runMenuState(window, control):
         if button.isButtonPressed(point, playButton, window):
             common.switchState(window, control, states.STATE_PLAYING)
         elif button.isButtonPressed(point, howToPlayButton, window):
-            pass#TODO
-        elif button.isButtonPressed(point, highscoreButton, window):
-            common.undrawList([titleText] + sprites)
-            highScoreDisplayState(window, control, apples)
-            if window.closed:
+            if displayMenu(createHowToPlayMenu):
                 break
-            common.drawList([titleText] + sprites, window)
+        elif button.isButtonPressed(point, highscoreButton, window):
+            if displayMenu(highscores.createHighscoresDisplay):
+                break
         elif button.isButtonPressed(point, exitButton, window):
             common.switchState(window, control, states.EXIT)
 

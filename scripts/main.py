@@ -7,11 +7,11 @@ from state_menu    import runMenuState
 import common
 
 def makeWindow():
-    gfx.GraphWin("Android Apple Drop - By Matthew Hopson", 
-                                common.WINDOW_WIDTH, common.WINDOW_HEIGHT, 
-                                autoflush = False) 
-                                #Turning off autoflush allows more control over the framerate
-
+    '''Creates a window that does not automatically update'''
+    return gfx.GraphWin("Android Apple Drop - By Matthew Hopson", 
+                        common.WINDOW_WIDTH, common.WINDOW_HEIGHT, 
+                        autoflush = False) #Turning off autoflush allows more control over the framerate
+                                
 def runGame(window, control):
     '''Main loop of the game'''
     #Chooses state based on the main control
