@@ -1,6 +1,7 @@
 import graphics as gfx
 import random   as rng
 from   common   import WINDOW_HEIGHT, WINDOW_WIDTH
+import common
 
 TILE_SIZE   = 50
 BASE_HEIGHT = WINDOW_HEIGHT - TILE_SIZE * 3
@@ -10,8 +11,10 @@ def createTiles(window):
     tiles  = []
     active = []
     for x in range(WINDOW_WIDTH // TILE_SIZE):
-        tiles.append(gfx.Image(gfx.Point(x * TILE_SIZE + 25, y), "../res/tile.gif").draw(window))
+        tiles.append(gfx.Image(gfx.Point(x * TILE_SIZE + 25, y), "../res/tile.gif"))
         active.append(True)
+
+    common.drawList(tiles, window)
         
     return tiles, active
 

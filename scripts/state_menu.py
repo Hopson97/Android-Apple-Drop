@@ -10,8 +10,6 @@ import time
 import random
 import math
 
-
-
 def getRandX():
     '''Gets a random X-Position not above the button bounds'''
     return random.randint(0, common.WINDOW_WIDTH)
@@ -139,7 +137,7 @@ def runMenuState(window, control):
 
         updateApples(apples, window)
         #make it so the title is ALWAYS on front
-        common.redrawList([titleText] + sprites)
+        common.redrawList([titleText] + sprites, window)
         gfx.update(common.UPDATE_SPEED)
 
     common.undrawList([titleText] + sprites + apples)

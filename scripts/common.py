@@ -99,9 +99,9 @@ def shouldExit(window, control):
         return True 
     return False
 
-def createTitle(text, window = None):
+def createTitle(text, window = None, x = WINDOW_WIDTH / 2, y = WINDOW_HEIGHT / 10):
     '''Creates a big text at the top of the window, pass window in for auto drawing'''
-    titleText = gfx.Text(gfx.Point(WINDOW_WIDTH / 2, WINDOW_HEIGHT / 10), text)
+    titleText = gfx.Text(gfx.Point(x, y), text)
     titleText.setSize(36)
     titleText.setFill("green")
     titleText.setStyle("bold")

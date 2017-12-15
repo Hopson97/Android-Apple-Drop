@@ -56,16 +56,28 @@ def updateApples(apples, playerMinX, isTilesActive, tileSprites, window):
             deltaLife -= 1
     return deltaLife, deltaScore
 
+def createStatsDisplay(window):
+
+    statsBG = gfx.Rectangle(gfx.Point(common.WINDOW_WIDTH / 2 - 50, 25), gfx.Point(common.WINDOW_WIDTH / 2 + 50, 125))
+    statsBG.setFill("gray")
+    scoreDisplay = gfx.Text(gfx.Point(common.WINDOW_WIDTH / 2, 50),  "Score: 0")
+    livesDisplay = gfx.Text(gfx.Point(common.WINDOW_WIDTH / 2, 100), "Lives: 10")
+    statsBG.draw(window)
+    scoreDisplay.draw(window)
+    livesDisplay.draw(window)
+
+    return scoreDisplay, livesDisplay, [statsBG, scoreDisplay, livesDisplay]
+
 def runMainGame(window, control):
     '''The main function handling the actual gameplay of the game'''
-    
+    #Draw background image
+    #background = gfx.Image(gfx.Point(common.WINDOW_WIDTH//2, common.WINDOW_HEIGHT // 2), "../res/game_background.gif")
+    #background.draw(window)
+
     #Set up score
     score = 0
     lives = 10
-    scoreDisplay = gfx.Text(gfx.Point(common.WINDOW_WIDTH / 2, 50),  "Score: 0")
-    livesDisplay = gfx.Text(gfx.Point(common.WINDOW_WIDTH / 2, 100), "Lives: " + str(lives))
-    scoreDisplay.draw(window)
-    livesDisplay.draw(window)
+    scoreDisplay, livesDisplay, statSprites = createStatsDisplay(window)
 
     #Set up player
     playerXVel =   0.0
@@ -97,6 +109,9 @@ def runMainGame(window, control):
     #Begin timer
     startTime = time.time()
     elapsed = 0
+   
+    isGamePaused = False
+    gamePausedDisplay = common.createTitle("Paused - Press E to exit", y = tiles.BASE_HEIGHT / 2)
 
     #Main loop section for the playing state
     while lives > 0 and not common.shouldExit(window, control):
@@ -106,39 +121,51 @@ def runMainGame(window, control):
         playerMaxX = playerAABB["x"] + playerAABB["w"]
         key = common.getKeyPress(window)
 
-        if key == "o":
-            break
+        #Handle game pausing
+        if key == "p":
+            isGamePaused = not isGamePaused
+            if isGamePaused:
+                gamePausedDisplay.draw(window)
+            else:
+                gamePausedDisplay.undraw()
 
-        #Player input
-        playerXVel = player.handleInput     (key, playerXVel)
-        playerXVel = player.clampVelocity   (playerXVel)
 
-        if (playerFire(window, playerSprite, projectiles, projectilesDirections, score)):
-            updateScore(-1)
+        if not isGamePaused:
+            #Player input
+            playerXVel = player.handleInput     (key, playerXVel)
+            playerXVel = player.clampVelocity   (playerXVel)
 
-        #Fix for a glitch causing player to get stuck
-        tileIndex = math.floor(playerSprite[1].getCenter().x / tiles.TILE_SIZE)
-        if not isTilesActive[tileIndex]:
-            isTilesActive[tileIndex] = True
-            tileSprites[tileIndex].draw(window)
+            if (playerFire(window, playerSprite, projectiles, projectilesDirections, score)):
+                updateScore(-1)
 
-        #Update players, apples, and then projectiles
-        playerXVel = player.tryCollideEdges(playerXVel, playerMinX, playerMaxX, isTilesActive)
-        player.movePlayer(playerSprite, playerXVel)
-        playerAABB["x"] += playerXVel
-        
-        tryAddMoreApples(apples, elapsed, window)
-        deltaLives, deltaScore = updateApples(apples, playerMinX, 
-                                              isTilesActive, tileSprites, window)
-        updateScore(deltaScore)
-        updateLives(deltaLives)
+            #Fix for a glitch causing player to get stuck
+            tileIndex = math.floor(playerSprite[1].getCenter().x / tiles.TILE_SIZE)
+            if not isTilesActive[tileIndex]:
+                isTilesActive[tileIndex] = True
+                tileSprites[tileIndex].draw(window)
 
-        projectile.update(projectiles, projectilesDirections, apples)
-        
+            #Update players, apples, and then projectiles
+            playerXVel = player.tryCollideEdges(playerXVel, playerMinX, playerMaxX, isTilesActive)
+            player.movePlayer(playerSprite, playerXVel)
+            playerAABB["x"] += playerXVel
+            
+            tryAddMoreApples(apples, elapsed, window)
+            deltaLives, deltaScore = updateApples(apples, playerMinX, 
+                                                isTilesActive, tileSprites, window)
+            updateScore(deltaScore)
+            updateLives(deltaLives)
+
+            projectile.update(projectiles, projectilesDirections, apples)
+            
+            common.redrawList(statSprites, window)
+        else:
+            if key == "e":
+                break
+            
         gfx.update(common.UPDATE_SPEED * 2)
     #end of the game (Game over)!
     #Undraw everything...
-    common.undrawList(apples + projectiles + playerSprite + [livesDisplay, scoreDisplay])
+    common.undrawList(apples + projectiles + playerSprite + statSprites)
     tiles.undraw(tileSprites, isTilesActive)
     #...and return the results
     return score, elapsed
