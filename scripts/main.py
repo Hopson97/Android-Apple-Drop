@@ -8,7 +8,7 @@ import common
 
 def makeWindow():
     '''Creates a window that does not automatically update'''
-    return gfx.GraphWin("Android Apple Drop - By Matthew Hopson", 
+    return gfx.GraphWin(GAME_NAME + " - By Matthew Hopson", 
                         common.WINDOW_WIDTH, common.WINDOW_HEIGHT, 
                         autoflush = False) #Turning off autoflush allows more control over the framerate
                                 
