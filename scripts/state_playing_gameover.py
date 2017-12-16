@@ -43,13 +43,17 @@ def makeSubmitMenuGUI(score, window):
 def submitScoreState(window, control, score):
     '''The playing screen for submitting a new score'''
 
-    sprites, errorMessage, inputBox, submitBtnBounds = makeSubmitMenuGUI(score, window)
+    sprites,            \
+    errorMessage,       \
+    inputBox,           \
+    submitScoreButton   = makeSubmitMenuGUI(score, window)
+
     common.drawList(sprites[:-2] + [inputBox], window)
     isError = False
 
     while not window.closed:
         point = window.checkMouse()
-        if button.isButtonPressed(point, submitBtnBounds, window):
+        if button.isButtonPressed(point, submitScoreButton, window):
             name = inputBox.getText()
             if (len(name) == 0 or len(name) > 10) or " " in name and not isError:
                 errorMessage.draw(window)
@@ -90,16 +94,18 @@ def gameOverState(window, control, score, elapsed):
         addMessage(window, "Final Score:  " + str(overallScore))
     ]
 
-    sprites,      contBounds, \
-    submitBounds, exitBounds  = makeGameOverButtons(len(messages), window)
+    sprites,            \
+    playAgainButton,    \
+    submitScoreButton,  \
+    exitToMenuButton    = makeGameOverButtons(len(messages), window)
     sprites += messages
 
     scoreSubmitted = False
     while not common.shouldExit(window, control):
         mouseClick = window.checkMouse()
-        if button.isButtonPressed(mouseClick, contBounds, window):
+        if button.isButtonPressed(mouseClick, playAgainButton, window):
             break
-        elif button.isButtonPressed(mouseClick,submitBounds, window) and not scoreSubmitted:
+        elif button.isButtonPressed(mouseClick,submitScoreButton, window) and not scoreSubmitted:
             common.undrawList(sprites)
             submitScoreState(window, control, overallScore)
             if window.closed:
@@ -108,7 +114,7 @@ def gameOverState(window, control, score, elapsed):
             scoreSubmitted = True
             sprites[0].setFill("dim gray")
             sprites[1].setFill("gray")
-        elif button.isButtonPressed(mouseClick,exitBounds, window):
+        elif button.isButtonPressed(mouseClick, exitToMenuButton, window):
             common.switchState(window, control, states.STATE_MENU)
             break
 
