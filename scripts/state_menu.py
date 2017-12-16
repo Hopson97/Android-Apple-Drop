@@ -81,8 +81,8 @@ def createHowToObjectives(window):
 
 def createHowToAppleTypes(window):
     sprites = [
-        common.createTitle("Apple Types")
-        #common.createCenteredImage("apple_types")
+        common.createTitle("Apple Types"),
+        common.createCenteredImage("apple_types")
     ]
     common.drawList(sprites, window)
     return sprites
