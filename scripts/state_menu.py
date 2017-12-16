@@ -10,6 +10,8 @@ import time
 import random
 import math
 
+BACK_BTN_Y = common.WINDOW_HEIGHT - button.HEIGHT - 10
+
 def getRandX():
     '''Gets a random X-Position not above the button bounds'''
     return random.randint(0, common.WINDOW_WIDTH)
@@ -41,28 +43,24 @@ def createHowToPlayMenu(window):
 
     guiY =  common.WINDOW_HEIGHT / 10 + 50
 
-    ctrlBtn,   \
-    ctrlTxt,   \
-    ctrlBounds = button.create(aabb.create(button.LEFT, guiY, button.WIDTH, button.HEIGHT), 
-                               "Controls", window, "gray")
+    controlsSprites, \
+    controlsButton   = button.create(guiY, "Controls", window)
+
     guiY += button.HEIGHT * 2
-    objBtn,   \
-    objTxt,   \
-    objBounds = button.create(aabb.create(button.LEFT, guiY, button.WIDTH, button.HEIGHT), 
-                               "Objective", window, "gray")
+
+    objectivesSprites, \
+    objectivesButton   = button.create(guiY, "Objectives", window)
+
     guiY += button.HEIGHT * 2
-    typeBtn,   \
-    typeTxt,   \
-    typeBounds = button.create(aabb.create(button.LEFT, guiY, button.WIDTH, button.HEIGHT), 
-                               "Apple Types", window, "gray")
+
+    appleTypesSprites, \
+    appleTypesButton   = button.create(guiY, "Apple Types", window)
 
     #This is a list of sprites that have no purpose but to be shown, hence stored in a list
     #for ease of undrawing.
-    sprites += [ctrlBtn, ctrlTxt, 
-                objBtn,  objTxt, 
-                typeBtn, typeTxt]
+    sprites += objectivesSprites + controlsSprites + appleTypesSprites
 
-    return sprites, ctrlBounds, objBounds, typeBounds
+    return sprites, controlsButton, objectivesButton, appleTypesButton
 
 def createHowToControls(window):
     sprites = [
@@ -90,18 +88,15 @@ def createHowToAppleTypes(window):
 
 def displayHowToPlayMenu(window, control, apples):
     sprites, ctrlButton, objButton, typeButton = createHowToPlayMenu(window)
-    backButton,      \
-    backButtonText,  \
-    backButtonBounds = button.create(aabb.create(button.LEFT, common.WINDOW_HEIGHT - button.HEIGHT - 10, 
-                                     button.WIDTH, button.HEIGHT), 
-                                     "Back", window, "gray")
+    backButtonSprites, \
+    backButtonBounds   = button.create(BACK_BTN_Y, "Back", window)
 
     def displayMenu(guiCreateFunction):
-        common.undrawList(sprites + [backButton, backButtonText])
+        common.undrawList(sprites + backButtonSprites)
         showMenu(window, control, apples, guiCreateFunction)
         if window.closed:
             return True
-        common.drawList(sprites + [backButton, backButtonText], window)
+        common.drawList(sprites + backButtonSprites, window)
         return False
 
     while not window.closed:
@@ -120,16 +115,14 @@ def displayHowToPlayMenu(window, control, apples):
                 break
         common.redrawList(sprites, window)
         gfx.update(common.UPDATE_SPEED)
-    common.undrawList(sprites + [backButton, backButtonText])
+    common.undrawList(sprites + backButtonSprites)
 
 def showMenu(window, control, apples, guiCreateFunction):
     sprites = guiCreateFunction(window)
-    backButton,      \
-    backButtonText,  \
-    backButtonBounds = button.create(aabb.create(button.LEFT, common.WINDOW_HEIGHT - button.HEIGHT - 10, 
-                                     button.WIDTH, button.HEIGHT), 
-                                     "Back", window, "gray")
-    sprites += [backButton, backButtonText]
+    backButtonSprites, \
+    backButtonBounds   = button.create(BACK_BTN_Y, "Back", window)
+
+    sprites += backButtonSprites
     while not window.closed:
         mouseClickPoint = window.checkMouse()
         updateApples(apples, window)
@@ -143,36 +136,29 @@ def createFrontMenuButtons(window):
     '''Creates the main buttons for the main menu'''
     guiY =  common.WINDOW_HEIGHT / 10 + 50
 
-    playBtn,   \
-    playTxt,   \
-    playBounds = button.create(aabb.create(button.LEFT, guiY, button.WIDTH, button.HEIGHT), 
-                               "Play Game", window, "gray")
-    guiY += button.HEIGHT * 2
-    howToPlayBtn,   \
-    howToPlayTxt,   \
-    howToPlayBounds = button.create(aabb.create(button.LEFT, guiY, button.WIDTH, button.HEIGHT), 
-                                    "How To Play", window, "gray")
+    playGameSprites, \
+    playGameButton   = button.create(guiY, "Play Game", window)
 
     guiY += button.HEIGHT * 2
-    highBtn,   \
-    highTxt,   \
-    highBounds = button.create(aabb.create(button.LEFT, guiY, button.WIDTH, button.HEIGHT), 
-                               "Highscores", window, "gray")
+    howToPlaySprites, \
+    howToPlayButton   = button.create(guiY, "How To Play", window)
 
     guiY += button.HEIGHT * 2
-    exitBtn,   \
-    exitTxt,   \
-    exitBounds = button.create(aabb.create(button.LEFT, guiY, button.WIDTH, button.HEIGHT), 
-                               "Exit", window, "gray")
+    highScoresSprites, \
+    highScoresButton   = button.create(guiY, "Highscores", window)
+
+    guiY += button.HEIGHT * 2
+    exitSprites, \
+    exitButton   = button.create(guiY, "Exit Game", window)
 
     #This is a list of sprites that have no purpose but to be shown, hence stored in a list
     #for ease of undrawing.
-    sprites = [ playBtn,        playTxt, 
-                howToPlayBtn,   howToPlayTxt, 
-                highBtn,        highTxt,
-                exitBtn,        exitTxt]
+    sprites = playGameSprites   + \
+              howToPlaySprites  + \
+              highScoresSprites + \
+              exitSprites
 
-    return sprites, playBounds, howToPlayBounds, highBounds, exitBounds
+    return sprites, playGameButton, howToPlayButton, highScoresButton, exitButton
 
 
 

@@ -28,11 +28,8 @@ def makeSubmitMenuGUI(score, window):
     nameText = gfx.Text (gfx.Point(WINDOW_WIDTH // 2, WINDOW_HEIGHT // 6 * 3 - 50), "Enter your name:")
     inputBox = gfx.Entry(gfx.Point(WINDOW_WIDTH // 2, WINDOW_HEIGHT // 6 * 3), 25)
     
-    subBtn,   \
-    subTxt,   \
-    subBounds = button.create(aabb.create(button.LEFT,  WINDOW_HEIGHT// 6 * 4, 
-                              button.WIDTH, button.HEIGHT), 
-                              "Submit", window, "gray")
+    submitSprites,   \
+    submitButton     = button.create(WINDOW_HEIGHT// 6 * 4, "Submit", window)
 
     messText.setFill("red")
     messText.setSize(36)
@@ -41,7 +38,7 @@ def makeSubmitMenuGUI(score, window):
     errorMessage.setStyle("bold")
     errorMessage.setFill("red")
 
-    return [messText, nameText, subBtn, subTxt], errorMessage, inputBox, subBounds
+    return [messText, nameText] + submitSprites, errorMessage, inputBox, submitButton
 
 def submitScoreState(window, control, score):
     '''The playing screen for submitting a new score'''
@@ -67,23 +64,20 @@ def submitScoreState(window, control, score):
 def makeGameOverButtons(messageLength, window):
     '''Makes buttons for game over screen'''
     guiY =  WINDOW_HEIGHT / 10 + 50 * messageLength
-    contBtn,   \
-    contTxt,   \
-    contBounds = button.create(aabb.create(button.LEFT, guiY, button.WIDTH, button.HEIGHT), 
-                               "Play Again", window, "gray")
+    playAgainSprites, \
+    playAgainButton   = button.create(guiY, "Play Again", window)
+
     guiY += button.HEIGHT + 10                    
-    submitBtn,   \
-    submitTxt,   \
-    submitBounds = button.create(aabb.create(button.LEFT, guiY, button.WIDTH, button.HEIGHT), 
-                               "Submit Score", window, "gray")
+    submitSprites, \
+    submitButton   = button.create(guiY, "Submit Score", window)
+
     guiY += button.HEIGHT + 10
-    exitBtn,   \
-    exitTxt,   \
-    exitBounds = button.create(aabb.create(button.LEFT, guiY, button.WIDTH, button.HEIGHT), 
-                               "Exit", window, "gray")
-    return [submitBtn, submitTxt,
-            contBtn,   contTxt,
-            exitBtn,   exitTxt], contBounds, submitBounds, exitBounds
+    exitSprites, \
+    exitButton   = button.create(guiY, "Exit", window)
+
+    return submitSprites + playAgainSprites + exitSprites, \
+           playAgainButton, submitButton, exitButton
+        
 
 
 def gameOverState(window, control, score, elapsed):

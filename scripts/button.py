@@ -8,19 +8,19 @@ WIDTH  =  int(common.WINDOW_WIDTH  / 4)
 HEIGHT =  int(common.WINDOW_HEIGHT / 10)
 LEFT   =  int(common.WINDOW_WIDTH  / 2  - WIDTH / 2)
 
-def create(aabb, text, window, fill):
-    x1 = aabb["x"]
-    y1 = aabb["y"]
-    x2 = aabb["x"] + aabb["w"]
-    y2 = aabb["y"] + aabb["h"]
+def create(y, text, window):
+    x1 = LEFT
+    y1 = y
+    x2 = LEFT + WIDTH
+    y2 = y    + HEIGHT
     btnSprite = gfx.Rectangle(gfx.Point(x1, y1), gfx.Point(x2, y2))
-    btnText   = gfx.Text     (gfx.Point(x1 + aabb["w"] / 2, y1 + aabb["h"] / 2), text)
+    btnText   = gfx.Text     (gfx.Point(x1 + WIDTH / 2, y1 + HEIGHT / 2), text)
 
-    btnSprite.setFill(fill)
+    btnSprite.setFill("gray")
     btnSprite.draw(window)
     btnText  .draw(window)
 
-    return btnSprite, btnText, aabb
+    return [btnSprite, btnText], aabb.create(x1, y1, WIDTH, HEIGHT)
 
 def isButtonPressed(point, bounds, window):
     if point is not None:
