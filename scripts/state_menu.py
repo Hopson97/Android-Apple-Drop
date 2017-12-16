@@ -23,6 +23,7 @@ def addApple(apples, window):
     apples[-1].setOutline("red")
 
 
+
 def updateApples(apples, window):
     '''Updates the apples, such as moves them as removes them when they hit the bottom'''
     for app in apples[:]:
@@ -36,10 +37,50 @@ def updateApples(apples, window):
 def createHowToPlayMenu(window):
     sprites = [
         common.createTitle("HOW TO PLAY")
+        #common.createCenteredImage("how_to_play")
     ]
     common.drawList(sprites, window)
-    return sprites
 
+    guiY =  common.WINDOW_HEIGHT / 10 + 50
+
+    ctrlBtn,   \
+    ctrlTxt,   \
+    ctrlBounds = button.create(aabb.create(button.LEFT, guiY, button.WIDTH, button.HEIGHT), 
+                               "Controls", window, "gray")
+    guiY += button.HEIGHT * 2
+    objBtn,   \
+    objTxt,   \
+    objBounds = button.create(aabb.create(button.LEFT, guiY, button.WIDTH, button.HEIGHT), 
+                               "Objective", window, "gray")
+    guiY += button.HEIGHT * 2
+    typeBtn,   \
+    typeTxt,   \
+    typeBounds = button.create(aabb.create(button.LEFT, guiY, button.WIDTH, button.HEIGHT), 
+                               "Apple Types", window, "gray")
+
+    #This is a list of sprites that have no purpose but to be shown, hence stored in a list
+    #for ease of undrawing.
+    sprites += [ctrlBtn, ctrlTxt, 
+                objBtn,  objTxt, 
+                typeBtn, typeTxt]
+
+    return sprites, ctrlBounds, objBounds, typeBounds
+
+def displayHowToPlayMenu(window, control, apples, displayMenuFunction):
+    sprites, ctrlButton, objButton, typeButton = createHowToPlayMenu(window)
+    backButton,      \
+    backButtonText,  \
+    backButtonBounds = button.create(aabb.create(button.LEFT, common.WINDOW_HEIGHT - button.HEIGHT - 10, 
+                                     button.WIDTH, button.HEIGHT), 
+                                     "Back", window, "gray")
+    while not window.closed:
+        mouseClickPoint = window.checkMouse()
+        updateApples(apples, window)
+        if button.isButtonPressed(mouseClickPoint, backButtonBounds, window):
+            break
+        common.redrawList(sprites, window)
+        gfx.update(common.UPDATE_SPEED)
+    common.undrawList(sprites + [backButton, backButtonText])
 
 def showMenu(window, control, apples, guiCreateFunction):
     sprites = guiCreateFunction(window)
@@ -110,7 +151,7 @@ def runMenuState(window, control):
     for i in range(100):
         addApple(apples, window)
 
-    def displayMenu(guiCreateFunction):
+    def displayMenu(guiCreateFunction = None):
         common.undrawList([titleText] + sprites)
         showMenu(window, control, apples, guiCreateFunction)
         if window.closed:
@@ -127,8 +168,11 @@ def runMenuState(window, control):
         if button.isButtonPressed(point, playButton, window):
             common.switchState(window, control, states.STATE_PLAYING)
         elif button.isButtonPressed(point, howToPlayButton, window):
-            if displayMenu(createHowToPlayMenu):
+            common.undrawList([titleText] + sprites)
+            displayHowToPlayMenu(window, control, apples, displayMenu)
+            if window.closed:
                 break
+            common.drawList([titleText] + sprites, window)
         elif button.isButtonPressed(point, highscoreButton, window):
             if displayMenu(highscores.createHighscoresDisplay):
                 break

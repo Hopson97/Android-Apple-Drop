@@ -12,6 +12,9 @@ UPDATE_SPEED = 30
 
 WINDOW_WIDTH = 1100
 WINDOW_HEIGHT = 720
+
+WINDOW_CENTER_X = WINDOW_WIDTH  // 2
+WINDOW_CENTER_Y = WINDOW_HEIGHT // 2
  
 def getKeyPress(window):
     '''Gets a key press from the window'''
@@ -108,3 +111,7 @@ def createTitle(text, window = None, x = WINDOW_WIDTH / 2, y = WINDOW_HEIGHT / 1
     if window is not None:
         titleText.draw(window)
     return titleText
+
+def createCenteredImage(name):
+    fullName = "../res/" + name + ".gif"
+    return gfx.Image(gfx.Point(WINDOW_CENTER_X, WINDOW_CENTER_Y), fullName)

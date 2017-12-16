@@ -8,7 +8,6 @@ import player
 import tiles
 import aabb
 
-from   common                 import WINDOW_HEIGHT, WINDOW_WIDTH
 from   state_enum             import STATE_PLAYING
 from   state_playing_gameover import gameOverState
 
@@ -58,10 +57,10 @@ def updateApples(apples, playerMinX, isTilesActive, tileSprites, window):
 
 def createStatsDisplay(window):
 
-    statsBG = gfx.Rectangle(gfx.Point(common.WINDOW_WIDTH / 2 - 50, 25), gfx.Point(common.WINDOW_WIDTH / 2 + 50, 125))
+    statsBG = gfx.Rectangle(gfx.Point(common.WINDOW_CENTER_X - 50, 25), gfx.Point(common.WINDOW_CENTER_X + 50, 125))
     statsBG.setFill("gray")
-    scoreDisplay = gfx.Text(gfx.Point(common.WINDOW_WIDTH / 2, 50),  "Score: 0")
-    livesDisplay = gfx.Text(gfx.Point(common.WINDOW_WIDTH / 2, 100), "Lives: 10")
+    scoreDisplay = gfx.Text(gfx.Point(common.WINDOW_CENTER_X, 50),  "Score: 0")
+    livesDisplay = gfx.Text(gfx.Point(common.WINDOW_CENTER_X, 100), "Lives: 10")
     statsBG.draw(window)
     scoreDisplay.draw(window)
     livesDisplay.draw(window)
