@@ -108,7 +108,7 @@ def createTitle(text, window = None, x = WINDOW_WIDTH / 2, y = WINDOW_HEIGHT / 1
     '''Creates a big text at the top of the window, pass window in for auto drawing'''
     titleText = gfx.Text(gfx.Point(x, y), text)
     titleText.setSize(36)
-    titleText.setFill("green")
+    titleText.setFill("spring green")
     titleText.setStyle("bold")
     if window is not None:
         titleText.draw(window)

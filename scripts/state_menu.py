@@ -161,8 +161,6 @@ def createFrontMenuButtons(window):
 
     return sprites, playGameButton, howToPlayButton, highScoresButton, exitButton
 
-
-
 def runMenuState(window, control):
     '''Says it on the tin'''
     titleText = common.createTitle(common.GAME_NAME, window)

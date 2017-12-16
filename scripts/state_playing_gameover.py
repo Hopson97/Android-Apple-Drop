@@ -63,7 +63,7 @@ def submitScoreState(window, control, score):
                 highscores.submitScore(name, score)
                 break
         gfx.update(common.UPDATE_SPEED)
-    common.undrawList(sprites + [inputBox])
+    common.undrawList(sprites + [inputBox, errorMessage])
 
 def makeGameOverButtons(messageLength, window):
     '''Makes buttons for game over screen'''
@@ -86,6 +86,8 @@ def makeGameOverButtons(messageLength, window):
 
 def gameOverState(window, control, score, elapsed):
     '''Runs after the player has run out of lives'''
+    bg = common.createCenteredImage("menu_bg")
+    bg.draw(window)
     overallScore = score * round(elapsed)
     messages = [
         addMessage(window, "GAME OVER", 30, "red", True),
@@ -120,4 +122,4 @@ def gameOverState(window, control, score, elapsed):
 
         gfx.update(common.UPDATE_SPEED)
 
-    common.undrawList(sprites)
+    common.undrawList(sprites + [bg])
