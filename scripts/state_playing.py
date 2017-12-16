@@ -40,14 +40,18 @@ def updateApples(apples, playerMinX, isTilesActive, tileSprites, window):
     deltaScore = 0
     for apple in apples[:]:
         appleFuncs.moveApple(apple)
+        #Different apples have different effects
         if player.isTochingApple(apple, playerMinX):
-            appleType = appleFuncs.radiusToAppleType(int(apple.getRadius()))
-            if appleType == appleFuncs.REPAIR:
-                tiles.repairTiles(tileSprites, isTilesActive, window)
-            elif appleType == appleFuncs.BOOST:
-                deltaLife += random.randint(1, 2)
-            appleFuncs.removeApple(apples, apple)
             deltaScore += 1
+            appleType = int(apple.getRadius())
+            appleFuncs.removeApple(apples, apple)
+            if appleType == appleFuncs.REPAIR:  #"Repair apple": Repairs tiles
+                tiles.repairTiles(tileSprites, isTilesActive, window)
+            elif appleType == appleFuncs.BOOST: #"Boost Apple": Gives player upto 2 extra lives
+                deltaLife += random.randint(1, 2)
+            elif appleType == appleFuncs.APPLPOCALYPSE: #"APPLPOCALYPSE": Removes all apples
+                for oldApple in apples[:]:
+                    appleFuncs.removeApple(apples, oldApple)
         elif appleFuncs.isCollidingTile(apple, isTilesActive, tileSprites):
             appleFuncs.removeApple(apples, apple)
         elif appleFuncs.isOffScreen(apple):

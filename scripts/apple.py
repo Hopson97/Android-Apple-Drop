@@ -18,36 +18,32 @@ _APPLE_SPEED = 1.5
 _RADIUS      = 15
 DIAMETER     = _RADIUS * 2
 
-#Attributes for "special" apple types
-_RADIUS_REPAIR = 14  
-_RADIUS_BOOST   = 13
+#Enum for the different apple types, + also their radius
+DEFAULT         = _RADIUS
+REPAIR          = _RADIUS - 1
+BOOST           = _RADIUS - 2
+APPLPOCALYPSE   = _RADIUS - 3
 
 #List of different apple types
-_RADIUS_TYPES  = [_RADIUS, _RADIUS_REPAIR, _RADIUS_BOOST]
-_APPLE_COLOURS = ["red",  "green",       "yellow"]
+_RADIUS_TYPES  = [DEFAULT, REPAIR,  BOOST,    APPLPOCALYPSE]
+_APPLE_COLOURS = ["red",   "green", "yellow", "pink"]
 
-#Enum for the different apple types
-DEFAULT = 0
-REPAIR  = 1
-BOOST   = 2
+_DEF_INDEX = 0
+_REP_INDEX = 1
+_BOO_INDEX = 2
+_APP_INDEX = 3
 
 def getRandomAppleType():
     '''Gets a random apple type enum'''
     appleType = random.randint(0, 150)
-    if appleType > 20:
-        return DEFAULT
-    elif appleType > 2:
-        return REPAIR
+    if appleType > 25:
+        return _APP_INDEX
+    elif appleType > 10:
+        return _REP_INDEX
+    elif appleType > 4:
+        return _BOO_INDEX
     else:
-        return BOOST
-
-def radiusToAppleType(radius):
-    if radius == _RADIUS:
-        return DEFAULT
-    elif radius == _RADIUS_REPAIR:
-        return REPAIR
-    elif radius == _RADIUS_BOOST:
-        return BOOST
+        return _APP_INDEX
 
 def getRandomAppleInfo():
     '''get random radius and colour for apples'''
@@ -61,6 +57,7 @@ def makeApple(x, y, colour, radius, window):
     apple = gfx.Circle(gfx.Point(x, y), radius)
     apple.draw(window)
     apple.setFill(colour)
+    apple.setOutline(colour)
     return apple
 
 def makeDefaultApple(x, y, window):
@@ -77,7 +74,7 @@ def getRandomAppleXPosition():
 def createRandomApple(window):
     '''Creates an random apple at top of window'''
     x = getRandomAppleXPosition()
-    y = random.randint(-DIAMETER * 10, 0)
+    y = random.randint(-DIAMETER * 15, 0)
     radius, colour = getRandomAppleInfo()
     return makeApple(x, y, colour, radius, window)
 
