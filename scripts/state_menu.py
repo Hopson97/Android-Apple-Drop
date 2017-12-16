@@ -22,8 +22,6 @@ def addApple(apples, window):
     apples.append(apple.makeApple(x, y, "red", r, window))
     apples[-1].setOutline("red")
 
-
-
 def updateApples(apples, window):
     '''Updates the apples, such as moves them as removes them when they hit the bottom'''
     for app in apples[:]:
