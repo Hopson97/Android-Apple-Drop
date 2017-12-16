@@ -73,7 +73,7 @@ def createHowToControls(window):
 
 def createHowToObjectives(window):
     sprites = [
-        common.createTitle("Objectives")
+        common.createTitle("Objectives"),
         common.createCenteredImage("objectives")
     ]
     common.drawList(sprites, window)
@@ -173,6 +173,9 @@ def runMenuState(window, control):
     highscoreButton, \
     exitButton       = createFrontMenuButtons(window)
 
+    bg = common.createCenteredImage("menu_bg")
+    bg.draw(window)
+
     apples = []
     for i in range(100):
         addApple(apples, window)
@@ -210,4 +213,4 @@ def runMenuState(window, control):
         common.redrawList([titleText] + sprites, window)
         gfx.update(common.UPDATE_SPEED)
 
-    common.undrawList([titleText] + sprites + apples)
+    common.undrawList([titleText, bg] + sprites + apples)

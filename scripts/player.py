@@ -7,10 +7,10 @@ import math
 def createAndroid(window):
     '''Creates the Android sprite (based on Dr. M. Poole's code)'''
     coords = common.loadSpriteVerticies("android")
-    body = gfx.Polygon(coords).draw(window)
-    head = gfx.Circle(gfx.Point(30, 20), 20).draw(window)
-    eye1 = gfx.Circle(gfx.Point(22, 7), 4).draw(window)
-    eye2 = gfx.Circle(gfx.Point(37, 7), 4).draw(window)
+    body = gfx.Polygon(coords)
+    head = gfx.Circle(gfx.Point(30, 20), 20)
+    eye1 = gfx.Circle(gfx.Point(22, 7), 4)
+    eye2 = gfx.Circle(gfx.Point(37, 7), 4)
 
     droidParts = [body, head, eye1, eye2]
     eyes = [eye1, eye2]
@@ -22,6 +22,7 @@ def createAndroid(window):
         part.setFill(colour)
         part.setOutline(colour)
         part.move(500, tiles.BASE_HEIGHT - 45)
+        part.draw(window)
     return droidParts
 
 def handleInput(key, velocity):
