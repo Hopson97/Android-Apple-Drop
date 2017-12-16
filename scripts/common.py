@@ -15,6 +15,8 @@ WINDOW_HEIGHT = 720
 
 WINDOW_CENTER_X = WINDOW_WIDTH  // 2
 WINDOW_CENTER_Y = WINDOW_HEIGHT // 2
+
+GAME_NAME = "ANDROID APPLE DROP"
  
 def getKeyPress(window):
     '''Gets a key press from the window'''

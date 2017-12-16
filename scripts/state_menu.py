@@ -164,8 +164,7 @@ def createFrontMenuButtons(window):
 
 def runMenuState(window, control):
     '''Says it on the tin'''
-    title = "ANDROID APPLE DROP"
-    titleText = common.createTitle(title, window)
+    titleText = common.createTitle(common.GAME_NAME, window)
 
     sprites,         \
     playButton,      \
