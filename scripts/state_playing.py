@@ -56,7 +56,7 @@ def updateApples(apples, playerMinX, isTilesActive, tileSprites, window):
     return deltaLife, deltaScore
 
 def createStatsDisplay(window):
-
+    '''Creates the rectangle that shows the player's score and how many lives they have left'''
     statsBG = gfx.Rectangle(gfx.Point(common.WINDOW_CENTER_X - 50, 25), gfx.Point(common.WINDOW_CENTER_X + 50, 125))
     statsBG.setFill("gray")
     scoreDisplay = gfx.Text(gfx.Point(common.WINDOW_CENTER_X, 50),  "Score: 0")
@@ -110,7 +110,7 @@ def runMainGame(window, control):
     elapsed = 0
    
     isGamePaused = False
-    gamePausedDisplay = common.createTitle("Paused - Press E to exit", y = tiles.BASE_HEIGHT / 2)
+    gamePausedDisplay = common.createTitle("Paused - Press E to exit", y = tiles.BASE_HEIGHT / 2, size = 20)
 
     #Main loop section for the playing state
     while lives > 0 and not common.shouldExit(window, control):
