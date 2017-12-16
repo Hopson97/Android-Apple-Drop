@@ -62,6 +62,7 @@ def createHowToPlayMenu(window):
 
     return sprites, controlsButton, objectivesButton, appleTypesButton
 
+#TODO, clearly these 3 functions repeat code, need to find way to stop this (Harder than you think, see how this is used in `displayHowToPlayMenu())
 def createHowToControls(window):
     sprites = [
         common.createTitle("Controls"),
@@ -73,7 +74,7 @@ def createHowToControls(window):
 def createHowToObjectives(window):
     sprites = [
         common.createTitle("Objectives")
-        #common.createCenteredImage("objectives")
+        common.createCenteredImage("objectives")
     ]
     common.drawList(sprites, window)
     return sprites
