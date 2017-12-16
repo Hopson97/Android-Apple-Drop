@@ -22,7 +22,6 @@ def addApple(apples, window):
     y = random.randint(-common.WINDOW_HEIGHT, 0)
     r = random.randint(5, 20)
     apples.append(apple.makeApple(x, y, "red", r, window))
-    apples[-1].setOutline("red")
 
 def updateApples(apples, window):
     '''Updates the apples, such as moves them as removes them when they hit the bottom'''
@@ -119,6 +118,7 @@ def displayHowToPlayMenu(window, control, apples):
     common.undrawList(sprites + backButtonSprites)
 
 def showMenu(window, control, apples, guiCreateFunction):
+    '''Shows a basic menu which only has a back button (eg how to play, highscores)'''
     sprites = guiCreateFunction(window)
     backButtonSprites, \
     backButtonBounds   = button.create(BACK_BTN_Y, "Back", window)

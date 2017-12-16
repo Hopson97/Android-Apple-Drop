@@ -34,6 +34,26 @@ def playerFire(window, playerSprite, projectiles, projDirections, score):
         return True 
     return False
 
+def doAppleEffect(apples, appleType, isTilesActive, tileSprites, window):
+    '''Takes the apple type and does something depending on its type'''
+    deltaLife = 0
+    if appleType == appleFuncs.REPAIR:  #"Repair apple": Repairs tiles
+        tiles.repairTiles(tileSprites, isTilesActive, window)
+    elif appleType == appleFuncs.BOOST: #"Boost Apple": Gives player upto 2 extra lives
+        deltaLife = random.randint(1, 2)
+    elif appleType == appleFuncs.APPLPOCALYPSE: #"APPLPOCALYPSE": Removes all apples
+        for oldApple in apples[:]:
+            appleFuncs.removeApple(apples, oldApple)
+    return deltaLife
+
+
+def collectApple(apples, apple, isTilesActive, tileSprites, window):
+    '''Collects a single apple'''
+    appleType = int(apple.getRadius())
+    appleFuncs.removeApple(apples, apple)
+    return doAppleEffect(apples, appleType, isTilesActive, tileSprites, window)
+
+
 def updateApples(apples, playerMinX, isTilesActive, tileSprites, window):
     '''Update the updates, and test for collisions'''
     deltaLife = 0
@@ -43,15 +63,7 @@ def updateApples(apples, playerMinX, isTilesActive, tileSprites, window):
         #Different apples have different effects
         if player.isTochingApple(apple, playerMinX):
             deltaScore += 1
-            appleType = int(apple.getRadius())
-            appleFuncs.removeApple(apples, apple)
-            if appleType == appleFuncs.REPAIR:  #"Repair apple": Repairs tiles
-                tiles.repairTiles(tileSprites, isTilesActive, window)
-            elif appleType == appleFuncs.BOOST: #"Boost Apple": Gives player upto 2 extra lives
-                deltaLife += random.randint(1, 2)
-            elif appleType == appleFuncs.APPLPOCALYPSE: #"APPLPOCALYPSE": Removes all apples
-                for oldApple in apples[:]:
-                    appleFuncs.removeApple(apples, oldApple)
+            deltaLife += collectApple(apples, apple, isTilesActive, tileSprites, window)
         elif appleFuncs.isCollidingTile(apple, isTilesActive, tileSprites):
             appleFuncs.removeApple(apples, apple)
         elif appleFuncs.isOffScreen(apple):
