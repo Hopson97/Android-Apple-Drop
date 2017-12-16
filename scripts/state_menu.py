@@ -64,8 +64,8 @@ def createHowToPlayMenu(window):
 
 def createHowToControls(window):
     sprites = [
-        common.createTitle("Controls")
-        #common.createCenteredImage("how_to_play")
+        common.createTitle("Controls"),
+        common.createCenteredImage("controls")
     ]
     common.drawList(sprites, window)
     return sprites
@@ -73,7 +73,7 @@ def createHowToControls(window):
 def createHowToObjectives(window):
     sprites = [
         common.createTitle("Objectives")
-        #common.createCenteredImage("how_to_play")
+        #common.createCenteredImage("objectives")
     ]
     common.drawList(sprites, window)
     return sprites
@@ -81,7 +81,7 @@ def createHowToObjectives(window):
 def createHowToAppleTypes(window):
     sprites = [
         common.createTitle("Apple Types")
-        #common.createCenteredImage("how_to_play")
+        #common.createCenteredImage("apple_types")
     ]
     common.drawList(sprites, window)
     return sprites
