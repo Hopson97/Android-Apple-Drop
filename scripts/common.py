@@ -5,6 +5,7 @@ import graphics as gfx
 
 import math
 import time
+import winsound
 
 import state_enum as states
 
@@ -115,5 +116,11 @@ def createTitle(text, window = None, colour = "white", x = WINDOW_WIDTH / 2, y =
     return titleText
 
 def createCenteredImage(name):
+    '''Loads up an image, and places it at centre of window'''
     fullName = "../res/" + name + ".gif"
     return gfx.Image(gfx.Point(WINDOW_CENTER_X, WINDOW_CENTER_Y), fullName)
+
+def playSound(name):
+    '''Plays a sound (currently doesn't work for some reason)'''
+    fullName = "../res/" + name + ".wav"
+    winsound.PlaySound(fullName, winsound.SND_ASYNC)

@@ -51,6 +51,7 @@ def collectApple(apples, apple, isTilesActive, tileSprites, window):
     '''Collects a single apple'''
     appleType = int(apple.getRadius())
     appleFuncs.removeApple(apples, apple)
+    #common.playSound("eat")
     return doAppleEffect(apples, appleType, isTilesActive, tileSprites, window)
 
 
