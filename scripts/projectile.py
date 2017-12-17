@@ -4,7 +4,7 @@ import common
 
 import apple as appleFuncs
 
-SPEED = 10
+SPEED = 15
 
 def testForAppleProjectileCollision(projectile, apples):
     for apple in apples[:]:
