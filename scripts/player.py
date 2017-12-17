@@ -27,7 +27,7 @@ def createAndroid(window):
 
 def handleInput(key, velocity):
     '''Says it on the tin'''
-    acceleration = 0.7
+    acceleration = 1.0
     if key == "a":
         if (velocity > 0):
             velocity = -velocity / 2
@@ -68,7 +68,7 @@ def tryCollideEdges(playerVel, minX, maxX, isTilesActive):
     elif maxX > common.WINDOW_WIDTH:
         playerVel = -1
             
-    return playerVel * 0.95 #apply velocity dampening
+    return playerVel * 0.91 #apply velocity dampening
 
 def isTochingApple(apple, minX):
     '''Returns True if the player is touching an apple'''
