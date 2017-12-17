@@ -53,17 +53,17 @@ def getRandomAppleInfo():
     colour    = _APPLE_COLOURS[appleType]
     return radius, colour
 
-def makeApple(x, y, colour, radius, window):
+def makeAppleSprite(x, y, colour, radius, window):
     '''Creates a single apple'''
     apple = gfx.Circle(gfx.Point(x, y), radius)
     apple.draw(window)
     apple.setFill(colour)
-    apple.setOutline(colour)
+    apple.setOutline("black")
     return apple
 
 def makeDefaultApple(x, y, window):
     '''Creates a basic red apple'''
-    return makeApple(x, y, "red", _RADIUS, window)
+    return makeAppleSprite(x, y, "red", _RADIUS, window)
 
 def getRandomAppleXPosition():
     '''Gets an X position that is center to a tile'''
@@ -77,7 +77,7 @@ def createRandomApple(window):
     x = getRandomAppleXPosition()
     y = random.randint(-DIAMETER * 15, 0)
     radius, colour = getRandomAppleInfo()
-    return makeApple(x, y, colour, radius, window)
+    return makeAppleSprite(x, y, colour, radius, window)
 
 
 def isCollidingTile(apple, isTileActive, tileSprites):

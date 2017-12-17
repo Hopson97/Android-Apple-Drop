@@ -55,18 +55,18 @@ def tryCollideMissingTiles(playerVel, minIndex, maxIndex, isTilesActive):
     '''Collides player with any tiles that might be missing'''
     if playerVel < 0: #moving left
         if not isTilesActive[minIndex]:
-             playerVel = 0.1
+             playerVel = 0.5
     elif playerVel > 0:
         if not isTilesActive[maxIndex]:
-            playerVel = -0.1
+            playerVel = -0.5
     return playerVel
 
 def tryCollideWindowEdges(playerVel, minX, maxX):
     '''Collides player with window edges'''
     if minX < 0:
-        playerVel = 0.1
+        playerVel = 0.5
     elif maxX > common.WINDOW_WIDTH:
-        playerVel = -0.1
+        playerVel = -0.5
     return playerVel
 
 def tryCollideEdges(playerVel, minX, maxX, isTilesActive):

@@ -20,8 +20,9 @@ def addApple(apples, window):
     '''Adds an apple to the background of the menus'''
     x = getRandX()
     y = random.randint(-common.WINDOW_HEIGHT, 0)
-    r = random.randint(5, 20)
-    apples.append(apple.makeApple(x, y, "red", r, window))
+    r = random.randint(10, 20)
+    apples.append(apple.makeAppleSprite(x, y, "red", r, window))
+    apples[-1].setOutline("red")
 
 def updateApples(apples, window):
     '''Updates the apples, such as moves them as removes them when they hit the bottom'''
