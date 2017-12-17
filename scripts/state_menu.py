@@ -36,7 +36,6 @@ def updateApples(apples, window):
 def createHowToPlayMenu(window):
     sprites = [
         common.createTitle("HOW TO PLAY")
-        #common.createCenteredImage("how_to_play")
     ]
     common.drawList(sprites, window)
 
@@ -80,7 +79,7 @@ def createHowToObjectives(window):
 
 def createHowToAppleTypes(window):
     sprites = [
-        common.createTitle("Apple Types"),
+        common.createTitle("Apple Types", y= common.WINDOW_HEIGHT / 12),
         common.createCenteredImage("apple_types")
     ]
     common.drawList(sprites, window)
@@ -90,6 +89,9 @@ def displayHowToPlayMenu(window, control, apples):
     sprites, ctrlButton, objButton, typeButton = createHowToPlayMenu(window)
     backButtonSprites, \
     backButtonBounds   = button.create(BACK_BTN_Y, "Back", window)
+
+    menu_top = common.createCenteredImage("menu_top")
+    menu_top.draw(window)
 
     def displayMenu(guiCreateFunction):
         common.undrawList(sprites + backButtonSprites)
@@ -113,9 +115,11 @@ def displayHowToPlayMenu(window, control, apples):
         if button.isButtonPressed(mouseClickPoint, typeButton, window):
             if displayMenu(createHowToAppleTypes):
                 break
+
+        common.redrawSprite(menu_top, window)
         common.redrawList(sprites, window)
         gfx.update(common.UPDATE_SPEED)
-    common.undrawList(sprites + backButtonSprites)
+    common.undrawList(sprites + backButtonSprites + [menu_top])
 
 def showMenu(window, control, apples, guiCreateFunction):
     '''Shows a basic menu which only has a back button (eg how to play, highscores)'''
@@ -123,15 +127,19 @@ def showMenu(window, control, apples, guiCreateFunction):
     backButtonSprites, \
     backButtonBounds   = button.create(BACK_BTN_Y, "Back", window)
 
+    menu_top = common.createCenteredImage("menu_top")
+    menu_top.draw(window)
+
     sprites += backButtonSprites
     while not window.closed:
         mouseClickPoint = window.checkMouse()
         updateApples(apples, window)
         if button.isButtonPressed(mouseClickPoint, backButtonBounds, window):
             break
+        common.redrawSprite(menu_top, window)
         common.redrawList(sprites, window)
         gfx.update(common.UPDATE_SPEED)
-    common.undrawList(sprites)
+    common.undrawList(sprites + [menu_top])
 
 def createFrontMenuButtons(window):
     '''Creates the main buttons for the main menu'''
@@ -174,6 +182,9 @@ def runMenuState(window, control):
     bg = common.createCenteredImage("menu_bg")
     bg.draw(window)
 
+    menu_top = common.createCenteredImage("menu_top")
+    menu_top.draw(window)
+
     apples = []
     for i in range(100):
         addApple(apples, window)
@@ -208,7 +219,8 @@ def runMenuState(window, control):
 
         updateApples(apples, window)
         #make it so the title is ALWAYS on front
+        common.redrawSprite(menu_top, window)
         common.redrawList([titleText] + sprites, window)
         gfx.update(common.UPDATE_SPEED)
 
-    common.undrawList([titleText, bg] + sprites + apples)
+    common.undrawList([titleText, bg, menu_top] + sprites + apples)

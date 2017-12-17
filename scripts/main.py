@@ -27,7 +27,7 @@ def runGame(window, control):
         gfx.update(common.UPDATE_SPEED)
 
 if __name__ == "__main__":
-    '''Entry'''
+    '''Entry point of program'''
     window = makeWindow()
     #Create control variables in a dictionary so it can pass-by-reference 
     control = {

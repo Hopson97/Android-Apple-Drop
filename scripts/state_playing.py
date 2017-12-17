@@ -86,8 +86,11 @@ def createStatsDisplay(window):
 def runMainGame(window, control):
     '''The main function handling the actual gameplay of the game'''
     #Draw background image
-    background = gfx.Image(gfx.Point(common.WINDOW_WIDTH//2, common.WINDOW_HEIGHT // 2), "../res/game_background.gif")
+    background = common.createCenteredImage("game_background")
     background.draw(window)
+
+    treeTop = common.createCenteredImage("tree_top")
+    treeTop.draw(window)
 
     #Set up score
     score = 0
@@ -126,7 +129,7 @@ def runMainGame(window, control):
     elapsed = 0
    
     isGamePaused = False
-    gamePausedDisplay = common.createTitle("Paused - Press E to exit", y = tiles.BASE_HEIGHT / 2, size = 20)
+    gamePausedDisplay = common.createTitle("Paused - Press E to exit", colour = "red", y = tiles.BASE_HEIGHT / 2)
 
     #Main loop section for the playing state
     while lives > 0 and not common.shouldExit(window, control):
@@ -144,7 +147,7 @@ def runMainGame(window, control):
             else:
                 gamePausedDisplay.undraw()
 
-
+        #Game logic itself
         if not isGamePaused:
             #Player input
             playerXVel = player.handleInput     (key, playerXVel)
@@ -172,17 +175,18 @@ def runMainGame(window, control):
 
             projectile.update(projectiles, projectilesDirections, apples)
             
-            common.redrawList(statSprites, window)
-        else:
+            #Redraw fore-ground
+            common.redrawSprite (treeTop, window)
+            common.redrawList   (statSprites, window)
+        else: #is paused
             if key == "e":
                 break
-            
         gfx.update(common.UPDATE_SPEED * 2)
-    #end of the game (Game over)!
-    #Undraw everything...
+
+    #End of the game/ Game over
     common.undrawList(apples + projectiles + playerSprite + statSprites + [background])
     tiles.undraw(tileSprites, isTilesActive)
-    #...and return the results
+
     return score, elapsed
 
 

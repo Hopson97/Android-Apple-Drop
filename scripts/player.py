@@ -51,22 +51,31 @@ def movePlayer(sprite, amount):
     for part in sprite:
         part.move(amount, 0)
 
+def tryCollideMissingTiles(playerVel, minIndex, maxIndex, isTilesActive):
+    '''Collides player with any tiles that might be missing'''
+    if playerVel < 0: #moving left
+        if not isTilesActive[minIndex]:
+             playerVel = 0.1
+    elif playerVel > 0:
+        if not isTilesActive[maxIndex]:
+            playerVel = -0.1
+    return playerVel
+
+def tryCollideWindowEdges(playerVel, minX, maxX):
+    '''Collides player with window edges'''
+    if minX < 0:
+        playerVel = 0.1
+    elif maxX > common.WINDOW_WIDTH:
+        playerVel = -0.1
+    return playerVel
+
 def tryCollideEdges(playerVel, minX, maxX, isTilesActive):
     '''Collides player with the X-edges of the window, as well as inactive tiles'''
     tileIndexMin = math.floor((minX + 15) / tiles.TILE_SIZE)
     tileIndexMax = math.ceil ((maxX - 15) / tiles.TILE_SIZE) - 1
 
-    if playerVel < 0: #moving left
-        if not isTilesActive[tileIndexMin]:
-             playerVel = 1
-    elif playerVel > 0:
-        if not isTilesActive[tileIndexMax]:
-            playerVel = -1
-
-    if minX < 0:
-        playerVel = 1
-    elif maxX > common.WINDOW_WIDTH:
-        playerVel = -1
+    playerVel = tryCollideMissingTiles(playerVel, tileIndexMin, tileIndexMax, isTilesActive)
+    playerVel = tryCollideWindowEdges (playerVel, minX, maxX)
             
     return playerVel * 0.91 #apply velocity dampening
 
