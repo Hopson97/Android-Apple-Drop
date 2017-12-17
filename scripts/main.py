@@ -11,7 +11,7 @@ def makeWindow():
     return gfx.GraphWin(common.GAME_NAME + " - By Matthew Hopson", 
                         common.WINDOW_WIDTH, common.WINDOW_HEIGHT, 
                         autoflush = False) #Turning off autoflush allows more control over the framerate
-                                
+
 def runGame(window, control):
     '''Main loop of the game'''
     #Chooses state based on the main control

@@ -28,23 +28,23 @@ APPLPOCALYPSE   = _RADIUS - 3
 _RADIUS_TYPES  = [DEFAULT, REPAIR,  BOOST,    APPLPOCALYPSE]
 _APPLE_COLOURS = ["red",   "green", "yellow", "pink"]
 
-#The enum for the apple type
-_DEF_INDEX = 0
-_REP_INDEX = 1
-_BOO_INDEX = 2
-_APP_INDEX = 3
+#The enum for the apple type, also doubling as the index for the lists above
+_DEFAULT_APPLE = 0
+_REPAIR_APPLE = 1
+_BOOST_APPLE = 2
+_APLPOCALYPSE_APPLE = 3
 
 def getRandomAppleType():
     '''Gets a random apple type enum'''
-    appleType = random.randint(0, 150)
+    appleType = random.randint(0, 170)
     if appleType > 25:
-        return _DEF_INDEX
+        return _DEFAULT_APPLE
     elif appleType > 10:
-        return _REP_INDEX
+        return _REPAIR_APPLE
     elif appleType > 4:
-        return _BOO_INDEX
+        return _BOOST_APPLE
     else:
-        return _APP_INDEX
+        return _APLPOCALYPSE_APPLE
 
 def getRandomAppleInfo():
     '''get random radius and colour for apples'''
