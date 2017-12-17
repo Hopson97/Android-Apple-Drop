@@ -86,9 +86,10 @@ def createHighscoresDisplay(window):
     sprites = []
 
     #Create title bar
-    sprites.append(common.createTitle("HIGHSCORES"))
+    sprites.append(common.createTitle("Highscores"))
 
-    colours = ["tan1", "chocolate1"] * (len(highscores) // 2 + 1)
+    ##colours = ["tan1", "chocolate1"] * (len(highscores) // 2 + 1)
+    colours = ["gray90", "cornsilk4"] * (len(highscores) // 2 + 1)
     for i in range(len(highscores) + 1):
         rank  = str(i)
         name  = str(highscores[i - 1][0])

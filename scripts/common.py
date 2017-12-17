@@ -17,7 +17,7 @@ WINDOW_HEIGHT = 720
 WINDOW_CENTER_X = WINDOW_WIDTH  // 2
 WINDOW_CENTER_Y = WINDOW_HEIGHT // 2
 
-GAME_NAME = "ANDROID APPLE DROP"
+GAME_NAME = "Android Apple Drop"
  
 def getKeyPress(window):
     '''Gets a key press from the window'''
@@ -105,7 +105,7 @@ def shouldExit(window, control):
         return True 
     return False
 
-def createTitle(text, window = None, colour = "white", x = WINDOW_WIDTH / 2, y = WINDOW_HEIGHT / 12, size = 36):
+def createTitle(text, window = None, colour = "orange", x = WINDOW_WIDTH / 2, y = WINDOW_HEIGHT / 12, size = 36):
     '''Creates a big text at the top of the window, pass window in for auto drawing'''
     titleText = gfx.Text(gfx.Point(x, y), text)
     titleText.setSize(size)

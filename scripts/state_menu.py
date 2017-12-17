@@ -35,8 +35,9 @@ def updateApples(apples, window):
             addApple(apples, window)
 
 def createHowToPlayMenu(window):
+    '''Creates the GUI for the "how to play" menu'''
     sprites = [
-        common.createTitle("HOW TO PLAY")
+        common.createTitle("How To Play")
     ]
     common.drawList(sprites, window)
 
@@ -87,6 +88,7 @@ def createHowToAppleTypes(window):
     return sprites
 
 def displayHowToPlayMenu(window, control, apples):
+    '''Displays the how to play menu, eg it's buttons'''
     sprites, ctrlButton, objButton, typeButton = createHowToPlayMenu(window)
     backButtonSprites, \
     backButtonBounds   = button.create(BACK_BTN_Y, "Back", window)

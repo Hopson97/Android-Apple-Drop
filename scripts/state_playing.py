@@ -39,8 +39,8 @@ def doAppleEffect(apples, appleType, isTilesActive, tileSprites, window):
     deltaLife = 0
     if appleType == appleFuncs.REPAIR:  #"Repair apple": Repairs tiles
         tiles.repairTiles(tileSprites, isTilesActive, window)
-    elif appleType == appleFuncs.BOOST: #"Boost Apple": Gives player upto 2 extra lives
-        deltaLife = random.randint(1, 2)
+    elif appleType == appleFuncs.BOOST: #"Boost Apple": Gives player upto 3 extra lives
+        deltaLife = random.randint(1, 3)
     elif appleType == appleFuncs.APPLPOCALYPSE: #"APPLPOCALYPSE": Removes all apples
         for oldApple in apples[:]:
             appleFuncs.removeApple(apples, oldApple)
@@ -86,6 +86,7 @@ def createStatsDisplay(window):
 
 def runMainGame(window, control):
     '''The main function handling the actual gameplay of the game'''
+    '''Also a shamefully long function :( '''
     #Draw background image
     background = common.createCenteredImage("game_background")
     background.draw(window)
