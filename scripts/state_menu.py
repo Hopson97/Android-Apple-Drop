@@ -20,14 +20,14 @@ def addApple(apples, window):
     '''Adds an apple to the background of the menus'''
     x = getRandX()
     y = random.randint(-common.WINDOW_HEIGHT, 0)
-    r = random.randint(10, 20)
+    r = random.randint(10, 22)
     apples.append(apple.makeAppleSprite(x, y, "red", r, window))
     apples[-1].setOutline("red")
 
 def updateApples(apples, window):
     '''Updates the apples, such as moves them as removes them when they hit the bottom'''
     for app in apples[:]:
-        app.move(0, app.getRadius() / 5)
+        app.move(0, app.getRadius() / 4)
         #app.move(math.sin(elapsed) * app.getRadius(), app.getRadius() / 5)
         if app.getCenter().getY() > common.WINDOW_HEIGHT + apple.DIAMETER:
             app.undraw()
@@ -189,7 +189,7 @@ def runMenuState(window, control):
     menu_top.draw(window)
 
     apples = []
-    for i in range(100):
+    for i in range(50):
         addApple(apples, window)
 
     def displayMenu(guiCreateFunction = None):

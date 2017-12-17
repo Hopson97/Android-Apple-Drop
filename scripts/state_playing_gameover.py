@@ -8,7 +8,7 @@ import common
 import button
 import aabb
 
-def addMessage(window, message, size = 20, color = "black", reset = False):
+def addMessage(window, message, size = 20, color = "black", reset = False, bold = False):
     '''message add'''
     if reset:
         addMessage.y = WINDOW_HEIGHT / 10
@@ -16,6 +16,7 @@ def addMessage(window, message, size = 20, color = "black", reset = False):
     msg.setSize(size)
     msg.setFill(color)
     msg.draw(window)
+    msg.setStyle("bold" if bold else "normal")
     addMessage.y += 40
     return msg
 addMessage.y = common.WINDOW_HEIGHT / 10
@@ -90,7 +91,7 @@ def gameOverState(window, control, score, elapsed):
     bg.draw(window)
     overallScore = score * round(elapsed)
     messages = [
-        addMessage(window, "GAME OVER", 30, "red", True),
+        addMessage(window, "GAME OVER", 30, "red", reset = True, bold = True),
         addMessage(window, "Score: "        + str(score)),
         addMessage(window, "Time:  "        + str(round(elapsed)) + " seconds"),
         addMessage(window, "Final Score:  " + str(overallScore))
