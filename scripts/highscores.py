@@ -45,7 +45,9 @@ def extractScores(data):
     highscores = []
     data = data.split()
     for i in range(0, len(data) - 1, 2):
-        name = data[i].replace("`", " ")
+        name = data[i]
+        if "`" in name:
+            name = data[i].replace("`", " ")
         pair = (name, int(data[i + 1]))
         highscores.append(pair)
     return highscores
@@ -55,7 +57,8 @@ def getScoresList():
 
 def submitScore(name, score):
     '''Adds a score to the highscores'''
-    name = name.replace(" ", "`")
+    if " " in name:
+        name = name.replace(" ", "`")
     highscores = getScoresList()
     highscores.append((name, score))
     highscores = sorted(highscores, key = lambda x: x[1])

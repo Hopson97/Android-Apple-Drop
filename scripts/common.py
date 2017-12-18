@@ -8,7 +8,6 @@ import drawer
 
 import math
 import time
-import winsound
 
 #Speed at which the game updates (Frames/updates per second)
 UPDATE_SPEED = 30
@@ -61,8 +60,3 @@ def createCenteredImage(name):
     '''Loads up an image, and places it at centre of window'''
     fullName = "../res/" + name + ".gif"
     return gfx.Image(gfx.Point(WINDOW_CENTER_X, WINDOW_CENTER_Y), fullName)
-
-def playSound(name):
-    '''Plays a sound (currently doesn't work for some reason)'''
-    fullName = "../res/" + name + ".wav"
-    winsound.PlaySound(fullName, winsound.SND_ASYNC)

@@ -35,6 +35,8 @@ def update(projectiles, projectileDirections, apples):
         testForAppleProjectileCollision(projectiles[i], apples)
         if isOutOfBounds(projectiles[i].getCenter()):
             removeMe.append(i)
+
+
     '''
     for x in removeMe:
         projectiles[i].undraw()
@@ -43,6 +45,7 @@ def update(projectiles, projectileDirections, apples):
     '''
     
 def create(playerPoint, target, window):
+    '''Creates a projectile'''
     dx, dy = vector.getPointDifference(playerPoint, target)
     proj = appleFuncs.makeDefaultApple(playerPoint.getX(), playerPoint.getY(), window)
 

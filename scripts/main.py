@@ -34,8 +34,8 @@ if __name__ == "__main__":
     window = makeWindow()
     #Create control variables in a dictionary so it can pass-by-reference 
     control = {
-        "running": True,
-        "state": states.STATE_MENU
+        "running": True,            #Whether the game is running or not
+        "state": states.STATE_MENU  #The current game state
     }
     runGame(window, control)
 

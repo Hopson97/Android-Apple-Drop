@@ -29,7 +29,7 @@ def createAndroid(window):
 
 def handleInput(key, velocity):
     '''Says it on the tin'''
-    acceleration = 1.0
+    acceleration = 1.25
     if key == "a":
         if (velocity > 0):
             velocity = -velocity / 2
