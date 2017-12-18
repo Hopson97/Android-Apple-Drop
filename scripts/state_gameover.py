@@ -86,7 +86,7 @@ def makeGameOverButtons(messageLength, window):
         
 
 
-def gameOverState(window, control, score, elapsed):
+def runGameOverState(window, control, score, elapsed):
     '''Runs after the player has run out of lives'''
     bg = common.createCenteredImage("menu_bg")
     bg.draw(window)
@@ -105,10 +105,10 @@ def gameOverState(window, control, score, elapsed):
     sprites += messages
 
     scoreSubmitted = False
-    while not common.shouldExit(window, control):
+    while control["state"] is states.STATE_GAME_OVER and not common.shouldExit(window, control):
         mouseClick = window.checkMouse()
         if button.isButtonPressed(mouseClick, playAgainButton, window):
-            break
+            common.switchState(window, control, states.STATE_PLAYING)
         elif button.isButtonPressed(mouseClick,submitScoreButton, window) and not scoreSubmitted:
             common.undrawList(sprites)
             submitScoreState(window, control, overallScore)
@@ -120,7 +120,6 @@ def gameOverState(window, control, score, elapsed):
             sprites[1].setFill("gray")
         elif button.isButtonPressed(mouseClick, exitToMenuButton, window):
             common.switchState(window, control, states.STATE_MENU)
-            break
 
         gfx.update(common.UPDATE_SPEED)
 

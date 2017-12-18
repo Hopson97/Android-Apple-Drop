@@ -1,8 +1,9 @@
 import graphics   as gfx
 import state_enum as states
 
-from state_playing import runPlayState
-from state_menu    import runMenuState
+from state_playing  import runPlayState
+from state_menu     import runMenuState
+from state_gameover import runGameOverState
 
 import common
 
@@ -20,7 +21,9 @@ def runGame(window, control):
         if currentState == states.STATE_MENU:
             runMenuState(window, control) 
         elif currentState == states.STATE_PLAYING:
-            runPlayState(window, control)
+            score, elapsed = runPlayState(window, control)
+        elif currentState == states.STATE_GAME_OVER:
+            runGameOverState(window, control, score, elapsed)
         #Exit the game
         if window.closed or currentState == states.EXIT:
             control["running"] = False 

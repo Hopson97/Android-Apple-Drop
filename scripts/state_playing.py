@@ -8,8 +8,7 @@ import player
 import tiles
 import aabb
 
-from   state_enum             import STATE_PLAYING
-from   state_playing_gameover import gameOverState
+from   state_enum import STATE_PLAYING
 
 import random
 import math
@@ -199,5 +198,6 @@ def runPlayState(window, control):
         if common.shouldExit(window, control):
             return
         common.undrawAll(window)
-        gameOverState(window, control, score, elapsed)
+        common.switchState(window, control, states.STATE_GAME_OVER)
+    return score, elapsed
     
