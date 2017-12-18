@@ -34,7 +34,7 @@ def makeSubmitMenuGUI(score, window):
 
     messText.setFill("red")
     messText.setSize(36)
-    error = "Text must be between 0 and 10 chars, and contain no spaces."
+    error = "Text must be between 3 and 12 chars, and contain no spaces."
     errorMessage = gfx.Text (gfx.Point(WINDOW_WIDTH // 2, WINDOW_HEIGHT // 6 * 3.50), error)
     errorMessage.setStyle("bold")
     errorMessage.setFill("red")
@@ -56,9 +56,10 @@ def submitScoreState(window, control, score):
         point = window.checkMouse()
         if button.isButtonPressed(point, submitScoreButton, window):
             name = inputBox.getText()
-            if (len(name) == 0 or len(name) > 10) or " " in name and not isError:
-                errorMessage.draw(window)
-                isError = True
+            if (len(name) <= 2 or len(name) > 12) or " " in name:
+                if not isError:
+                    errorMessage.draw(window)
+                    isError = True
             else:
                 name = inputBox.getText()
                 highscores.submitScore(name, score)
