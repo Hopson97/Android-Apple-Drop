@@ -13,6 +13,12 @@ def makeWindow():
                         common.WINDOW_WIDTH, common.WINDOW_HEIGHT, 
                         autoflush = False) #Turning off autoflush allows more control over the framerate
 
+def createControlDictionary():
+   return {
+        "running": True,            #Whether the game is running or not
+        "state": states.STATE_MENU  #The current game state
+    } 
+
 def runGame(window, control):
     '''Main loop of the game'''
     #Chooses state based on the main control
@@ -33,10 +39,7 @@ if __name__ == "__main__":
     '''Entry point of program'''
     window = makeWindow()
     #Create control variables in a dictionary so it can pass-by-reference 
-    control = {
-        "running": True,            #Whether the game is running or not
-        "state": states.STATE_MENU  #The current game state
-    }
+    control = createControlDictionary()
     runGame(window, control)
 
 

@@ -23,7 +23,6 @@ def highscoresExist():
 def createFile():
     open(PATH, "w").close()
 
-
 def loadScores():
     '''Loads the raw data from the highscore file'''
     if not highscoresExist():
@@ -38,17 +37,17 @@ def writeScores(scores):
     with open(PATH, "w") as outFile:
         for nameScore in scores:
             #Writes the tuple to the file, with a space between the elements
-            outFile.write(" ".join(str(x) for x in nameScore) + "\n")
+            outFile.write("`".join(str(x) for x in nameScore) + "\n")
 
 def extractScores(data):
     '''Extracts the highscores, and returns a list of tuple(name, score)'''
     highscores = []
-    data = data.split()
-    for i in range(0, len(data) - 1, 2):
-        name = data[i]
-        if "`" in name:
-            name = data[i].replace("`", " ")
-        pair = (name, int(data[i + 1]))
+    lines = data.split("\n")
+    newData = []
+    for line in lines:
+        newData += line.split("`")
+    for i in range(0, len(newData) - 1, 2):
+        pair = (newData[i], int(newData[i + 1]))
         highscores.append(pair)
     return highscores
 
@@ -57,8 +56,6 @@ def getScoresList():
 
 def submitScore(name, score):
     '''Adds a score to the highscores'''
-    if " " in name:
-        name = name.replace(" ", "`")
     highscores = getScoresList()
     highscores.append((name, score))
     highscores = sorted(highscores, key = lambda x: x[1])
