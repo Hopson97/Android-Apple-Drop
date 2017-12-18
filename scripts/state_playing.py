@@ -194,10 +194,12 @@ def runMainGame(window, control):
 
 def runPlayState(window, control):
     '''Runs the main game'''
+    score   = 0
+    elapsed = 0
     while control["state"] == STATE_PLAYING and not common.shouldExit(window, control):
         score, elapsed = runMainGame(window, control)
         if common.shouldExit(window, control):
-            return
+            return score, elapsed
         drawer.undrawAll(window)
         common.switchState(window, control, states.STATE_GAME_OVER)
     return score, elapsed
