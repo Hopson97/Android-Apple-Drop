@@ -4,6 +4,7 @@ from   common import WINDOW_HEIGHT, WINDOW_WIDTH
 import state_enum as states
 
 import highscores
+import drawer
 import common
 import button
 import aabb
@@ -65,7 +66,7 @@ def submitScoreState(window, control, score):
                 highscores.submitScore(name, score)
                 break
         gfx.update(common.UPDATE_SPEED)
-    common.undrawList(sprites + [inputBox, errorMessage])
+    drawer.undrawList(sprites + [inputBox, errorMessage])
 
 def makeGameOverButtons(messageLength, window):
     '''Makes buttons for game over screen'''
@@ -110,7 +111,7 @@ def runGameOverState(window, control, score, elapsed):
         if button.isButtonPressed(mouseClick, playAgainButton, window):
             common.switchState(window, control, states.STATE_PLAYING)
         elif button.isButtonPressed(mouseClick,submitScoreButton, window) and not scoreSubmitted:
-            common.undrawList(sprites)
+            drawer.undrawList(sprites)
             submitScoreState(window, control, overallScore)
             if window.closed:
                 break
@@ -123,4 +124,4 @@ def runGameOverState(window, control, score, elapsed):
 
         gfx.update(common.UPDATE_SPEED)
 
-    common.undrawList(sprites + [bg])
+    drawer.undrawList(sprites + [bg])

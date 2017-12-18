@@ -2,7 +2,7 @@ import graphics   as gfx
 import state_enum as states
 import common
 import button
-import aabb
+import drawer
 import apple
 import highscores
 
@@ -97,7 +97,7 @@ def displayHowToPlayMenu(window, control, apples):
     menu_top.draw(window)
 
     def displayMenu(guiCreateFunction):
-        common.undrawList(sprites + backButtonSprites)
+        drawer.undrawList(sprites + backButtonSprites)
         showMenu(window, control, apples, guiCreateFunction)
         if window.closed:
             return True
@@ -119,10 +119,10 @@ def displayHowToPlayMenu(window, control, apples):
             if displayMenu(createHowToAppleTypes):
                 break
 
-        common.redrawSprite(menu_top, window)
-        common.redrawList(sprites, window)
+        drawer.redrawSprite(menu_top, window)
+        drawer.redrawList(sprites, window)
         gfx.update(common.UPDATE_SPEED)
-    common.undrawList(sprites + backButtonSprites + [menu_top])
+    drawer.undrawList(sprites + backButtonSprites + [menu_top])
 
 def showMenu(window, control, apples, guiCreateFunction):
     '''Shows a basic menu which only has a back button (eg how to play, highscores)'''
@@ -139,10 +139,10 @@ def showMenu(window, control, apples, guiCreateFunction):
         updateApples(apples, window)
         if button.isButtonPressed(mouseClickPoint, backButtonBounds, window):
             break
-        common.redrawSprite(menu_top, window)
-        common.redrawList(sprites, window)
+        drawer.redrawSprite(menu_top, window)
+        drawer.redrawList(sprites, window)
         gfx.update(common.UPDATE_SPEED)
-    common.undrawList(sprites + [menu_top])
+    drawer.undrawList(sprites + [menu_top])
 
 def createFrontMenuButtons(window):
     '''Creates the main buttons for the main menu'''
@@ -193,7 +193,7 @@ def runMenuState(window, control):
         addApple(apples, window)
 
     def displayMenu(guiCreateFunction = None):
-        common.undrawList([titleText] + sprites)
+        drawer.undrawList([titleText] + sprites)
         showMenu(window, control, apples, guiCreateFunction)
         if window.closed:
             return True
@@ -209,7 +209,7 @@ def runMenuState(window, control):
         if button.isButtonPressed(point, playButton, window):
             common.switchState(window, control, states.STATE_PLAYING)
         elif button.isButtonPressed(point, howToPlayButton, window):
-            common.undrawList([titleText] + sprites)
+            drawer.undrawList([titleText] + sprites)
             displayHowToPlayMenu(window, control, apples)
             if window.closed:
                 break
@@ -222,8 +222,8 @@ def runMenuState(window, control):
 
         updateApples(apples, window)
         #make it so the title is ALWAYS on front
-        common.redrawSprite(menu_top, window)
-        common.redrawList([titleText] + sprites, window)
+        drawer.redrawSprite(menu_top, window)
+        drawer.redrawList([titleText] + sprites, window)
         gfx.update(common.UPDATE_SPEED)
 
-    common.undrawList([titleText, bg, menu_top] + sprites + apples)
+    drawer.undrawList([titleText, bg, menu_top] + sprites + apples)

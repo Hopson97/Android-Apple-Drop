@@ -5,6 +5,7 @@ import apple      as appleFuncs
 import projectile
 import common
 import player
+import drawer
 import tiles
 import aabb
 
@@ -177,15 +178,15 @@ def runMainGame(window, control):
             projectile.update(projectiles, projectilesDirections, apples)
             
             #Redraw fore-ground
-            common.redrawSprite (treeTop, window)
-            common.redrawList   (statSprites, window)
+            drawer.redrawSprite (treeTop, window)
+            drawer.redrawList   (statSprites, window)
         else: #is paused
             if key == "e":
                 break
         gfx.update(common.UPDATE_SPEED * 2)
 
     #End of the game/ Game over
-    common.undrawList(apples + projectiles + playerSprite + statSprites + [background])
+    drawer.undrawList(apples + projectiles + playerSprite + statSprites + [background])
     tiles.undraw(tileSprites, isTilesActive)
 
     return score, elapsed
@@ -197,7 +198,7 @@ def runPlayState(window, control):
         score, elapsed = runMainGame(window, control)
         if common.shouldExit(window, control):
             return
-        common.undrawAll(window)
+        drawer.undrawAll(window)
         common.switchState(window, control, states.STATE_GAME_OVER)
     return score, elapsed
     

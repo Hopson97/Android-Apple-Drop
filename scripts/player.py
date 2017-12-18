@@ -4,10 +4,11 @@ import vector
 import tiles
 import apple as appleF
 import math
+import drawer
 
 def createAndroid(window):
     '''Creates the Android sprite (based on Dr. M. Poole's code)'''
-    coords = common.loadSpriteVerticies("android")
+    coords = drawer.loadSpriteVerticies("android")
     body = gfx.Polygon(coords)
     head = gfx.Circle(gfx.Point(30, 20), 20)
     eye1 = gfx.Circle(gfx.Point(22, 7), 4)
