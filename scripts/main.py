@@ -41,5 +41,6 @@ if __name__ == "__main__":
     #Create control variables in a dictionary so it can pass-by-reference 
     control = createControlDictionary()
     runGame(window, control)
+    window.close()
 
 
