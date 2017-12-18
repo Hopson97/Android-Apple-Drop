@@ -1,4 +1,4 @@
-#Android Apple Drop
+# Android Apple Drop
 
 This is a game about an Android eating apples. It was created for a contest run by the computing dept. at my university.
 
