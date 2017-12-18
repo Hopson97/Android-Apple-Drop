@@ -4,6 +4,7 @@ import math
 from pathlib import Path
 
 import common
+import drawer
 
 #Relative path to the text file containing the highscores listings
 PATH = "../res/highscores.txt"
@@ -103,5 +104,5 @@ def createHighscoresDisplay(window):
         if i + 1 == 26: #Maximum of 25 highscore fields can be displayed
             break
 
-    common.drawList(sprites, window)
+    drawer.drawList(sprites, window)
     return sprites

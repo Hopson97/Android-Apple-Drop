@@ -20,20 +20,28 @@ def moveProjectile(direction, projectile):
     #direction.y += 0.05    #Apply gravity
     projectile.move(dx, dy)
 
+def isOutOfBounds(centre):
+    x = centre.getX()
+    y = centre.getY()
+    d = appleFuncs.DIAMETER
+    return x - d > common.WINDOW_WIDTH  or x + d < 0 or \
+           y - d > common.WINDOW_HEIGHT or y + d < 0
+
 def update(projectiles, projectileDirections, apples):
     '''Updates the player's projectiles'''
     removeMe = []
     for i in range(len(projectiles)):
         moveProjectile(projectileDirections[i], projectiles[i])
         testForAppleProjectileCollision(projectiles[i], apples)
-        if projectiles[i].getCenter().y - appleFuncs.DIAMETER > common.WINDOW_HEIGHT:
+        if isOutOfBounds(projectiles[i].getCenter()):
             removeMe.append(i)
-
+    '''
     for x in removeMe:
         projectiles[i].undraw()
         projectileDirections.pop(x)
         projectiles.pop(x)
-
+    '''
+    
 def create(playerPoint, target, window):
     dx, dy = vector.getPointDifference(playerPoint, target)
     proj = appleFuncs.makeDefaultApple(playerPoint.getX(), playerPoint.getY(), window)

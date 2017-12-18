@@ -50,7 +50,7 @@ def submitScoreState(window, control, score):
     inputBox,           \
     submitScoreButton   = makeSubmitMenuGUI(score, window)
 
-    common.drawList(sprites[:-2] + [inputBox], window)
+    drawer.drawList(sprites[:-2] + [inputBox], window)
     isError = False
 
     while not window.closed:
@@ -115,7 +115,7 @@ def runGameOverState(window, control, score, elapsed):
             submitScoreState(window, control, overallScore)
             if window.closed:
                 break
-            common.drawList(sprites, window)
+            drawer.drawList(sprites, window)
             scoreSubmitted = True
             sprites[0].setFill("dim gray")
             sprites[1].setFill("gray")

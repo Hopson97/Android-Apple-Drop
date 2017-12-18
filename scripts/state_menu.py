@@ -39,7 +39,7 @@ def createHowToPlayMenu(window):
     sprites = [
         common.createTitle("How To Play")
     ]
-    common.drawList(sprites, window)
+    drawer.drawList(sprites, window)
 
     guiY =  common.WINDOW_HEIGHT / 10 + 50
 
@@ -68,7 +68,7 @@ def createHowToControls(window):
         common.createTitle("Controls"),
         common.createCenteredImage("controls")
     ]
-    common.drawList(sprites, window)
+    drawer.drawList(sprites, window)
     return sprites
 
 def createHowToObjectives(window):
@@ -76,7 +76,7 @@ def createHowToObjectives(window):
         common.createTitle("Objectives"),
         common.createCenteredImage("objectives")
     ]
-    common.drawList(sprites, window)
+    drawer.drawList(sprites, window)
     return sprites
 
 def createHowToAppleTypes(window):
@@ -84,7 +84,7 @@ def createHowToAppleTypes(window):
         common.createTitle("Apple Types", y= common.WINDOW_HEIGHT / 12),
         common.createCenteredImage("apple_types")
     ]
-    common.drawList(sprites, window)
+    drawer.drawList(sprites, window)
     return sprites
 
 def displayHowToPlayMenu(window, control, apples):
@@ -101,7 +101,7 @@ def displayHowToPlayMenu(window, control, apples):
         showMenu(window, control, apples, guiCreateFunction)
         if window.closed:
             return True
-        common.drawList(sprites + backButtonSprites, window)
+        drawer.drawList(sprites + backButtonSprites, window)
         return False
 
     while not window.closed:
@@ -197,7 +197,7 @@ def runMenuState(window, control):
         showMenu(window, control, apples, guiCreateFunction)
         if window.closed:
             return True
-        common.drawList([titleText] + sprites, window)
+        drawer.drawList([titleText] + sprites, window)
         return False
     
     start = time.time()
@@ -213,7 +213,7 @@ def runMenuState(window, control):
             displayHowToPlayMenu(window, control, apples)
             if window.closed:
                 break
-            common.drawList([titleText] + sprites, window)
+            drawer.drawList([titleText] + sprites, window)
         elif button.isButtonPressed(point, highscoreButton, window):
             if displayMenu(highscores.createHighscoresDisplay):
                 break
