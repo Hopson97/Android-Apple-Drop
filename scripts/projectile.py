@@ -1,6 +1,7 @@
 import graphics as gfx
 
 import common 
+import vector
 
 import apple as appleFuncs
 
@@ -10,7 +11,7 @@ def testForAppleProjectileCollision(projectile, apples):
     for apple in apples[:]:
         appleCenter = apple.getCenter()
         projCenter  = projectile.getCenter()
-        if common.distanceBetween(appleCenter, projCenter) < appleFuncs.DIAMETER:
+        if vector.distanceBetween(appleCenter, projCenter) < appleFuncs.DIAMETER:
             appleFuncs.removeApple(apples, apple)
 
 def moveProjectile(direction, projectile):
@@ -34,10 +35,10 @@ def update(projectiles, projectileDirections, apples):
         projectiles.pop(x)
 
 def create(playerPoint, target, window):
-    dx, dy = common.getPointDifference(playerPoint, target)
+    dx, dy = vector.getPointDifference(playerPoint, target)
     proj = appleFuncs.makeDefaultApple(playerPoint.getX(), playerPoint.getY(), window)
 
-    dirVector = common.normalise(gfx.Point(dx, dy))
+    dirVector = vector.normalise(gfx.Point(dx, dy))
     dx = dirVector.getX() * SPEED
     dy = dirVector.getY() * SPEED
     velocity = gfx.Point(dx, dy)

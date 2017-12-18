@@ -1,5 +1,6 @@
 import graphics as gfx
 import common
+import vector 
 import tiles
 import apple as appleF
 import math
@@ -83,7 +84,7 @@ def isTochingApple(apple, minX):
     '''Returns True if the player is touching an apple'''
     appleX = apple.getCenter().x
     appleY = apple.getCenter().y
-    return common.distance(minX + 30, tiles.BASE_HEIGHT - 20,
+    return vector.distance(minX + 30, tiles.BASE_HEIGHT - 20,
                            appleX, appleY) < appleF.DIAMETER
 
 def shouldFireProjectile(window):
@@ -94,7 +95,7 @@ def shouldFireProjectile(window):
         x2 = mousePoint.x
         y1 = shouldFireProjectile.oldPos.y
         y2 = mousePoint.y
-        if common.distance(x1, y1, x2, y2) > 10:
+        if vector.distance(x1, y1, x2, y2) > 10:
             shouldFireProjectile.oldPos = mousePoint
             return True, mousePoint
     return False, shouldFireProjectile.oldPos
