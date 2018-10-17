@@ -1,5 +1,9 @@
 # Android Apple Drop
 
+Demonstation: https://www.youtube.com/watch?v=e9HhxOSJWLs
+
+How it was made: https://www.youtube.com/watch?v=AX-Zfcz1AEs
+
 This is a game about an Android eating apples. It was created for a contest run by the computing dept. at my university.
 
 The rules were as follows:
