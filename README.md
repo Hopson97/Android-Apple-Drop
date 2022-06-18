@@ -1,6 +1,6 @@
 # Android Apple Drop
 
-Demonstation: https://www.youtube.com/watch?v=e9HhxOSJWLs
+Demonstration: https://www.youtube.com/watch?v=e9HhxOSJWLs
 
 How it was made: https://www.youtube.com/watch?v=AX-Zfcz1AEs
 
@@ -17,3 +17,4 @@ The rules were as follows:
 To run the game, run from main.py
 
 ![GamePlaye](https://i.imgur.com/rCsVO5N.png)
+
